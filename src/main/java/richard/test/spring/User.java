@@ -1,11 +1,14 @@
 package richard.test.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by richard on 18/03/2019.
  */
+@Scope("singleton")
+//@Scope("prototype")
 @Component
 public class User {
 

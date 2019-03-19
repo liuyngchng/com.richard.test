@@ -1,5 +1,7 @@
 package richard.test.spring;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -8,14 +10,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class SpringTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringTest.class);
+
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         User user = (User)context.getBean("user");
-
-        Order order = user.getOrder();
-
-        final User user1 = new User();
-        Order order1 = user1.getOrder();
+        User user1 = (User)context.getBean("user");
+        LOGGER.info("user == user1 :{}", user == user1);
     }
 
 }
