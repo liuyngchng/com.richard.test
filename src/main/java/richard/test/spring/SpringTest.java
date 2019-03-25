@@ -14,9 +14,14 @@ public class SpringTest {
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
-        User user = (User)context.getBean("user");
-        User user1 = (User)context.getBean("user");
-        LOGGER.info("user == user1 :{}", user == user1);
+        try {
+            User user = (User)context.getBean("myUser");
+            User user1 = context.getBean(User.class);
+            LOGGER.info("user == user1 :{}", user == user1);
+        } catch (Exception ex) {
+            LOGGER.error("error", ex);
+        }
+
     }
 
 }

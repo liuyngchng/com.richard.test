@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Scope("singleton")
 //@Scope("prototype")
-@Component
+@Component(value = "myUser")
 public class User {
 
     @Autowired
