@@ -34,4 +34,23 @@ public class ByteBufToBytes {
         datas.readBytes(bytes);
         return bytes;
     }
+
+    public static void main(String[] args) {
+        ByteBuf buf = Unpooled.buffer(40);
+        for (int i = 0; i < 10; i ++) {
+            System.out.println("readIndex is " + buf.readerIndex() + "writeIndex is " + buf.writerIndex());
+            buf.writeBytes("hello".getBytes());
+        }
+        byte[] buffer;
+        while (buf.isReadable()) {
+            System.out.println("readIndex is " + buf.readerIndex() + " writeIndex is " + buf.writerIndex());
+            buffer = new byte[10];
+            ByteBuf buf1 = buf.readBytes(buffer);
+            System.out.println("buffer is " + new String(buffer));
+
+        }
+
+
+
+    }
 }

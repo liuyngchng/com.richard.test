@@ -27,6 +27,8 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             if (HttpUtil.isContentLengthSet(request)) {
                 reader = new ByteBufToBytes(
                     (int) HttpUtil.getContentLength(request));
+            } else {
+                reader = new ByteBufToBytes(1024);
             }
         }
         if (msg instanceof HttpContent) {
