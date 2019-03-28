@@ -33,3 +33,47 @@ A temporary password is generated for root@localhost: ab*******m1
 mysql -hlocalhost -uroot -p
 alter user 'root'@'localhost' identified by '1$%4!Qw*;,';
 ```
+# 2. Docker
+| CMD | NOTE |
+| --- |  --- |
+| yum install docker -y     | setup docker      |
+| dockerd &                 | startup dockerd   |
+| docker pull centos        | pull centos image |
+执行
+```
+docker images
+```
+看到  
+
+| REPOSITORY | TAG | IMAGE ID | CREATED | SIZE |
+|     ---    | --- |   ---    |   ---   |  --- |
+| docker.io/centos | latest | 9f38484d220f | 13 days ago | 202 MB |
+执行
+```
+docker run -dit image_id
+docker ps
+```
+看到
+
+| CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES |
+|    ---       |  ---  |   ---   |  ---    |  ---   |  ---  |  ---  |
+| 11bd69099a06 | 9f38484d220f | "/bin/bash" | 10 minutes ago | Up 10 minutes |  | hardcore_curie |
+执行
+
+| CMD | NOTE |
+| --- | ---  |
+| docker rename hardcore_curie test | 重命名容器 |
+| docker exec -it test bash         | 进入容器   |
+| vi /root/.bashrc                  | 配置环境变量，重新进入容器依然有效 |
+| export PATH=$PATH:/opt/jre        | 配置 java 环境变量 |
+| exit                              | 退出容器  |
+docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
+
+提交 container 生成新的 image
+
+| CMD | NOTE |
+| --- | ---  |
+| docker ps | 获取 CONTAINER ID |
+| docker commit container_id richard/test | 提交更改，生成新的镜像 |
+| docker images | 获取 IMAGE ID |
+|docker rmi  image_id | 删除 image |
