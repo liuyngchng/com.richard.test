@@ -125,5 +125,15 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service 
 | top           | 按 1 键，查看各个 CPU 的利用率，验证 CPU 限制是否生效 |
 | docker stats | 查看  MEM USAGE / LIMIT ，验证配置是否生效 |
 
-
-
+## 2.8 为容器设置固定的 IP 地址
+```
+启动Docker容器的时候，使用默认的网络是不支持指派固定IP的，如下
+docker run -itd --net bridge --ip 172.17.0.10 centos:latest /bin/bash
+6eb1f228cf308d1c60db30093c126acbfd0cb21d76cb448c678bab0f1a7c0df6
+docker: Error response from daemon: User specified IP address is supported on user defined networks only.
+```
+| CMD | NOTE |
+| --- |  --- |
+| docker network create --subnet=172.18.0.0/16 mynetwork | 创建自定义网络 |
+| docker network ls | 查看自定义网络 |
+| docker run -itd --name networkTest1 --net mynetwork --ip 172.18.0.2 centos:latest /bin/bash | 启动容器 |
