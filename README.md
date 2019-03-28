@@ -95,4 +95,35 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | cat /usr/lib/systemd/system/docker.service \ grep proxy | 查找安装目录 |
 | ln -s /usr/libexec/docker/docker-proxy-current /usr/bin/docker-proxy | 建立软链 |
 | docker run -dit -p 9088:9088 image bash | 启动 |
+## 2.6 修改默认镜像存储目录
+CentOS 下 docker 默认的存储路径在 /var/lib/docker下面。  
+```
+docker info | grep dir -i
+```
+修改docker的systemd的 docker.service的配置文件                                             
+不知道 配置文件在哪里可以使用systemd 命令显示一下.  
+```
+systemctl disable docker
+systemctl enable docker
+#显示结果
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+```
+| CMD | NOTE |
+| --- |  --- |
+| vim /usr/lib/systemd/system/docker.service | 修改配置文件 |
+| ExecStart=/usr/bin/dockerd --graph /data/docker | 在里面的EXECStart的后面增加 --graph /data/docker |
+| systemctl disable docker | disable |
+| systemctl enable docker  | enable |
+| systemctl daemon-reload  | reload |
+| systemctl start docker   | start |
+## 2.7 限制 container 使用的 CPU 和 内存
+| CMD | NOTE |
+| --- | ---  |
+| docker run -dit --rm --cpuset-cpus="1,3" -m=2g 9a5f12155efd bash | 限制使用编号为1，3的 CPU， 内存限制使用 2GB |
+| yum install -y stress | 安装压力工具 |
+| stress -c 8 | 启动 8 个任务不停地执行 sqrt() |
+| top           | 按 1 键，查看各个 CPU 的利用率，验证 CPU 限制是否生效 |
+| docker stats | 查看  MEM USAGE / LIMIT ，验证配置是否生效 |
+
+
 
