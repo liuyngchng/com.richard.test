@@ -34,11 +34,13 @@ mysql -hlocalhost -uroot -p
 alter user 'root'@'localhost' identified by '1$%4!Qw*;,';
 ```
 # 2. Docker
+## 2.1 Install docker
 | CMD | NOTE |
 | --- |  --- |
 | yum install docker -y     | setup docker      |
 | dockerd &                 | startup dockerd   |
 | docker pull centos        | pull centos image |
+## 2.2 start
 执行
 ```
 docker images
@@ -69,6 +71,7 @@ docker ps
 | exit                              | 退出容器  |
 docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 
+## 2.3 生成新的 image
 提交 container 生成新的 image
 
 | CMD | NOTE |
@@ -77,3 +80,19 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | docker commit container_id richard/test | 提交更改，生成新的镜像 |
 | docker images | 获取 IMAGE ID |
 |docker rmi  image_id | 删除 image |
+
+## 2.4 导出及导入 image
+| CMD | NOTE |
+| --- |  --- |
+| docker images | 获取 REPOSITORY |
+| docker save richard/test -o ./test.tar | 导出为 tar 包 |
+| docker load -i ./test.tar              | 导入 tar 包 |
+## 2.5 端口映射
+执行端口映射时，会调用 docker-proxy 命令，为操作系统创建软链  
+
+| CMD | NOTE |
+| --- |  --- |
+| cat /usr/lib/systemd/system/docker.service \ grep proxy | 查找安装目录 |
+| ln -s /usr/libexec/docker/docker-proxy-current /usr/bin/docker-proxy | 建立软链 |
+| docker run -dit -p 9088:9088 image bash | 启动 |
+
