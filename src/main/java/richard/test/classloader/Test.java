@@ -1,9 +1,16 @@
 package richard.test.classloader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
+
 /**
  * Created by richard on 19/03/2019.
  */
-public class Test{
+public class Test {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
 
     public static void main(String[] arg){
 
@@ -19,6 +26,17 @@ public class Test{
 
         System.out.println(c2);
 
+        FileSystemClassLoader fileSystemClassLoader = new FileSystemClassLoader("/Users/richard/workspace/com.richard.test/target/richard.test-1.0-SNAPSHOT.jar");
+        try {
+            Class<?> clazz= fileSystemClassLoader.loadClass("richard.test.classloader.MyLoadClassTest");
+
+            fileSystemClassLoader.clearAssertionStatus();
+            Field[] files=clazz.getDeclaredFields();
+            LOGGER.info("field name is {}", files[0].getName());
+            LOGGER.info("class is {}", clazz);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
