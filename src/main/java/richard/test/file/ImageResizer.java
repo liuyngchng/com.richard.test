@@ -1,4 +1,4 @@
-package richard.test.fileresize;
+package richard.test.file;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
