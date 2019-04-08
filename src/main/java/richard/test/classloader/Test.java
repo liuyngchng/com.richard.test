@@ -28,13 +28,13 @@ public class Test {
 
         FileSystemClassLoader fileSystemClassLoader = new FileSystemClassLoader("/Users/richard/workspace/com.richard.test/target/richard.test-1.0-SNAPSHOT.jar");
         try {
-            Class<?> clazz= fileSystemClassLoader.loadClass("richard.test.classloader.MyLoadClassTest");
-
+            Class<?> clazz = fileSystemClassLoader.loadClass("richard.test.classloader.MyLoadClassTest");
+            Object object = clazz.newInstance();
             fileSystemClassLoader.clearAssertionStatus();
             Field[] files=clazz.getDeclaredFields();
             LOGGER.info("field name is {}", files[0].getName());
             LOGGER.info("class is {}", clazz);
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

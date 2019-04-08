@@ -10,7 +10,7 @@ import java.net.InetAddress;
  */
 public class UDPClient {
 
-    private final static int PORT = 2003;
+    private final static int PORT = 20003;
     private static final String HOSTNAME = "localhost";
 
     public static void main(String[] args) {
