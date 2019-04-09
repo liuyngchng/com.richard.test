@@ -45,6 +45,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 response.content().readableBytes());
             response.headers().set(CONNECTION, HttpHeaderValues.KEEP_ALIVE);
 //            response.setDecoderResult(DecoderResult.SUCCESS);
+            LOGGER.info("response is {}", response);
             ctx.write(response);
 
             ctx.flush();
@@ -87,5 +88,12 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+        throws Exception {
+        LOGGER.error("error", cause);
+        ctx.writeAndFlush(cause);
     }
 }

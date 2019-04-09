@@ -12,9 +12,6 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
-
 public class HttpServer {
 
     public void start(int port) throws Exception {
@@ -28,15 +25,11 @@ public class HttpServer {
                     @Override
                     public void initChannel(SocketChannel ch)
                         throws Exception {
-                        // server端发送的是httpResponse，所以要使用HttpResponseEncoder进行编码
-                        ch.pipeline().addLast(
-                            new HttpResponseEncoder());
-                        // server端接收到的是httpRequest，所以要使用HttpRequestDecoder进行解码
-                        ch.pipeline().addLast(
-                            new HttpRequestDecoder());
+
+                        ch.pipeline().addLast(new HttpResponseEncoder());
+                        ch.pipeline().addLast(new HttpRequestDecoder());
                         ch.pipeline().addLast(new HttpObjectAggregator(65535));
-                        ch.pipeline().addLast(
-                            new HttpServerHandler());
+                        ch.pipeline().addLast(new HttpServerHandler());
                     }
                 }).option(ChannelOption.SO_BACKLOG, 128)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);

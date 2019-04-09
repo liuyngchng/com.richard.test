@@ -4,6 +4,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -139,8 +142,32 @@ public class Pkcs12Util {
         return key;
     }
 
-    public static void test(String[] args) throws Exception {
-        initCert("/Users/richard/work/study/key/1912700web.pkcs12", "****");
+    public static synchronized SSLEngine buildSSLEngine(String path, String pwd) {
+        SSLEngine engine = null;
+        try {
+            char[] password = pwd.toCharArray();
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            ks.load(new FileInputStream(path), password);
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+            tmf.init(ks);
+            SSLContext context = SSLContext.getInstance("SSL");
+            context.init(null, tmf.getTrustManagers(), null);
+            engine = context.createSSLEngine();
+            engine.setUseClientMode(false);
+            LOGGER.info("cipherSuites is \r\n");
+            String[] cipherSuit = engine.getEnabledCipherSuites();
+            for (int i = 0; i < cipherSuit.length; i ++) {
+                System.out.println(cipherSuit[i]);
+            }
+        } catch (Throwable t) {
+            LOGGER.error("error", t);
+        }
+        return engine;
+    }
+
+    public static void main(String[] args) throws Exception {
+        SSLEngine engine = buildSSLEngine("/Users/richard/work/study/key/1912700_*****.pkcs12", "*****");
+//        initCert("/Users/richard/work/study/key/1912700web.pkcs12", "****");
         String plainText = "test";
         LOGGER.info("plainText is {}", plainText);
         String sign = RSAUtils.sign(plainText, privateKey);
