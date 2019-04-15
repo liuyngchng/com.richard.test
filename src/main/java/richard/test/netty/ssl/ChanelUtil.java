@@ -12,7 +12,7 @@ public class ChanelUtil {
     static final Logger LOGGER = LoggerFactory.getLogger(ChanelUtil.class);
 
     public static ChannelFuture writeMessage(Channel channel,String msg) {
-        if (channel!= null){
+        if (channel!= null) {
             try {
                 return channel.writeAndFlush(msg).sync();
             } catch (Exception e) {
