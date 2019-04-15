@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * keytool -export -alias securechat -keystore sChat.jks -storepass sNetty -file sChat.cer
  * 生成 client 证书
  * keytool -genkey -alias smcc -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass cNetty -storepass cNetty -keystore cChat.jks
- * 添加信任
+ * 导入 server 证书，将 server 证书添加到 client 证书的信任列表中
  * keytool -import -trustcacerts -alias securechat -file sChat.cer -storepass cNetty -keystore cChat.jks
  */
 public class SslServer {
