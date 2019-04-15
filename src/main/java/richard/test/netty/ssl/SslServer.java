@@ -16,13 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 生成 server 证书
  * keytool -genkey -alias securechat -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass sNetty -storepass sNetty -keystore sChat.jks
-
- keytool -export -alias securechat -keystore sChat.jks -storepass sNetty -file sChat.cer
- 存储在文件 <sChat.cer> 中的证书
-
- keytool -genkey -alias smcc -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass cNetty -storepass cNetty -keystore cChat.jks
- keytool -import -trustcacerts -alias securechat -file sChat.cer -storepass cNetty -keystore cChat.jks
+ * 导出 server 证书信息
+ * keytool -export -alias securechat -keystore sChat.jks -storepass sNetty -file sChat.cer
+ * 生成 client 证书
+ * keytool -genkey -alias smcc -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass cNetty -storepass cNetty -keystore cChat.jks
+ * 添加信任
+ * keytool -import -trustcacerts -alias securechat -file sChat.cer -storepass cNetty -keystore cChat.jks
  */
 public class SslServer {
     static final Logger LOGGER = LoggerFactory.getLogger(SslServer.class);
