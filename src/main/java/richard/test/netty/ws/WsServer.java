@@ -11,7 +11,7 @@ import io.netty.handler.logging.LoggingHandler;
 /**
  * Created by richard on 16/04/2019.
  */
-public class WebSocketServer {
+public class WsServer {
     public static void main(String[] args) throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
