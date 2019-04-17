@@ -1,0 +1,27 @@
+@startuml
+
+title Start Speak
+
+participant Client
+
+
+participant Signal
+
+
+participant Media
+
+
+== Upstream Signal Client ,push down button, start to speak ==
+
+Signal -> Media :  SPEAK_BEGAN
+Signal -> Signal : getMediaByUid
+
+Client -> Signal : SPEAK_BEGAN
+note left: this is a note test
+
+
+
+Media -> Media :  do something
+
+
+@enduml
