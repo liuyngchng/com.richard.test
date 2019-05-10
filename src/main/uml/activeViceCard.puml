@@ -1,0 +1,38 @@
+@startuml
+
+title Active Vice Card in Sybase DB But Not in Sunbox DB
+participant Service
+participant Sunbox
+participant Sybase
+== getMainCardList ==
+Service -> Sunbox : getAccCardActive
+Sunbox -> Sunbox : sunbox.acct_card_activate
+Sunbox -> Service : mainCardNo
+== getViceCardList ==
+Service -> Sunbox : getAccCardActiveDetailByMainCardNo
+Sunbox -> Sunbox : sunbox.acct_card_activate_detail
+Sunbox -> Service : viceCardList
+== getViceCardListInSybase ==
+Service -> Sybase : getCardInforByMainCardNo
+Sybase -> Sybase : snpccard.cardinfor.compno by cardNo;
+Sybase -> Service : mainCardCompno
+Service -> Sybase : getViceCardInforByCompno
+Sybase -> Sybase : snpccard.cardinfor.cardNo by compno;
+Service -> Service : compare sunbox.acct_card_activate_detail with snpccard.cardinfor
+Service -> Service : get snpccard.cardinfor not in sunbox.acct_card_activate_detail
+== createUser ==
+Service -> Sunbox : createUserByViceCardNo
+Sunbox -> Sunbox : INSERT user_base
+Sunbox -> Service : getUserIdByCardNo
+== saveNewViceCard ==
+Service -> Service : setUidForViceCardNo
+note left: Runtime
+Service -> Sunbox : saveAcctCardActivateDetail
+Sunbox -> Sunbox : INSERT sunbox.acct_card_activate_detail
+== createAccount ==
+Service -> Sunbox : createAccountBase
+Sunbox -> Sunbox : INSERT sunbox.acct_account_base
+
+== viceCardActived ==
+
+@enduml

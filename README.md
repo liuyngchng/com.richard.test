@@ -10,7 +10,7 @@ yum -y remove mysql-community-client-5.6.38-2.el7.x86_6
 cd /usr/local/src/
 wget http://repo.mysql.com/mysql57-community-release-el7-8.noarch.rpm
 rpm -ivh mysql57-community-release-el7-8.noarch.rpm
-yum -y install mysql-server 
+yum -y install mysql-server
 ```
 ## 1.2 默认配置文件路径 
 ```
@@ -24,9 +24,17 @@ socket文件：/var/run/mysqld/mysqld.pid
 ```
 service mysqld restart
 ```
+在 docker 容器中启动 MySQL
+```
+docker run --privileged -dit --name test1  centos /usr/sbin/init
+docker exec -it centos bash
+systemctl start mysqld
+A temporary password is generated for root@localhost: eiDIxJi8s1)h
+mysql -uroot -p
+```
 重置密码
 ```
-grep "password" /var/log/mysqld.log 
+grep "password" /var/log/mysqld.log
 ```
 A temporary password is generated for root@localhost: ab*******m1
 ```
@@ -137,3 +145,17 @@ docker: Error response from daemon: User specified IP address is supported on us
 | docker network create --subnet=172.18.0.0/16 mynetwork | 创建自定义网络 |
 | docker network ls | 查看自定义网络 |
 | docker run -itd --name networkTest1 --net mynetwork --ip 172.18.0.2 centos:latest /bin/bash | 启动容器 |
+# 3. Setup Redis
+```
+yum install -y epel-release
+yum install -y redis
+
+```
+# Install MySQL in windows
+```
+unzip mysql-8.0.16-winx64.zip
+config ENV for ./mysql-8.0.16-winx64/bin/
+mysqld.exe --initialize-insecure
+mysqld.exe --install
+net start mysql
+```
