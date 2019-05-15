@@ -159,3 +159,25 @@ mysqld.exe --initialize-insecure
 mysqld.exe --install
 net start mysql
 ```
+# 4. Setup MySQL on ubuntu
+```
+sudo apt-get install mysql-server
+mysqld
+cd /etc/mysql
+cat debian.cnf
+```
+user = debian-sys-maint
+password = xedvSNKdLavjuEWV
+```
+mysql -udebian-sys-maint -pxedvSNKdLavjuEWV
+show databases;
+use mysql;
+update user set authentication_string=PASSWORD("自定义密码") where user='root';
+update user set plugin="mysql_native_password";
+flush privileges;
+quit;
+```
+restart MySQL
+```
+/etc/init.d/mysql restart;
+```
