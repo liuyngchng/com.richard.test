@@ -179,5 +179,10 @@ quit;
 ```
 restart MySQL
 ```
-/etc/init.d/mysql restart;
+/etc/init.d/mysql restart
+```
+# 5. 查看挂载的硬盘
+```
+fdisk -l
+lsblk
 ```
