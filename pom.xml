@@ -26,6 +26,11 @@
             <version>8.0.12</version>
         </dependency>
         <dependency>
+            <groupId>sybase</groupId>
+            <artifactId>jconn3</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
             <version>1.7.5</version>
