@@ -28,29 +28,35 @@ public class OracleDbTest extends JdbcTest {
                 LOGGER.error("pls input right sql");
                 continue;
             }
-            try {
-                pstm = connection.prepareStatement(sql);
-                LOGGER.info("start to execute sql: {}", sql);
-                rs = pstm.executeQuery();
-                ResultSetMetaData metaData = rs.getMetaData();
-                LOGGER.info("column count is {}", metaData.getColumnCount());
-                StringBuilder header = new StringBuilder();
-                for (int i = 0; i < metaData.getColumnCount(); i ++) {
-                    header.append(metaData.getColumnName(i + 1) + "(" + metaData.getColumnType(i + 1) + ") | ");
-                }
-                LOGGER.info("data list is as following.");
-                System.out.println(header.toString());
-                while (rs.next()) {
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < metaData.getColumnCount(); i ++) {
-                        sb.append(rs.getString(i + 1) + " | ");
-                    }
-                    System.out.println(sb.toString());
-                }
-            } catch (Exception ex) {
-                LOGGER.error("error to execute sql {}", sql, ex);
-            }
+            OracleDbTest.queryData(connection, sql);
         }
 
+    }
+
+    private static void queryData(Connection connection, String sql) {
+        PreparedStatement pstm;
+        ResultSet rs;
+        try {
+            pstm = connection.prepareStatement(sql);
+            LOGGER.info("start to execute sql: {}", sql);
+            rs = pstm.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            LOGGER.info("column count is {}", metaData.getColumnCount());
+            StringBuilder header = new StringBuilder();
+            for (int i = 0; i < metaData.getColumnCount(); i ++) {
+                header.append(metaData.getColumnName(i + 1) + "(" + metaData.getColumnType(i + 1) + ") | ");
+            }
+            LOGGER.info("data list is as following.");
+            System.out.println(header.toString());
+            while (rs.next()) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < metaData.getColumnCount(); i ++) {
+                    sb.append(rs.getString(i + 1) + " | ");
+                }
+                System.out.println(sb.toString());
+            }
+        } catch (Exception ex) {
+            LOGGER.error("error to execute sql {}", sql, ex);
+        }
     }
 }
