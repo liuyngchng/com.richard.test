@@ -1,5 +1,5 @@
 #!/bin/sh
-FILE_LIST=`ls *.log`;
+FILE_LIST=`ls *\.log\.[0-9]`;
 FILE_LIST_SIZE=${#FILE_LIST[@]};
 echo '*.log file list size is '$FILE_LIST_SIZE
 INDEX=0

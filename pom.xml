@@ -13,6 +13,18 @@
         <logback.version>1.1.7</logback.version>
     </properties>
     <dependencies>
+        <!-- 添加oracle jdbc driver -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.1.0</version>
+        </dependency>
+        <!-- MySql 5.5 Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.12</version>
+        </dependency>
         <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
@@ -109,7 +121,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>richard.test.netty.TcpNettyServer</mainClass>
+                            <mainClass>richard.test.db.OracleDbTest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
