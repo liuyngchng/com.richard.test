@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.Scanner;
 
-public class MySqlDbTest {
+public class MySqlDbTest extends JdbcTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MySqlDbTest.class);
     private static String USERNAME = "root";
@@ -15,33 +15,16 @@ public class MySqlDbTest {
     private static String URL = "jdbc:mysql://localhost:3306/test";
 
 
-    public static Connection getConnection() {
-        LOGGER.info("start connect db {}", URL);
-        Connection connection = null;
-        try {
-            Class.forName(DRVIER);
-            LOGGER.info(DRVIER + "|" + URL + "|" + USERNAME + "|" + PASSWORD);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            LOGGER.info("connect success for " + URL + USERNAME + PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("class not find !", e);
-        } catch (SQLException e) {
-            throw new RuntimeException("get connection error!", e);
-        } catch (Exception ex) {
-            LOGGER.error("error,", ex);
-        }
-
-        return connection;
-    }
 
     public static void main(String[] args) {
-        Connection connection = getConnection();
+        MySqlDbTest mySqlDbTest = new MySqlDbTest();
+        Connection connection = mySqlDbTest.getConnection(DRVIER, URL,USERNAME, PASSWORD);
         PreparedStatement pstm = null;
         ResultSet rs = null;
         while (true) {
             LOGGER.info("please input sql");
             Scanner scanner = new Scanner(System.in);
-            String sql = scanner.nextLine().trim(); //"SELECT  * FROM HSCMP.tProCertiInfo where rownum <= 5";
+            String sql = scanner.nextLine().trim();
             if (null == sql || sql.trim().length() == 0) {
                 LOGGER.error("pls input right sql");
                 continue;

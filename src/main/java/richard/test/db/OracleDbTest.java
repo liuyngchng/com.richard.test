@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.Scanner;
 
-public class OracleDbTest {
+public class OracleDbTest extends JdbcTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OracleDbTest.class);
     private static String USERNAME = "hebsycx";
@@ -15,27 +15,9 @@ public class OracleDbTest {
     private static String URL = "jdbc:oracle:thin:@10.179.0.93:1521:hbcvsdb3";
 
 
-    public static Connection getConnection() {
-        LOGGER.info("start connect db {}", URL);
-        Connection connection = null;
-        try {
-            Class.forName(DRVIER);
-            LOGGER.info(DRVIER + "|" + URL + "|" + USERNAME + "|" + PASSWORD);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            LOGGER.info("connect success for " + URL + USERNAME + PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("class not find !", e);
-        } catch (SQLException e) {
-            throw new RuntimeException("get connection error!", e);
-        } catch (Exception ex) {
-            LOGGER.error("error,", ex);
-        }
-
-        return connection;
-    }
-
     public static void main(String[] args) {
-        Connection connection = getConnection();
+        OracleDbTest oracleDbTest = new OracleDbTest();
+        Connection connection = oracleDbTest.getConnection(DRVIER,URL,USERNAME, PASSWORD);
         PreparedStatement pstm = null;
         ResultSet rs = null;
         while (true) {
@@ -52,13 +34,19 @@ public class OracleDbTest {
                 rs = pstm.executeQuery();
                 ResultSetMetaData metaData = rs.getMetaData();
                 LOGGER.info("column count is {}", metaData.getColumnCount());
+                StringBuilder header = new StringBuilder();
                 for (int i = 0; i < metaData.getColumnCount(); i ++) {
-                    LOGGER.info("column name is {}", metaData.getColumnName(i + 1));
-                    LOGGER.info("column type is {}", metaData.getColumnType(i + 1));
+                    header.append(metaData.getColumnName(i + 1) + "(" + metaData.getColumnType(i + 1) + ") | ");
                 }
-//                while (rs.next()) {
-//                    LOGGER.info("rs count is {}  ", rs.getString(1));
-//                }
+                LOGGER.info("data list is as following.");
+                System.out.println(header.toString());
+                while (rs.next()) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < metaData.getColumnCount(); i ++) {
+                        sb.append(rs.getString(i + 1) + " | ");
+                    }
+                    System.out.println(sb.toString());
+                }
             } catch (Exception ex) {
                 LOGGER.error("error to execute sql {}", sql, ex);
             }
