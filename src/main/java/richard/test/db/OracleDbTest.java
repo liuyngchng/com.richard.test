@@ -1,4 +1,4 @@
-package richard.test.oracle;
+package richard.test.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +11,12 @@ public class OracleDbTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(OracleDbTest.class);
     private static String USERNAME = "hebsycx";
     private static String PASSWORD = "s1n0pec";
-    private static String DRVIER = "oracle.jdbc.OracleDriver";
+    private static String DRVIER = "oracle.jdbc.driver.OracleDriver";
     private static String URL = "jdbc:oracle:thin:@10.179.0.93:1521:hbcvsdb3";
 
 
     public static Connection getConnection() {
-        LOGGER.info("start connect oracle {}", URL);
+        LOGGER.info("start connect db {}", URL);
         Connection connection = null;
         try {
             Class.forName(DRVIER);
@@ -41,7 +41,7 @@ public class OracleDbTest {
         while (true) {
             LOGGER.info("please input sql");
             Scanner scanner = new Scanner(System.in);
-            String sql = scanner.nextLine().trim(); //"SELECT  * FROM HSCMP.tProCertiInfo where rownum <= 5";
+            String sql = scanner.nextLine().trim(); //"SELECT  * FROM HSCMP.tProCertiInfo where CxBillNo = ? rownum <= 5";
             if (null == sql || sql.trim().length() == 0) {
                 LOGGER.error("pls input right sql");
                 continue;
@@ -50,7 +50,14 @@ public class OracleDbTest {
                 pstm = connection.prepareStatement(sql);
                 LOGGER.info("start to execute sql: {}", sql);
                 rs = pstm.executeQuery();
-                LOGGER.info("rs count {}", rs.getString(0));
+                ResultSetMetaData metaData = rs.getMetaData();
+                for (int i = 0; i < metaData.getColumnCount(); i ++) {
+                    LOGGER.info("column name is {}", metaData.getColumnName(i + 1));
+                    LOGGER.info("column type is {}", metaData.getColumnType(i + 1));
+                }
+//                while (rs.next()) {
+//                    LOGGER.info("rs count is {}  ", rs.getString(1));
+//                }
             } catch (Exception ex) {
                 LOGGER.error("error to execute sql {}", sql, ex);
             }
