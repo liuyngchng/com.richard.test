@@ -51,6 +51,7 @@ public class OracleDbTest {
                 LOGGER.info("start to execute sql: {}", sql);
                 rs = pstm.executeQuery();
                 ResultSetMetaData metaData = rs.getMetaData();
+                LOGGER.info("column count is {}", metaData.getColumnCount());
                 for (int i = 0; i < metaData.getColumnCount(); i ++) {
                     LOGGER.info("column name is {}", metaData.getColumnName(i + 1));
                     LOGGER.info("column type is {}", metaData.getColumnType(i + 1));
