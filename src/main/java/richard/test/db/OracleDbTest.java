@@ -10,7 +10,7 @@ public class OracleDbTest extends JdbcTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OracleDbTest.class);
     private static String USERNAME = "hebsycx";
-    private static String PASSWORD = "s1n0pec";
+    private static String PASSWORD = "hUbe6mYblW";
     private static String DRVIER = "oracle.jdbc.driver.OracleDriver";
     private static String URL = "jdbc:oracle:thin:@10.179.0.93:1521:hbcvsdb3";
 
