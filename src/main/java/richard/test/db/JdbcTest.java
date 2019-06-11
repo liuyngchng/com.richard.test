@@ -38,7 +38,7 @@ public class JdbcTest {
             LOGGER.info("start to execute sql: {}", sql);
             rs = pstm.executeQuery();
             ResultSetMetaData metaData = rs.getMetaData();
-            LOGGER.info("column count is {}", metaData.getColumnCount());
+            LOGGER.info("column increaseCount is {}", metaData.getColumnCount());
             StringBuilder header = new StringBuilder();
             for (int i = 0; i < metaData.getColumnCount(); i ++) {
                 header.append(metaData.getColumnName(i + 1) + "(" + metaData.getColumnType(i + 1) + ") | ");

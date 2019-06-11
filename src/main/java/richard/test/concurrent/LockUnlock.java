@@ -16,7 +16,7 @@ public class LockUnlock {
         lock.lock();
         try {
 //            LOGGER.info(
-//                "{} want to sleep, queued length is {}, hold count is {}",
+//                "{} want to sleep, queued length is {}, hold increaseCount is {}",
 //                Thread.currentThread().getName(),
 //                lock.getQueueLength(),
 //                lock.getHoldCount()
@@ -42,7 +42,7 @@ public class LockUnlock {
         }
         try {
 //            LOGGER.info(
-//                "{} want to sleep, queued length is {}, hold count is {}",
+//                "{} want to sleep, queued length is {}, hold increaseCount is {}",
 //                Thread.currentThread().getName(),
 //                lock.getQueueLength(),
 //                lock.getHoldCount()

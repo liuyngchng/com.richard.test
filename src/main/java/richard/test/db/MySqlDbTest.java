@@ -34,7 +34,7 @@ public class MySqlDbTest extends JdbcTest {
                 LOGGER.info("start to execute sql: {}", sql);
                 rs = pstm.executeQuery();
                 while (rs.next()) {
-                    LOGGER.info("rs count {}", rs.getString(1));
+                    LOGGER.info("rs increaseCount {}", rs.getString(1));
                 }
             } catch (Exception ex) {
                 LOGGER.error("error to execute sql {}", sql, ex);
