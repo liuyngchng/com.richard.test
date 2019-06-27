@@ -145,6 +145,15 @@ docker: Error response from daemon: User specified IP address is supported on us
 | docker network create --subnet=172.18.0.0/16 mynetwork | 创建自定义网络 |
 | docker network ls | 查看自定义网络 |
 | docker run -itd --name networkTest1 --net mynetwork --ip 172.18.0.2 centos:latest /bin/bash | 启动容器 |
+
+## 2.9 gdb in docker
+linux 内核为了安全起见，采用了Seccomp(secure computing)的沙箱机制来保证系统不被破坏   
+它能使一个进程进入到一种“安全”运行模式，该模式下的进程只能调用4种系统调用（system calls），  
+即read(), write(), exit()和sigreturn()，否则进程便会被终止。
+docker只有以--security-opt seccomp=unconfined的模式运行container才能利用GDB调试  
+```
+docker run --security-opt seccomp=unconfined -dit image_id
+```  
 # 3. Setup Redis
 ```
 yum install -y epel-release
@@ -185,4 +194,9 @@ restart MySQL
 ```
 fdisk -l
 lsblk
+```
+# 6. yun
+download rpm package only
+```
+yum install --downloadonly --downloaddir=/opt/rpms mysql
 ```
