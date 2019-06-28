@@ -154,6 +154,26 @@ docker只有以--security-opt seccomp=unconfined的模式运行container才能�
 ```
 docker run --security-opt seccomp=unconfined -dit image_id
 ```  
+## 2.10 "No manual entry for xx" in docker
+By default the centos containers are built using yum's nodocs  
+注释掉这个选项，重新安装 rpm 包即可  
+```
+docker exec -it container_id bash
+vim /etc/yum.conf
+```
+注释掉 tsflags=nodocs  
+```
+#tsflags=nodocs
+```
+重新安装 rpm 包  
+```
+rpm -qa | xargs yum reinstall -y
+```
+退出容器, 提交修改到镜像  
+```
+exit
+docker commit bbb046a8fefe image_repository
+```
 # 3. Setup Redis
 ```
 yum install -y epel-release
