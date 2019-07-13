@@ -1,5 +1,8 @@
 package richard.test.zk.pubsub;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+@JsonRootName("details")
 public class InstanceDetails {
 
     private String id;
