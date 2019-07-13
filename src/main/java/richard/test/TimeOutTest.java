@@ -34,18 +34,18 @@ public class TimeOutTest {
 //        System.out.println("end.");
 //        timer.stop();
 
-        Object [] a1 = new Object[]{"test", 1, 2.5, new java.util.Timer("test1")};
-        for (Object obj : a1) {
-            Class cls = obj.getClass();
-            String className = cls.getCanonicalName();
-            System.out.println("className is " + className);
-            try {
-                Method f = cls.getDeclaredMethod("toString", new Class[0]);
-                String result = (String)f.invoke(obj, null);
-                System.out.println("result is " + result);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        Object [] a1 = new Object[]{"test", 1, 2.5, new java.util.Timer("test1")};
+//        for (Object obj : a1) {
+//            Class cls = obj.getClass();
+//            String className = cls.getCanonicalName();
+//            System.out.println("className is " + className);
+//            try {
+//                Method f = cls.getDeclaredMethod("toString", new Class[0]);
+//                String result = (String)f.invoke(obj, null);
+//                System.out.println("result is " + result);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

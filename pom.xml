@@ -13,23 +13,33 @@
         <logback.version>1.1.7</logback.version>
     </properties>
     <dependencies>
-        <!-- 添加oracle jdbc driver -->
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>10.2.0.1.0</version>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-x-discovery</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <!-- 添加oracle jdbc driver -->
+<!--        <dependency>-->
+<!--            <groupId>com.oracle</groupId>-->
+<!--            <artifactId>ojdbc14</artifactId>-->
+<!--            <version>10.2.0.2.0</version>-->
+<!--        </dependency>-->
         <!-- MySql 5.5 Connector -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.12</version>
         </dependency>
-        <dependency>
-            <groupId>sybase</groupId>
-            <artifactId>jconn3</artifactId>
-            <version>3.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>sybase</groupId>-->
+<!--            <artifactId>jconn3</artifactId>-->
+<!--            <version>3.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
@@ -38,7 +48,7 @@
         <dependency>
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
-            <version>0.4</version>
+            <version>0.9</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

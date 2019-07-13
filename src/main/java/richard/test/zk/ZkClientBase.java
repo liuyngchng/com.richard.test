@@ -7,7 +7,7 @@ import org.I0Itec.zkclient.ZkConnection;
  * Created by richard on 3/26/18.
  */
 public class ZkClientBase {
-    static final String CONNECT_ADDR = "127.0.0.1:2181";
+    static final String CONNECT_ADDR = "127.0.0.1:2182";
     static final int SESSION_TIMEOUT = 5000;
 
     public static void main(String[] args) throws InterruptedException {
