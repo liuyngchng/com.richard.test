@@ -22,7 +22,7 @@ public class ClientApp {
         System.out.println(instance1.buildUriSpec());
         System.out.println(instance1.getPayload());
 
-        ServiceInstance<InstanceDetails> instance2 = serviceDiscoverer.getInstanceByName("service1");
+        ServiceInstance<InstanceDetails> instance2 = serviceDiscoverer.getInstanceByName("service2");
 
         System.out.println(instance2.buildUriSpec());
         System.out.println(instance2.getPayload());
