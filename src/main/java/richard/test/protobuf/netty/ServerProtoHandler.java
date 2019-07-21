@@ -15,8 +15,9 @@ public class ServerProtoHandler extends ChannelInboundHandlerAdapter {
 //        if (ConnectionPool.getChannel(message.getId()) == null) {
 //            ConnectionPool.putChannel(message.getId(), ctx);
 //        }
-        System.err.println("server:" + message.getId());
-        ctx.writeAndFlush(message);
+        LOGGER.info("id {}", message.getId());
+        MessageProto.msg.Builder builder = MessageProto.msg.newBuilder().setId("123").setContent("this is a server msg.");
+        ctx.writeAndFlush(builder.build());
     }
 
     @Override

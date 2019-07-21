@@ -9,8 +9,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MyServer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyServer.class);
 
     public static void main(String[] args) {
         MyServer myServer = new MyServer();
@@ -41,6 +45,7 @@ public class MyServer {
 
         try {
             ChannelFuture f = bootstrap.bind(port).sync();
+            LOGGER.info("server started.");
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

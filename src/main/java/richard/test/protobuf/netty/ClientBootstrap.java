@@ -1,6 +1,8 @@
 package richard.test.protobuf.netty;
 
 import io.netty.channel.Channel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -9,6 +11,8 @@ import java.util.UUID;
  * @author yinjihuan
  */
 public class ClientBootstrap {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientBootstrap.class);
     public static void main(String[] args) {
         String host = "127.0.0.1";
         int port = 8899;
