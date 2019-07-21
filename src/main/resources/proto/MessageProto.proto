@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "richard.test.protobuf.netty";
+
+option java_outer_classname = "MessageProto";
+
+message msg {
+  string id = 1;
+  string content = 2;
+}
