@@ -27,7 +27,7 @@ For more information on building and installing Thrift see: [Building from sourc
 
 ## OTHER ERROR ON MAC OS
 When execute 'make' in thrift directory ,some error occurred,   
-follow the steps:
+troubleshoot following the steps:
     
     ## can't found header openssl/
     /usr/local/Cellar/openssl/1.0.2q/include/openssl.tar ./${thrift_dir} 
