@@ -39,6 +39,15 @@ troubleshoot following the steps:
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/local/bin/composer
     
+## Mac OS not permitted create file under directory /user/bin, /user/local/bin
+
+    （1）重启电脑
+    （2） command + R 进入 recover 模式
+    （3）点击最上方的菜单使用弓箭，选择终端
+    （4）运行命令 csrutil disable
+    （5）当出现 successfully 字样代表成功，重启电脑就可以了。
+    （6）如果后面需要重新开启这个 SIP 功能，做法类似，就是在第四步的命令是 csrutil enable
+    
    
     
     
