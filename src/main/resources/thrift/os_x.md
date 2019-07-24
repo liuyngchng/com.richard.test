@@ -30,8 +30,13 @@ When execute 'make' in thrift directory ,some error occurred,
 troubleshoot following the steps:
     
     ## can't found header openssl/
-    /usr/local/Cellar/openssl/1.0.2q/include/openssl.tar ./${thrift_dir} 
+    cd /usr/local/Cellar/openssl/1.0.2q/include
+    # cd /Applications/homebrew-master/Cellar/openssl/1.0.2r/include
+    tar -cf openssl.tar openssl
+    tar -xf openssl.tar
+    cp openssl.tar ./${thrift_dir} 
     ## composer: No such file or directory
+    curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/local/bin/composer
     
    
