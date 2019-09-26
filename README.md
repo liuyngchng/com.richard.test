@@ -220,3 +220,24 @@ download rpm package only
 ```
 yum install --downloadonly --downloaddir=/opt/rpms mysql
 ```
+# 7. make a iso start up flash disk  
+
+打开终端，输入
+```
+diskutil list 
+```
+记录下U盘的地址
+然后卸载U盘命令
+```
+diskutil unmountDisk [硬碟位置]
+```
+开始刻录
+```
+sudo dd if=/path/to/xxx.iso of=/path/to/USB bs=1m; sync
+```
+输入密码后开始等待刻录完成
+然后移除U盘
+```
+diskutil eject /path/to/USB
+```
+```
