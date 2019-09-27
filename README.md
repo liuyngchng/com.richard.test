@@ -222,6 +222,16 @@ yum install --downloadonly --downloaddir=/opt/rpms mysql
 ```
 # 7. make a iso start up flash disk  
 
+需要把下载的Ubuntu安装文件（.iso）转换成(.dmg)格式的文件,方便在Mac OS上面进行操作，转换命令
+```
+cd Downloads/
+hdiutil convert -format UDRW -o ubuntu.dmg ubuntu-14.04.5-desktop-amd64.iso
+```
+hdiutil转换的文件后缀名为.dmg,所以需要把文件重命名为.iso，在安装的时候系统才能够更好的识别
+```
+mv ubuntu.dmg ubuntu.iso
+```
+
 打开终端，输入
 ```
 diskutil list 
