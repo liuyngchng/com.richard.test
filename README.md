@@ -250,4 +250,15 @@ sudo dd if=/path/to/xxx.iso of=/path/to/USB bs=1m; sync
 ```
 diskutil eject /path/to/USB
 ```
+# 8. WebService Client Generation Error with JDK8
+```$xslt
+java.lang.AssertionError: org.xml.sax.SAXParseException; 
+systemId: jar:file:/path/to/glassfish/modules/jaxb-osgi.jar!/com/sun/tools/xjc/reader/xmlschema/bindinfo/binding.xsd; 
+lineNumber: 52; columnNumber: 88; schema_reference: 
+Failed to read schema document 'xjc.xsd', 
+because 'file' access is not allowed due to restriction set by the accessExternalSchema property.
+```
+Create a file named jaxp.properties (if it doesn't exist) under /path/to/jdk1.8.0/jre/lib and then write this line in it:
+```$xslt
+javax.xml.accessExternalSchema = all
 ```
