@@ -90,11 +90,20 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 |docker rmi  image_id | 删除 image |
 
 ## 2.4 导出及导入 image
+### 2.4.1 导出tar
 | CMD | NOTE |
 | --- |  --- |
 | docker images | 获取 REPOSITORY |
 | docker save richard/test -o ./test.tar | 导出为 tar 包 |
 | docker load -i ./test.tar              | 导入 tar 包 |
+
+### 2.4.2 导出img文件
+| CMD | NOTE |
+| --- | ---  |
+| docker images | get image id |
+| docker save 62cfce4d2e9a > /opt/aaa.img | output img file |
+| docker load < ~/images/aaa.img | load img file |
+
 ## 2.5 端口映射
 执行端口映射时，会调用 docker-proxy 命令，为操作系统创建软链  
 
@@ -234,7 +243,7 @@ mv ubuntu.dmg ubuntu.iso
 
 打开终端，输入
 ```
-diskutil list 
+diskutil list
 ```
 记录下U盘的地址
 然后卸载U盘命令
@@ -252,10 +261,10 @@ diskutil eject /path/to/USB
 ```
 # 8. WebService Client Generation Error with JDK8
 ```$xslt
-java.lang.AssertionError: org.xml.sax.SAXParseException; 
-systemId: jar:file:/path/to/glassfish/modules/jaxb-osgi.jar!/com/sun/tools/xjc/reader/xmlschema/bindinfo/binding.xsd; 
-lineNumber: 52; columnNumber: 88; schema_reference: 
-Failed to read schema document 'xjc.xsd', 
+java.lang.AssertionError: org.xml.sax.SAXParseException;
+systemId: jar:file:/path/to/glassfish/modules/jaxb-osgi.jar!/com/sun/tools/xjc/reader/xmlschema/bindinfo/binding.xsd;
+lineNumber: 52; columnNumber: 88; schema_reference:
+Failed to read schema document 'xjc.xsd',
 because 'file' access is not allowed due to restriction set by the accessExternalSchema property.
 ```
 Create a file named jaxp.properties (if it doesn't exist) under /path/to/jdk1.8.0/jre/lib and then write this line in it:
