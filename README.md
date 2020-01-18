@@ -271,3 +271,8 @@ Create a file named jaxp.properties (if it doesn't exist) under /path/to/jdk1.8.
 ```$xslt
 javax.xml.accessExternalSchema = all
 ```
+# 9. use iphone as usb internet modem in ubuntu
+
+```
+sudo apt-get install ipheth-utils libimobiledevice-dev libimobiledevice-utils
+```
