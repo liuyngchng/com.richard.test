@@ -1,10 +1,24 @@
-# 1. network monitor
+# 1. mininet setup
+## 1.1 env
+OS: ubuntu 16.04 LTS
+Instruction : http://mininet.org/
+```
+git clone git://github.com/mininet/mininet
+cd mininet
+git tag  # list available versions
+git checkout -b 2.2.2 2.2.2  # 2.2.1 版本在checkout openflow时由于git地址问题会报错
+cd ..
+mkdir -p /usr/local/lib/mininet  # 创建build目录
+mininet/util/install.sh -s /usr/local/lib/mininet -a
+```
+# 2. network monitor and config
+## 2.1 network traffic
 ```
 iftop
 ```
-# 2. network config
-
-把网卡eth0的传输设置为：延时100ms(上下误差10ms)、丢包6%、包重复0.8%、包损坏0.5%的网络环境
+## 2.2 network traffic control  
+把网卡eth0的传输设置为：  
+延时100ms(上下误差10ms)、丢包6%、包重复0.8%、包损坏0.5%的网络环境
 ```
 tc qdisc add dev eth0 root netem delay 100ms 10ms loss 6% duplicate 0.8% corrupt 0.5%
 ```
