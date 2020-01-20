@@ -276,3 +276,28 @@ javax.xml.accessExternalSchema = all
 ```
 sudo apt-get install ipheth-utils libimobiledevice-dev libimobiledevice-utils
 ```
+# 10. setup atom in ubuntu 16.04
+## 10.1 add source
+```
+sudo add-apt-repository ppa:webupd8team/atom  
+sudo apt-get update  
+sudo apt-get install atom
+```
+## 10.2 deb package
+```
+wget https://github.com/atom/atom/releases/download/v1.43.0/atom-amd64.deb
+wget https://github.com/atom/atom/releases/download/v1.7.4/atom-amd64.deb
+sudo dpkg -i atom-amd64.deb
+```
+# 11. pandoc
+```
+sudo apt-get install pandoc
+sudo apt-get install texlive-lang-cjk texlive-latex-extra texlive-xetex
+pandoc test.md -o test.docx
+pandoc test.md -o test.pdf 
+```
+# 12. tcp info is OS
+```
+cd /proc/sys/net/ipv4
+ls -al | grep tcp
+```
