@@ -296,8 +296,31 @@ sudo apt-get install texlive-lang-cjk texlive-latex-extra texlive-xetex
 pandoc test.md -o test.docx
 pandoc test.md -o test.pdf 
 ```
-# 12. tcp info is OS
+# 12. tcp control info
+## 12.1 tcp info in ubuntu
 ```
 cd /proc/sys/net/ipv4
 ls -al | grep tcp
+```
+## 12.2 use tcp congestion algorithm BBR
+update kernel if necessary and config bbr as congestion algorithm
+
+```
+wget –no-check-certif
+```
+sysctl net.ipv4.tcp_available_congestion_control
+```
+显示以下即已开启：
+```
+# sysctl net.ipv4.tcp_available_congestion_control
+net.ipv4.tcp_available_congestion_control = bbr cubic reno
+```
+查看BBR是否启动
+```
+lsmod | grep bbr
+```
+显示以下即启动成功：
+```
+lsmod | grep bbr
+tcp_bbr 20480 14
 ```
