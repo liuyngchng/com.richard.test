@@ -294,25 +294,27 @@ sudo dpkg -i atom-amd64.deb
 sudo apt-get install pandoc
 sudo apt-get install texlive-lang-cjk texlive-latex-extra texlive-xetex
 pandoc test.md -o test.docx
-pandoc test.md -o test.pdf 
+pandoc test.md -o test.pdf
 ```
-# 12. tcp control info
-## 12.1 tcp info in ubuntu
+# 12. TCP control info
+## 12.1 TCP info in ubuntu
 ```
 cd /proc/sys/net/ipv4
 ls -al | grep tcp
 ```
-## 12.2 use tcp congestion algorithm BBR
-update kernel if necessary and config bbr as congestion algorithm
+## 12.2 use TCP congestion algorithm BBR
+update kernel if necessary and config bbr as tcp congestion algorithm
 
 ```
-wget –no-check-certif
+wget --no-check-certificate \    'https://github.com/teddysun/across/raw/master/bbr.sh' \   && chmod +x bbr.sh && ./bbr.sh  
+```
+查看是否开启
 ```
 sysctl net.ipv4.tcp_available_congestion_control
 ```
 显示以下即已开启：
 ```
-# sysctl net.ipv4.tcp_available_congestion_control
+sysctl net.ipv4.tcp_available_congestion_control
 net.ipv4.tcp_available_congestion_control = bbr cubic reno
 ```
 查看BBR是否启动
