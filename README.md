@@ -326,3 +326,7 @@ lsmod | grep bbr
 lsmod | grep bbr
 tcp_bbr 20480 14
 ```
+# 13. mac terminal hostname
+```
+sudo scutil --set HostName my_host_name
+```
