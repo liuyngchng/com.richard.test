@@ -330,3 +330,7 @@ tcp_bbr 20480 14
 ```
 sudo scutil --set HostName my_host_name
 ```
+# 14. git中文文件名变数字
+修改配置
+git config --global core.quotepath false
+即可解决！
