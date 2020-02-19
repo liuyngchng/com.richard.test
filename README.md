@@ -334,3 +334,21 @@ sudo scutil --set HostName my_host_name
 修改配置
 git config --global core.quotepath false
 即可解决
+
+# 15. create iso file in ubuntu
+## 15.1  create iso file from CD-ROM
+```
+sudo umount /dev/cdrom
+dd if=/dev/cdrom of=file.iso bs=1024
+```
+## 15.2 add file or directory to iso file
+需要使用mkisofs这个工具,你想改的参数都可以修改，而且还有-gui这个参数。最简单的用法如下：
+```
+mkisofs -r -o file.iso your_folder_name/
+```
+生成一个MD5文件，执行
+```
+md5sum file.iso > file.iso.md5
+```
+## 15.3 burn iso file to CD-ROM
+ 右键, write to disc...),点击这个选项
