@@ -352,3 +352,9 @@ md5sum file.iso > file.iso.md5
 ```
 ## 15.3 burn iso file to CD-ROM
  右键, write to disc...),点击这个选项
+
+# 16. install app in ubuntu docker container
+```
+apt-get update
+apt-get install xxx
+```
