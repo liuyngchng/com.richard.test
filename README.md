@@ -358,3 +358,8 @@ md5sum file.iso > file.iso.md5
 apt-get update
 apt-get install xxx
 ```
+# 17. convert GBK(gb18030 gbk) text file to readable file in ubuntu (UTF-8 format)
+
+```
+ iconv -f gbk -t utf8 gbk.txt > utf8.txt
+```
