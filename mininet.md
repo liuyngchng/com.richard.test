@@ -14,7 +14,7 @@ mininet/util/install.sh -s /usr/local/lib/mininet -a
 # 2. network monitor and config
 ## 2.1 network traffic
 ```
-iftop
+iftop -i interface
 ```
 ## 2.2 network traffic control  
 把网卡eth0的传输设置为：  

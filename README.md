@@ -363,3 +363,7 @@ apt-get install xxx
 ```
  iconv -f gbk -t utf8 gbk.txt > utf8.txt
 ```
+# 18. network traffic monitoring/网络流量监控  
+```
+iftop -i interface
+```
