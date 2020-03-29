@@ -1,5 +1,6 @@
 # 1. Setup MySQL on CentOS
 ## 1.1 Setup
+
 ```
 卸载  先停掉mysql进程   没有安装过的可以直接跳过
 pkill -9 mysqld
@@ -13,18 +14,24 @@ rpm -ivh mysql57-community-release-el7-8.noarch.rpm
 yum -y install mysql-server
 ```
 ## 1.2 默认配置文件路径 
+
 ```
 配置文件：/etc/my.cnf 
 日志文件：/var/log/var/log/mysqld.log 
 服务启动脚本：/usr/lib/systemd/system/mysqld.service 
 socket文件：/var/run/mysqld/mysqld.pid
 ```
+
 ## 1.3 StartUp
+
 启动mysql服务
+
 ```
 service mysqld restart
 ```
+
 在 docker 容器中启动 MySQL
+
 ```
 docker run --privileged -dit --name test1  centos /usr/sbin/init
 docker exec -it centos bash
@@ -32,11 +39,14 @@ systemctl start mysqld
 A temporary password is generated for root@localhost: eiDIxJi8s1)h
 mysql -uroot -p
 ```
+
 重置密码
+
 ```
-grep "password" /var/log/mysqld.log
+grep password /var/log/mysqld.log
 ```
 A temporary password is generated for root@localhost: ab*******m1
+
 ```
 mysql -hlocalhost -uroot -p
 alter user 'root'@'localhost' identified by '1$%4!Qw*;,';
@@ -330,18 +340,28 @@ tcp_bbr 20480 14
 ```
 sudo scutil --set HostName my_host_name
 ```
-# 14. git中文文件名变数字
+# 14. some git things
+## 14.1 git中文文件名变数字
 修改配置
 git config --global core.quotepath false
 即可解决
 
-# 15. create iso file in ubuntu
-## 15.1  create iso file from CD-ROM
+## 14.2 use vim diff as git diff visual tool
+```
+sudo apt-get install vim
+git config --global diff.tool vimdiff
+git config --global difftool.prompt false   // 不再弹出 Launch  vimdiff ?
+git config --global alias.d difftool        // 为输入方便，difftool输入实在太长， 用别名 d 来替代 difftool
+git d your_file                             // enjoy your coding.
+```
+
+# 15. create ISO file in ubuntu
+## 15.1  create ISO file from CD-ROM
 ```
 sudo umount /dev/cdrom
 dd if=/dev/cdrom of=file.iso bs=1024
 ```
-## 15.2 add file or directory to iso file
+## 15.2 add file or directory to ISO file
 需要使用mkisofs这个工具,你想改的参数都可以修改，而且还有-gui这个参数。最简单的用法如下：
 ```
 mkisofs -r -o file.iso your_folder_name/
@@ -350,7 +370,7 @@ mkisofs -r -o file.iso your_folder_name/
 ```
 md5sum file.iso > file.iso.md5
 ```
-## 15.3 burn iso file to CD-ROM
+## 15.3 burn ISO file to CD-ROM
  右键, write to disc...),点击这个选项
 
 # 16. install app in ubuntu docker container
