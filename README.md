@@ -327,6 +327,10 @@ sysctl net.ipv4.tcp_available_congestion_control
 sysctl net.ipv4.tcp_available_congestion_control
 net.ipv4.tcp_available_congestion_control = bbr cubic reno
 ```
+```
+sysctl net.ipv4.tcp_congestion_control
+net.ipv4.tcp_congestion_control = bbr
+```
 查看BBR是否启动
 ```
 lsmod | grep bbr
@@ -335,6 +339,16 @@ lsmod | grep bbr
 ```
 lsmod | grep bbr
 tcp_bbr 20480 14
+```
+## 12.3 停止BBR  
+
+依次执行下面命令就可以了。   
+
+```
+sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+sysctl -p       
+reboot
 ```
 # 13. mac terminal hostname
 ```
@@ -389,17 +403,22 @@ iftop -i interface
 ```
 # 19. replace tab  
 
-TAB替换为空格  
+## 19.1 TAB替换为空格  
 ```
 :set ts=4
 :set expandtab
 :%retab!
 ```
 
-空格替换为TAB  
+## 19.2 空格替换为TAB  
 
 ```
 :set ts=4
 :set noexpandtab
 :%retab!
+```
+## 19.3 删除空白行（delete all blank lines)
+
+```
+g/^\s*$/d
 ```
