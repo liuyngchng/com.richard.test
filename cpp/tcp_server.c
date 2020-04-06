@@ -47,7 +47,7 @@ int main()
 
     while (1)
     {
-        socklen_t len = 0;
+        socklen_t len = sizeof(client_sock);
         int client_socket = accept(sock, (struct sockaddr*)&client_sock,&len);
         if (client_socket < 0)
         {
