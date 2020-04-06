@@ -8,7 +8,7 @@
 #include<arpa/inet.h>
 
 #define SERVER_PORT 9999
-#define SERVER_IP "192.168.2.103"
+//#define SERVER_IP "192.168.2.103"
 
 int main(int argc, char *argv[])
 {
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     bzero(&server_sock, sizeof(server_sock));
     server_sock.sin_family = AF_INET;
-    inet_pton(AF_INET, SERVER_IP, &server_sock.sin_addr);
+    inet_pton(AF_INET, ip, &server_sock.sin_addr);
     server_sock.sin_port = htons(SERVER_PORT);
 
     int ret = connect(sock, (struct sockaddr*)& server_sock, sizeof(server_sock));
