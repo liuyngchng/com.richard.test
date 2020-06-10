@@ -439,3 +439,9 @@ run
 sudo apt-get clean
 ```
 and then all file in /var/cache/apt/archives be deleted.
+
+# 22. ubuntu support exfat disk format
+
+```
+sudo apt-get install exfat-utils
+```
