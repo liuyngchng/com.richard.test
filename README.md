@@ -445,3 +445,19 @@ and then all file in /var/cache/apt/archives be deleted.
 ```
 sudo apt-get install exfat-utils
 ```
+# 23. kylin 4.0.2 source list
+
+修改 apt 的源文件管理文件 :  
+```
+/etc/apt/sources.list
+```
+， 修改为
+```
+deb http://archive.kylinos.cn/yhkylin juniper main restricted universe multiverse
+deb http://cz.archive.ubuntu.com/ubuntu trusty main
+deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu trusty stable
+```
+
+保存后， 更新源：
+
+apt-get update
