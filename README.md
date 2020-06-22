@@ -463,4 +463,19 @@ deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu trusty stabl
 保存后， 更新源：
 
 apt-get update
->>>>>>> 4474056f75b7d43e4310d915e920d96c89f6db0d
+
+# 24. gitlab ce 
+
+## 24.1 docker image
+
+```
+docker pull gitlab/gitlab-ce
+```
+
+## 24.2
+install gitlab
+```
+https://about.gitlab.com/install/#ubuntu
+```
+
+
