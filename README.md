@@ -432,3 +432,46 @@ add parameter in cmake
 
  cmake ../ -DOPENSSL_ROOT_DIR=/usr/local/ssl -DOPENSSL_LIBRARIES=/usr/local/ssl/lib
 ```
+
+# 21. delete cache file after 'sudo apt-get install for ubuntu'  
+run
+```
+sudo apt-get clean
+```
+and then all file in /var/cache/apt/archives be deleted.
+
+# 22. ubuntu support exfat disk format
+
+```
+sudo apt-get install exfat-utils
+```
+# 23. kylin 4.0.2 source list
+
+修改 apt 的源文件管理文件 :  
+```
+/etc/apt/sources.list
+```
+， 修改为
+```
+deb http://archive.kylinos.cn/yhkylin juniper main restricted universe multiverse
+deb http://cz.archive.ubuntu.com/ubuntu trusty main
+deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu trusty stable
+```
+
+保存后， 更新源：
+
+apt-get update
+
+# 24. gitlab ce 
+
+## 24.1 docker image
+
+```
+docker pull gitlab/gitlab-ce
+```
+
+## 24.2
+install gitlab
+```
+https://about.gitlab.com/install/#ubuntu
+```
