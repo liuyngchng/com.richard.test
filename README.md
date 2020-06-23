@@ -422,3 +422,13 @@ iftop -i interface
 ```
 g/^\s*$/d
 ```
+
+# 20. compile quant project
+
+to debug the openssl version, download openssl new version,  
+add parameter in cmake
+
+```
+
+ cmake ../ -DOPENSSL_ROOT_DIR=/usr/local/ssl -DOPENSSL_LIBRARIES=/usr/local/ssl/lib
+```
