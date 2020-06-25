@@ -475,3 +475,17 @@ install gitlab
 ```
 https://about.gitlab.com/install/#ubuntu
 ```
+# 25. ubuntu wifi driver setup (wireless card driver)  
+```
+lspci | grep Wireless
+```  
+看到无线网卡类型为 
+```
+Broadcom Inc. and subsidiaries BCM4360 802.11ac Wireless Network Adapter (rev 03)
+```
+执行
+```
+apt install firmware-b43-installer
+apt-get install bcmwl-kernel-source
+```
+
