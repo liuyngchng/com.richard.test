@@ -489,3 +489,9 @@ apt install firmware-b43-installer
 apt-get install bcmwl-kernel-source
 ```
 
+# 26. rar and unrar in ubuntu with password
+```
+sudo apt-get install rar unrar -y
+rar -p a test.csv.rar test.csv   // input password
+unrar -x test.csv.rar 			// input password
+```
