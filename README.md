@@ -495,3 +495,7 @@ sudo apt-get install rar unrar -y
 rar -p a test.csv.rar test.csv   // input password
 unrar -x test.csv.rar 			// input password
 ```
+# 27. disk IO
+[userbenchmark](https://ssd.userbenchmark.com)
+SSD write speed 1000~2000 MByte per second.
+HDD,Hard Disk Drive write speed 100 MByte per second. 
