@@ -499,3 +499,20 @@ unrar -x test.csv.rar 			// input password
 [userbenchmark](https://ssd.userbenchmark.com)
 SSD write speed 1000~2000 MByte per second.
 HDD,Hard Disk Drive write speed 100 MByte per second. 
+
+# 28. 设置ubuntu默认登录为非图形化界面
+
+如果想让系统默认不进入图形界面，只需编辑文件  
+/etc/default/grub
+把原来的  
+GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”
+改成  
+GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash text”
+然后再运行  
+sudo update-grub 
+
+即可。
+
+如果想进入图形界面，输入命令：   
+sudo lightdm 
+
