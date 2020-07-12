@@ -70,7 +70,7 @@ docker images
 | docker.io/centos | latest | 9f38484d220f | 13 days ago | 202 MB |
 执行
 ```
-docker run -dit image_id
+docker run -dit --name test image_id
 docker ps
 ```
 看到
@@ -83,6 +83,7 @@ docker ps
 | CMD | NOTE |
 | --- | ---  |
 | docker rename hardcore_curie test | 重命名容器 |
+| docker tag img_id name            | 重命名镜像(image) |
 | docker exec -it test bash         | 进入容器   |
 | vi /root/.bashrc                  | 配置环境变量，重新进入容器依然有效 |
 | export PATH=$PATH:/opt/jre        | 配置 java 环境变量 |
