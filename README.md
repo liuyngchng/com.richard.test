@@ -96,7 +96,7 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | CMD | NOTE |
 | --- | ---  |
 | docker ps | 获取 CONTAINER ID |
-| docker commit container_id richard/test | 提交更改，生成新的镜像 |
+| docker commit container_id richard/test(repository column) | 提交更改，生成新的镜像 |
 | docker images | 获取 IMAGE ID |
 |docker rmi  image_id | 删除 image |
 
@@ -113,9 +113,10 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | --- | ---  |
 | docker images | get image id |
 | docker save 62cfce4d2e9a > /opt/aaa.img | output img file |
-| docker load < ~/images/aaa.img | load img file |
+| `docker load < ~/images/aaa.img` | load img file |
 
-## 2.5 端口映射
+
+## 2.5 端口和目录映射
 执行端口映射时，会调用 docker-proxy 命令，为操作系统创建软链  
 
 | CMD | NOTE |
@@ -123,6 +124,7 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | cat /usr/lib/systemd/system/docker.service \ grep proxy | 查找安装目录 |
 | ln -s /usr/libexec/docker/docker-proxy-current /usr/bin/docker-proxy | 建立软链 |
 | docker run -dit -p 9088:9088 image bash | 启动 |
+| docker run -dit -v /hostdir:/containerdir --name test repository_id | 目录映射 |
 ## 2.6 修改默认镜像存储目录
 CentOS 下 docker 默认的存储路径在 /var/lib/docker下面。  
 ```
