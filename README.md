@@ -519,3 +519,36 @@ sudo update-grub
 如果想进入图形界面，输入命令：   
 sudo lightdm 
 
+# 29. after install ubuntu on Mac and then delete ubuntu, efi boot is redundant.
+
+在Mac安装ubuntu后开机默认进入Grub引导，删除ubuntu后Grub引导依旧存在，  
+导致每次开机都要按住option才能进入Mac系统
+
+打开终端，挂载EFI分区
+```
+mkdir /mnt
+sudo mount -t msdos /dev/disk0s1 /mnt
+```
+查看当前EFI分区
+
+```
+ls /mnt/
+ls /mnt/EFI/
+cd /mnt/EFI/
+ls
+```
+
+```
+rd@mba: ls /mnt/
+BOOTLOG     EFI     FSCK0000.REC
+rd@mba: ls /mnt/EFI/
+APPLE
+rd@mba: cd /mnt/EFI/
+rd@mab: ls
+APPLE BOOT ubuntu
+```
+run
+```
+rm -rf ubuntu
+sudo reboot
+```
