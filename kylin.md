@@ -17,7 +17,7 @@ deb http://archive.kylinos.cn/kylin/KYLIN-ALL 4.0.2-server main restricted unive
 ##1.5 4.0.2-sp1服务器版本:
 deb http://archive.kylinos.cn/kylin/KYLIN-ALL 4.0.2sp1-server main restricted universe multiverse
 
-##1.6 4.0.2-sp2服务器版本:
+##1.6 4.0.2-sp2服务器版本(current):
 deb http://archive.kylinos.cn/kylin/KYLIN-ALL 4.0.2sp2-server main restricted universe multiverse
 
 ##1.7 4.0.2-sp2 FT2000+服务器版本:
