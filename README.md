@@ -552,3 +552,38 @@ run
 rm -rf ubuntu
 sudo reboot
 ```
+# 30. setup manpage
+
+```
+sudo apt-get update
+sudo apt-get install manpages-posix
+
+```
+安装 C语言 库函数基本帮助文档:  
+```
+sudo apt-get install libc-dev
+sudo apt-get install glibc-doc
+sudo apt-get install manpages
+sudo apt-get install manpages-zh
+sudo apt-get install manpages-zh-dev
+sudo apt-get install manpages-dev
+```
+安装 POSIX 函数帮助文档:  
+```
+sudo apt-get install manpages-posix
+sudo apt-get install manpages-posix-dev
+```
+安装内核函数文档：
+```
+sudo apt-get install linux-doc
+sudo apt-get install libcorelinux-dev
+```
+安装 C++ 帮助文档:
+```
+sudo apt-get install libstdc++-7-dev
+sudo apt-get install libstdc++-7-doc
+```
+对于manpage可以直接一条命令：
+```
+sudo apt-get install manpages*
+```
