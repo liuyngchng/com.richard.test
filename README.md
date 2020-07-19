@@ -587,3 +587,14 @@ sudo apt-get install libstdc++-7-doc
 ```
 sudo apt-get install manpages*
 ```
+
+# 31. use smb to connect with windows doc sharing
+
+ios version > 13  
+file -> browser -> ...(right upper conner icon) -> connect server  
+server: smb://192.168.1.123  
+config user as guest or registed user.  
+have fun!
+```
+
+```
