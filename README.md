@@ -595,6 +595,21 @@ file -> browser -> ...(right upper conner icon) -> connect server
 server: smb://192.168.1.123  
 config user as guest or registed user.  
 have fun!
+
+# 32. 设置linux免密码登录 login linux without password      
+
+client:192.168.0.1  
+server:192.168.0.2  
+on client   
+```
+ssh-keygen  
+cd ~/.ssh/
+scp id_pub.rsa user@192.168.0.2:/home/user/
 ```
 
+on server
 ```
+cat /home/user/id_pub.rsa >> ~/.ssh/authroized_keys
+```
+hava fun!
+
