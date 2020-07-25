@@ -613,3 +613,21 @@ cat /home/user/id_pub.rsa >> ~/.ssh/authroized_keys
 ```
 hava fun!
 
+# 32. config ubuntu wifi driver and chinese input method after installed
+wifi
+```
+sudo apt-get --reinstall install bcmwl-kernel-source
+```
+zh languge pack
+```
+sudo apt-get install  language-pack-zh-han*
+sudo apt install $(check-language-support)
+sudo apt install ibus-pinyin
+sudo apt install ibus-libpinyin
+```
+grub time out
+
+```
+sudo vim /etc/default/grub
+sudo update-grub
+```
