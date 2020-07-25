@@ -631,3 +631,8 @@ grub time out
 sudo vim /etc/default/grub
 sudo update-grub
 ```
+close bluetooth when sys boot
+```
+sudo gedit /etc/rc.local
+rfkill block bluetooth
+```
