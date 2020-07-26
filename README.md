@@ -636,3 +636,11 @@ close bluetooth when sys boot
 sudo gedit /etc/rc.local
 rfkill block bluetooth
 ```
+# 33. Fn key in ubuntu
+make F1 work as F1, Fn+F1 work as something else.  
+
+```
+sudo vim /etc/modprobe.d/hid_apple.conf
+options hid_apple fnmode=2
+sudo update-initramfs -u
+```
