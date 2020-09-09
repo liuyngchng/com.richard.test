@@ -644,3 +644,8 @@ sudo vim /etc/modprobe.d/hid_apple.conf
 options hid_apple fnmode=2
 sudo update-initramfs -u
 ```
+# 34. 查看动态库so文件所在的目录
+
+```
+ldconfig -p 
+```  
