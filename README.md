@@ -712,5 +712,14 @@ sudo  echo 1 > /proc/sys/net/ipv4/ip_forward
 iptables -F
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
- iptables -t nat -A POSTROUTING -o wlp2s0 -j MASQUERADE     （wlp2s0为host A接外网的网卡）
+iptables -t nat -A POSTROUTING -o wlp2s0 -j MASQUERADE     （wlp2s0为host A接外网的网卡）
 ```
+## 35.4 debug
+
+配置完以上信息后，若发现 host A 无法上网，则是默认路由导致的，
+执行
+```
+ip route show
+sudo route del default gw 192.168.49.1
+```
+
