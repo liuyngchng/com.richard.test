@@ -649,3 +649,68 @@ sudo update-initramfs -u
 ```
 ldconfig -p 
 ```  
+# 35 ubuntu 通过网线共享网络
+
+[url](https://blog.csdn.net/qq1187239259/article/details/80022272) 
+
+host A：ubuntu16.04, 有两个网卡，一个接外网，一个与主机B相接  
+hostB：ubuntu16.04  
+
+## 35.1 config host A 
+run  
+```
+iwconfig
+```  
+wlp2s0 :这个是无线网卡。
+enp1s0 :有线网卡，与B主机通过网线相连的网卡  
+
+config ip  
+sudo vim /etc/network/interfaces  
+为接口enp1s0配置静态IP地址， 
+```
+iface enp1s0 inet static
+address 192.168.49.1
+netmask 255.255.255.0
+gateway 192.168.49.1
+```
+restart interface enp1s0
+```
+ifdonw enp1s0
+ifup enp1s0
+ifconfig  命令查看enp1s0 ip配置是否成功
+```
+## 35.2 config host B
+run  
+```
+iwconfig
+```
+获取网络接口卡名称 enpxxxx    
+sudo vim /etc/network/interfaces 
+```  
+iface enpxxxx inet static
+address 192.168.49.2
+netmask 255.255.255.0
+gateway 192.168.49.1
+dns-nameservers 186.76.76.76
+```
+restart interface enpxxxxx
+```
+ifdonw enp1s0
+ifup enp1s0
+ifconfig  命令查看enpxxxx ip配置是否成功
+```
+ping host A OK
+```
+ping 192.168.49.1
+```
+
+## 35.3 config NAT on host A
+
+这一步是为了B主机能通过A主机访问外网  
+```
+sudo  echo 1 > /proc/sys/net/ipv4/ip_forward 
+iptables -F
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+ iptables -t nat -A POSTROUTING -o wlp2s0 -j MASQUERADE     （wlp2s0为host A接外网的网卡）
+```
