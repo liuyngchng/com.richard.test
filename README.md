@@ -691,7 +691,7 @@ iface enpxxxx inet static
 address 192.168.49.2
 netmask 255.255.255.0
 gateway 192.168.49.1
-dns-nameservers 186.76.76.76
+dns-nameservers 180.76.76.76
 ```
 restart interface enpxxxxx
 ```
