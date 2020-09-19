@@ -70,7 +70,7 @@ docker images
 | docker.io/centos | latest | 9f38484d220f | 13 days ago | 202 MB |
 执行
 ```
-docker run -dit image_id
+docker run -dit --name test image_id
 docker ps
 ```
 看到
@@ -83,6 +83,7 @@ docker ps
 | CMD | NOTE |
 | --- | ---  |
 | docker rename hardcore_curie test | 重命名容器 |
+| docker tag img_id name            | 重命名镜像(rename image) |
 | docker exec -it test bash         | 进入容器   |
 | vi /root/.bashrc                  | 配置环境变量，重新进入容器依然有效 |
 | export PATH=$PATH:/opt/jre        | 配置 java 环境变量 |
@@ -95,7 +96,7 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | CMD | NOTE |
 | --- | ---  |
 | docker ps | 获取 CONTAINER ID |
-| docker commit container_id richard/test | 提交更改，生成新的镜像 |
+| docker commit container_id richard/test(repository column) | 提交更改，生成新的镜像 |
 | docker images | 获取 IMAGE ID |
 |docker rmi  image_id | 删除 image |
 
@@ -112,9 +113,10 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | --- | ---  |
 | docker images | get image id |
 | docker save 62cfce4d2e9a > /opt/aaa.img | output img file |
-| docker load < ~/images/aaa.img | load img file |
+| `docker load < ~/images/aaa.img` | load img file |
 
-## 2.5 端口映射
+
+## 2.5 端口和目录映射
 执行端口映射时，会调用 docker-proxy 命令，为操作系统创建软链  
 
 | CMD | NOTE |
@@ -122,6 +124,7 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | cat /usr/lib/systemd/system/docker.service \ grep proxy | 查找安装目录 |
 | ln -s /usr/libexec/docker/docker-proxy-current /usr/bin/docker-proxy | 建立软链 |
 | docker run -dit -p 9088:9088 image bash | 启动 |
+| docker run -dit -v /hostdir:/containerdir --name test repository_id | 目录映射 |
 ## 2.6 修改默认镜像存储目录
 CentOS 下 docker 默认的存储路径在 /var/lib/docker下面。  
 ```
@@ -499,3 +502,150 @@ unrar -x test.csv.rar 			// input password
 [userbenchmark](https://ssd.userbenchmark.com)
 SSD write speed 1000~2000 MByte per second.
 HDD,Hard Disk Drive write speed 100 MByte per second. 
+
+# 28. 设置ubuntu默认登录为非图形化界面
+
+如果想让系统默认不进入图形界面，只需编辑文件  
+/etc/default/grub
+把原来的  
+GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”
+改成  
+GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash text”
+然后再运行  
+sudo update-grub 
+
+即可。
+
+如果想进入图形界面，输入命令：   
+sudo lightdm 
+
+# 29. after install ubuntu on Mac and then delete ubuntu, efi boot is redundant.
+
+在Mac安装ubuntu后开机默认进入Grub引导，删除ubuntu后Grub引导依旧存在，  
+导致每次开机都要按住option才能进入Mac系统
+
+打开终端，挂载EFI分区
+```
+mkdir /mnt
+sudo mount -t msdos /dev/disk0s1 /mnt
+```
+查看当前EFI分区
+
+```
+ls /mnt/
+ls /mnt/EFI/
+cd /mnt/EFI/
+ls
+```
+
+```
+rd@mba: ls /mnt/
+BOOTLOG     EFI     FSCK0000.REC
+rd@mba: ls /mnt/EFI/
+APPLE
+rd@mba: cd /mnt/EFI/
+rd@mab: ls
+APPLE BOOT ubuntu
+```
+run
+```
+rm -rf ubuntu
+sudo reboot
+```
+# 30. setup manpage
+
+```
+sudo apt-get update
+sudo apt-get install manpages-posix
+
+```
+安装 C语言 库函数基本帮助文档:  
+```
+sudo apt-get install libc-dev
+sudo apt-get install glibc-doc
+sudo apt-get install manpages
+sudo apt-get install manpages-zh
+sudo apt-get install manpages-zh-dev
+sudo apt-get install manpages-dev
+```
+安装 POSIX 函数帮助文档:  
+```
+sudo apt-get install manpages-posix
+sudo apt-get install manpages-posix-dev
+```
+安装内核函数文档：
+```
+sudo apt-get install linux-doc
+sudo apt-get install libcorelinux-dev
+```
+安装 C++ 帮助文档:
+```
+sudo apt-get install libstdc++-7-dev
+sudo apt-get install libstdc++-7-doc
+```
+对于manpage可以直接一条命令：
+```
+sudo apt-get install manpages*
+```
+
+# 31. use smb to connect with windows doc sharing
+
+ios version > 13  
+file -> browser -> ...(right upper conner icon) -> connect server  
+server: smb://192.168.1.123  
+config user as guest or registed user.  
+have fun!
+
+# 32. 设置linux免密码登录 login linux without password      
+
+client:192.168.0.1  
+server:192.168.0.2  
+on client   
+```
+ssh-keygen  
+cd ~/.ssh/
+scp id_pub.rsa user@192.168.0.2:/home/user/
+```
+
+on server
+```
+cat /home/user/id_pub.rsa >> ~/.ssh/authroized_keys
+```
+hava fun!
+
+# 32. config ubuntu wifi driver and chinese input method after installed
+wifi
+```
+sudo apt-get --reinstall install bcmwl-kernel-source
+```
+zh languge pack
+```
+sudo apt-get install  language-pack-zh-han*
+sudo apt install $(check-language-support)
+sudo apt install ibus-pinyin
+sudo apt install ibus-libpinyin
+```
+grub time out
+
+```
+sudo vim /etc/default/grub
+sudo update-grub
+```
+close bluetooth when sys boot
+```
+sudo gedit /etc/rc.local
+rfkill block bluetooth
+```
+# 33. Fn key in ubuntu
+make F1 work as F1, Fn+F1 work as something else.  
+
+```
+sudo vim /etc/modprobe.d/hid_apple.conf
+options hid_apple fnmode=2
+sudo update-initramfs -u
+```
+# 34. 查看动态库so文件所在的目录
+
+```
+ldconfig -p 
+```  
