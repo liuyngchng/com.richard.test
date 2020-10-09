@@ -390,6 +390,10 @@ md5sum file.iso > file.iso.md5
 ## 15.3 burn ISO file to CD-ROM
  右键, write to disc...),点击这个选项
 
+## 15.4 burn data to CD-ROM on ubuntu
+```
+cdrecord /dev/sr0 driveropts=burnfree -v -data  test/
+```
 # 16. install app in ubuntu docker container
 ```
 apt-get update
