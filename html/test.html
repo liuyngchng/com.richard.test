@@ -12,31 +12,52 @@
   <canvas width="700" height="400" id="canvas"> </canvas>
 
 <script>
-window.onload = function(){
-  
-  var multiData = {values:[
+window.onload = function() {
+  //必须按照这个格式定义数据，关键字values value0 value1 ......
+    var multiData = {values:[
  { value0:[
-   {x:"Jan",y:5},
-   {x:"Feb",y:5},
-   {x:"Mar",y:80},
-   {x:"Apr",y:10},
-   {x:"May",y:30},
-   {x:"Jun",y:30},
-   {x:"Jul",y:60},
-   {x:"Aug",y:10}
+   {x:"1",y:5},
+   {x:"2",y:5},
+   {x:"3",y:80},
+   {x:"4",y:10},
+   {x:"5",y:30},
+   {x:"6",y:30},
+   {x:"7",y:60},
+   {x:"8",y:10}
   ]},
   { value1:[
-    {x:"Jan",y:50},
-    {x:"Feb",y:40},
-    {x:"Mar",y:60},
-    {x:"Apr",y:10},
-    {x:"May",y:20},
-    {x:"Jun",y:10},
-    {x:"Jul",y:40},
-    {x:"Aug",y:10}
+    {x:"1",y:50},
+    {x:"2",y:40},
+    {x:"3",y:60},
+    {x:"4",y:10},
+    {x:"5",y:20},
+    {x:"6",y:10},
+    {x:"7",y:40},
+    {x:"8",y:10}
    ]}
-  ]	
- }//必须按照这个格式定义数据，关键字values value0 value1 ...... 
+  ] 
+ }
+  draw(multiData);
+  
+function sleep(delay) {
+    for(var t = Date.now(); Date.now() - t <= delay;);
+}
+/**
+while(1) {
+  for (i = 0; i < multiData.values[0].value0.length; i++) { 
+    multiData.values[0].value0[i].y += Math.random() *10;
+    if (multiData.values[0].value0[i].y > 100) {
+      multiData.values[0].value0[i].y = 0;
+    };
+  }
+  draw(multiData);
+  sleep(5000);
+}
+**/
+}
+
+function draw(multiData){
+  console.log("done");
    /*
     *@param0: canvas 的id
     *@param1: json 数据
@@ -51,7 +72,7 @@ window.onload = function(){
    LineChart.setData("canvas",multiData,60,"red","#333",true,true);
  }
 		
-   var LineChart={
+var LineChart = {
     keynames:[],//数据信息数组
     can:undefined,
     ctx:undefined,
