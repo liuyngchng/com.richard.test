@@ -393,6 +393,7 @@ md5sum file.iso > file.iso.md5
 ## 15.4 burn data to CD-ROM on ubuntu
 ```
 cdrecord /dev/sr0 driveropts=burnfree -v -data  test/
+cdrecord -v -eject dev=/dev/cdrom /path/to/data
 ```
 # 16. install app in ubuntu docker container
 ```
@@ -653,7 +654,7 @@ sudo update-initramfs -u
 ```
 ldconfig -p 
 ```  
-# 35 ubuntu 通过网线共享网络
+# 35 ubuntu  share network between hosts (通过网线共享网络)
 
 [url](https://blog.csdn.net/qq1187239259/article/details/80022272) 
 
@@ -727,3 +728,7 @@ ip route show
 sudo route del default gw 192.168.49.1
 ```
 
+# 36. git clone with shallow history
+```
+git clone xxxx.git --depth 1
+```
