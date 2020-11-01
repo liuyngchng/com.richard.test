@@ -126,16 +126,17 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | docker run -dit -p 9088:9088 image bash | 启动 |
 | docker run -dit -v /hostdir:/containerdir --name test repository_id | 目录映射 |
 ## 2.6 修改默认镜像存储目录
-CentOS 下 docker 默认的存储路径在 /var/lib/docker下面。  
-```
+
+CentOS 下 docker 默认的存储路径在 /var/lib/docker下面。 
+``
 docker info | grep dir -i
 ```
-修改docker的systemd的 docker.service的配置文件                                             
+修改docker的systemd的 docker.service的配置文件
 不知道 配置文件在哪里可以使用systemd 命令显示一下.  
 ```
 systemctl disable docker
 systemctl enable docker
-#显示结果
+显示结果
 Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
 ```
 | CMD | NOTE |
@@ -211,6 +212,7 @@ mysqld.exe --install
 net start mysql
 ```
 # 4. Setup MySQL on ubuntu
+
 ```
 sudo apt-get install mysql-server
 mysqld
@@ -233,6 +235,7 @@ restart MySQL
 /etc/init.d/mysql restart
 ```
 # 5. 查看挂载的硬盘
+
 ```
 fdisk -l
 lsblk
@@ -243,8 +246,9 @@ download rpm package only
 yum install --downloadonly --downloaddir=/opt/rpms mysql
 ```
 # 7. make a iso start up flash disk  
-
-需要把下载的Ubuntu安装文件（.iso）转换成(.dmg)格式的文件,方便在Mac OS上面进行操作，转换命令
+#7.1 under MacOS
+如果是在Mac系统下，则 需要把下载的Ubuntu安装文件（.iso）  
+转换成(.dmg)格式的文件,方便在Mac OS上面进行操作，转换命令
 ```
 cd Downloads/
 hdiutil convert -format UDRW -o ubuntu.dmg ubuntu-14.04.5-desktop-amd64.iso
@@ -263,16 +267,28 @@ diskutil list
 ```
 diskutil unmountDisk [硬碟位置]
 ```
-开始刻录
+#7.2  Create the installation medium in linux
+Either you can burn the image onto CD/DVD, you use usb stick for the installation.  
+Under linux, you can use the dd for that:
 ```
-sudo dd if=/path/to/xxx.iso of=/path/to/USB bs=1m; sync
+dd if=<source iso> of=<target device> bs=4M; sync
 ```
-输入密码后开始等待刻录完成
-然后移除U盘
+Make sure that the device does not include partition number, so example from my machine:
+```
+dd if=~/Downloads/alpine-standard-3.10.2-x86_64.iso of=/dev/sdb bs=4M
+```
+The target device will be erased, so make sure you use something without any data you do not want to lose.
+#7.3 然后移除U盘
+on MacOS
 ```
 diskutil eject /path/to/USB
 ```
+on Linux
+```
+umount /path/to/USB
+```
 # 8. WebService Client Generation Error with JDK8
+
 ```$xslt
 java.lang.AssertionError: org.xml.sax.SAXParseException;
 systemId: jar:file:/path/to/glassfish/modules/jaxb-osgi.jar!/com/sun/tools/xjc/reader/xmlschema/bindinfo/binding.xsd;
@@ -291,18 +307,21 @@ sudo apt-get install ipheth-utils libimobiledevice-dev libimobiledevice-utils
 ```
 # 10. setup atom in ubuntu 16.04
 ## 10.1 add source
+
 ```
 sudo add-apt-repository ppa:webupd8team/atom  
 sudo apt-get update  
 sudo apt-get install atom
 ```
 ## 10.2 deb package
+
 ```
 wget https://github.com/atom/atom/releases/download/v1.43.0/atom-amd64.deb
 wget https://github.com/atom/atom/releases/download/v1.7.4/atom-amd64.deb
 sudo dpkg -i atom-amd64.deb
 ```
 # 11. pandoc
+
 ```
 sudo apt-get install pandoc
 sudo apt-get install texlive-lang-cjk texlive-latex-extra texlive-xetex
@@ -311,6 +330,7 @@ pandoc test.md -o test.pdf
 ```
 # 12. TCP control info
 ## 12.1 TCP info in ubuntu
+
 ```
 cd /proc/sys/net/ipv4
 ls -al | grep tcp
@@ -354,9 +374,11 @@ sysctl -p
 reboot
 ```
 # 13. mac terminal hostname
+
 ```
 sudo scutil --set HostName my_host_name
 ```
+
 # 14. some git things
 ## 14.1 git中文文件名变数字
 修改配置
@@ -390,6 +412,17 @@ md5sum file.iso > file.iso.md5
 ## 15.3 burn ISO file to CD-ROM
  右键, write to disc...),点击这个选项
 
+## 15.4 Create the installation medium
+Either you can burn the image onto CD/DVD, you use usb stick for the installation.  
+Under linux, you can use the dd for that:
+```
+dd if=<source iso> of=<target device> bs=4M; sync
+```
+Make sure that the device does not include partition number, so example from my machine:
+```
+dd if=~/Downloads/alpine-standard-3.10.2-x86_64.iso of=/dev/sdb bs=4M
+```
+The target device will be erased, so make sure you use something without any data you do not want to lose
 # 16. install app in ubuntu docker container
 ```
 apt-get update
