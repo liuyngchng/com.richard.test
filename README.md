@@ -1,3 +1,4 @@
+
 # 1. Setup MySQL on CentOS
 ## 1.1 Setup
 
@@ -49,16 +50,20 @@ A temporary password is generated for root@localhost: ab*******m1
 
 ```
 mysql -hlocalhost -uroot -p
-alter user 'root'@'localhost' identified by '1$%4!Qw*;,';
-```
+alter user 'root'@'localhost' identified
+i```
+
 # 2. Docker
+
 ## 2.1 Install docker
+
 | CMD | NOTE |
 | --- |  --- |
 | yum install docker -y     | setup docker      |
 | dockerd &                 | startup dockerd   |
 | docker pull centos        | pull centos image |
 ## 2.2 start
+
 执行
 ```
 docker images
@@ -68,11 +73,14 @@ docker images
 | REPOSITORY | TAG | IMAGE ID | CREATED | SIZE |
 |     ---    | --- |   ---    |   ---   |  --- |
 | docker.io/centos | latest | 9f38484d220f | 13 days ago | 202 MB |
+
 执行
+
 ```
 docker run -dit --name test image_id
 docker ps
 ```
+
 看到
 
 | CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES |
@@ -91,6 +99,7 @@ docker ps
 docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 
 ## 2.3 生成新的 image
+
 提交 container 生成新的 image
 
 | CMD | NOTE |
@@ -133,12 +142,15 @@ docker info | grep dir -i
 ```
 修改docker的systemd的 docker.service的配置文件
 不知道 配置文件在哪里可以使用systemd 命令显示一下.  
+
 ```
 systemctl disable docker
 systemctl enable docker
 显示结果
 Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
-```
+i```
+show
+
 | CMD | NOTE |
 | --- |  --- |
 | vim /usr/lib/systemd/system/docker.service | 修改配置文件 |
@@ -147,7 +159,9 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service 
 | systemctl enable docker  | enable |
 | systemctl daemon-reload  | reload |
 | systemctl start docker   | start |
+
 ## 2.7 限制 container 使用的 CPU 和 内存
+
 | CMD | NOTE |
 | --- | ---  |
 | docker run -dit --rm --cpuset-cpus="1,3" -m=2g 9a5f12155efd bash | 限制使用编号为1，3的 CPU， 内存限制使用 2GB |
@@ -157,6 +171,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service 
 | docker stats | 查看  MEM USAGE / LIMIT ，验证配置是否生效 |
 
 ## 2.8 为容器设置固定的 IP 地址
+
 ```
 启动Docker容器的时候，使用默认的网络是不支持指派固定IP的，如下
 docker run -itd --net bridge --ip 172.17.0.10 centos:latest /bin/bash
@@ -464,16 +479,11 @@ g/^\s*$/d
 to debug the openssl version, download openssl new version,  
 add parameter in cmake
 
-```
-
- cmake ../ -DOPENSSL_ROOT_DIR=/usr/local/ssl -DOPENSSL_LIBRARIES=/usr/local/ssl/lib
-```
+`cmake ../ -DOPENSSL_ROOT_DIR=/usr/local/ssl -DOPENSSL_LIBRARIES=/usr/local/ssl/lib`
 
 # 21. delete cache file after 'sudo apt-get install for ubuntu'  
 run
-```
-sudo apt-get clean
-```
+`sudo apt-get clean`
 and then all file in /var/cache/apt/archives be deleted.
 
 # 22. ubuntu support exfat disk format
@@ -682,7 +692,7 @@ sudo update-initramfs -u
 ```
 ldconfig -p 
 ```  
-# 35 ubuntu 通过网线共享网络
+# 35 ubuntu  share network between hosts (通过网线共享网络)
 
 [url](https://blog.csdn.net/qq1187239259/article/details/80022272) 
 
@@ -756,3 +766,7 @@ ip route show
 sudo route del default gw 192.168.49.1
 ```
 
+# 36. git clone with shallow history
+```
+git clone xxxx.git --depth 1
+```

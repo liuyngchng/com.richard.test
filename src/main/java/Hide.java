@@ -1,6 +1,6 @@
 class Hide {
 
-	public static final boolean debug = false;
+	public static final boolean debug = true;
 
 	
 	public static void main(String[] args) {
@@ -34,8 +34,21 @@ class Hide {
 		}
 		System.out.println("carType = " + car.getClass().getName());	
 		if (debug) {
+			
 		}
 
+	}
+
+	class InnerCar {
+		public void run() {
+			System.out.println("I am running.");
+		}
+	}
+	
+	class Truck extends InnerCar {
+		public void load() {
+			System.out.println(" I am truck, now loading 10 ton");
+		}
 	}
 
 }
