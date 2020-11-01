@@ -470,9 +470,7 @@ iftop -i interface
 ```
 ## 19.3 删除空白行（delete all blank lines)
 
-```
-g/^\s*$/d
-```
+run `g/^\s*$/d`
 
 # 20. compile quant project
 
@@ -482,21 +480,16 @@ add parameter in cmake
 `cmake ../ -DOPENSSL_ROOT_DIR=/usr/local/ssl -DOPENSSL_LIBRARIES=/usr/local/ssl/lib`
 
 # 21. delete cache file after 'sudo apt-get install for ubuntu'  
-run
-`sudo apt-get clean`
+run `sudo apt-get clean`
 and then all file in /var/cache/apt/archives be deleted.
 
 # 22. ubuntu support exfat disk format
 
-```
-sudo apt-get install exfat-utils
-```
+run `sudo apt-get install exfat-utils`
+
 # 23. kylin 4.0.2 source list
 
-修改 apt 的源文件管理文件 :  
-```
-/etc/apt/sources.list
-```
+修改 apt 的源文件管理文件 :  `/etc/apt/sources.list`
 ， 修改为
 ```
 deb http://archive.kylinos.cn/yhkylin juniper main restricted universe multiverse
@@ -522,9 +515,8 @@ install gitlab
 https://about.gitlab.com/install/#ubuntu
 ```
 # 25. ubuntu wifi driver setup (wireless card driver)  
-```
-lspci | grep Wireless
-```  
+
+run `lspci | grep Wireless`  
 看到无线网卡类型为 
 ```
 Broadcom Inc. and subsidiaries BCM4360 802.11ac Wireless Network Adapter (rev 03)
@@ -689,9 +681,8 @@ sudo update-initramfs -u
 ```
 # 34. 查看动态库so文件所在的目录
 
-```
-ldconfig -p 
-```  
+run `ldconfig -p`
+
 # 35 ubuntu  share network between hosts (通过网线共享网络)
 
 [url](https://blog.csdn.net/qq1187239259/article/details/80022272) 
@@ -700,10 +691,7 @@ host A：ubuntu16.04, 有两个网卡，一个接外网，一个与主机B相接
 hostB：ubuntu16.04  
 
 ## 35.1 config host A 
-run  
-```
-iwconfig
-```  
+run `iwconfig`  
 wlp2s0 :这个是无线网卡。
 enp1s0 :有线网卡，与B主机通过网线相连的网卡  
 
@@ -723,10 +711,8 @@ ifup enp1s0
 ifconfig  命令查看enp1s0 ip配置是否成功
 ```
 ## 35.2 config host B
-run  
-```
-iwconfig
-```
+
+run  `iwconfig` 
 获取网络接口卡名称 enpxxxx    
 sudo vim /etc/network/interfaces 
 ```  
@@ -742,14 +728,12 @@ ifdonw enp1s0
 ifup enp1s0
 ifconfig  命令查看enpxxxx ip配置是否成功
 ```
-ping host A OK
-```
-ping 192.168.49.1
-```
+ping host A OK `ping 192.168.49.1`
 
 ## 35.3 config NAT on host A
 
 这一步是为了B主机能通过A主机访问外网  
+
 ```
 sudo  echo 1 > /proc/sys/net/ipv4/ip_forward 
 iptables -F
@@ -767,6 +751,12 @@ sudo route del default gw 192.168.49.1
 ```
 
 # 36. git clone with shallow history
+
 ```
 git clone xxxx.git --depth 1
 ```
+
+#37. fix the `/dev/loop* 100%` problem
+
+run `sudo apt autoremove --purge snapd `
+    
