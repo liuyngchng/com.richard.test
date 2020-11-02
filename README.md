@@ -648,22 +648,25 @@ cat /home/user/id_pub.rsa >> ~/.ssh/authroized_keys
 ```
 hava fun!
 
-# 32. config ubuntu wifi driver and chinese input method after installed
-wifi
+# 32. config ubuntu wifi driver, chinese and grub timeout input method after installed
+# 32.1 wifi
 ```
 sudo apt-get --reinstall install bcmwl-kernel-source
 ```
-zh languge pack
+# 32.2 zh languge pack
 ```
 sudo apt-get install  language-pack-zh-han*
 sudo apt install $(check-language-support)
 sudo apt install ibus-pinyin
 sudo apt install ibus-libpinyin
 ```
-grub time out
+#32.3 grub time out
 
 ```
 sudo vim /etc/default/grub
+```
+change the value of GRUB_TIMEOUT=2
+```
 sudo update-grub
 ```
 close bluetooth when sys boot
@@ -756,7 +759,22 @@ sudo route del default gw 192.168.49.1
 git clone xxxx.git --depth 1
 ```
 
-#37. fix the `/dev/loop* 100%` problem
+# 37. fix the `/dev/loop* 100%` problem
 
 run `sudo apt autoremove --purge snapd `
-    
+
+# 38. ubuntu 16.04 remote access desktop of windows 7/10
+setup rdesktop first,
+```
+sudo apt-get install rdesktop libgssglue1
+```
+then run
+
+```
+rdesktop -g800*600 -a 16  192.168.1.112  // in a 800*600 windows
+rdesktop -f -a 16  192.168.1.112		// full screen
+```
+run `crtl+alt+enter` to exit remote desktop
+如果看到报错`ERROR:CREDSSP..... CredSSP required by Server`,则需要在windows上
+开启远程桌面(我的电脑->属性->远程设置->允许远程连接到此计算机)时，  
+取消勾选`仅允许使用网络级别身份认证...`
