@@ -778,10 +778,15 @@ run `crtl+alt+enter` to exit remote desktop
 如果看到报错`ERROR:CREDSSP..... CredSSP required by Server`,则需要在windows上
 开启远程桌面(我的电脑->属性->远程设置->允许远程连接到此计算机)时，  
 取消勾选`仅允许使用网络级别身份认证...`
-nmcli dev wifi
+# 37. connect wifi via terminal on Ubuntu
 
 查看可用wifi，
+```
+nmcli dev wifi
+```
 配置wifi，
-nmcli dev wifi connect essid（网络名称） password password（密码）
 
+```
+nmcli dev wifi connect essid（网络名称） password password（密码）
+```
 

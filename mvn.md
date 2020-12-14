@@ -23,7 +23,7 @@ settings.xml can be as following
       <id>mirrorId</id>
       <mirrorOf>central</mirrorOf>
       <name>localMirror</name>
-      <url>file://~/user/.m2/repository</url>
+      <url>file:///home/whoami/.m2/repository</url>
     </mirror>
   </mirrors>
 </settings>
