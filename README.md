@@ -789,4 +789,9 @@ nmcli dev wifi
 ```
 nmcli dev wifi connect essid（网络名称） password password（密码）
 ```
+# 39. get random number
+```
+dd if=/dev/urandom bs=1 count=16 | xxd -ps
+```
+
 
