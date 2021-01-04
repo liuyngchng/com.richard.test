@@ -49,7 +49,7 @@ void printa( int* p, int l) {
 }
 
 
-int main()
+int popup()
 {
     int tmp;
     int a[_SIZE_];
@@ -72,4 +72,8 @@ int main()
     }
     printf("\nrun %d round, after popup:\n", round);
 	printa(a, l);
+}
+int main() 
+{
+    popup();
 }
