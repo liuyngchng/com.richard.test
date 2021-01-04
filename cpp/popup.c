@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define _SIZE_ 100
+
 unsigned long random_xid(void)
 {
     static int initialized;
@@ -32,32 +34,34 @@ unsigned long random_xid(void)
 
 void printa( int* p, int l) {
 	for (int i = 0; i < l; i++) {
-        printf("%4d ", p+i);
-        if ((i % 10) == 0) {
+        printf("%3d ", p[i]);
+        if (((i+1) % 10) == 0) {
             printf("\n");
         }
     }
+    printf("\n");
 }
 
 
 int main()
 {
     int tmp;
-    int a[1000];
+    int a[_SIZE_];
     int l = sizeof(a)/sizeof(int);
     for (int i  = 0; i < l; i ++) {
-        a[i] = random_xid()%1000;
+        a[i] = random_xid()%_SIZE_;
     }
     printf("l=%d\n", l);
 	printa(a, l);
     for (int i = 0; i < l; i ++) {
         for (int j = i; j < l; j ++) {
-           if (i < j) {
+           if (a[i] < a[j]) {
                 tmp = a[i];
                 a[i] = a[j];
                 a[j] = tmp;
            }
         }
     }
+    printf("\nafter popup:\n");
 	printa(a, l);
 }
