@@ -53,8 +53,10 @@ int main()
     }
     printf("l=%d\n", l);
 	printa(a, l);
+    int round = 0;
     for (int i = 0; i < l; i ++) {
         for (int j = i; j < l; j ++) {
+            round++;
            if (a[i] < a[j]) {
                 tmp = a[i];
                 a[i] = a[j];
@@ -62,6 +64,6 @@ int main()
            }
         }
     }
-    printf("\nafter popup:\n");
+    printf("\nrun %d round, after popup:\n", round);
 	printa(a, l);
 }
