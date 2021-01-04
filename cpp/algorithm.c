@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define _SIZE_ 100
+#define _SIZE_ 10 
 
 static int round = 0;
 
@@ -102,6 +102,7 @@ void q_sort(int *a, int left, int right)
         a[j] = a[i];
     }
     a[i] = key;
+    printa(a, _SIZE_);
     q_sort(a, left, i - 1);
     q_sort(a, i + 1, right);
 }
@@ -112,7 +113,7 @@ void q_sort(int *a, int left, int right)
 void myqsort()
 {
     printf("run %s\n", __func__);
-	int a[_SIZE_];
+	int a[_SIZE_] ;
 	int l = sizeof(a)/sizeof(int);
     for (int i  = 0; i < l; i ++) {
         a[i] = random_xid()%_SIZE_;
