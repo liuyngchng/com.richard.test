@@ -2,6 +2,8 @@
 
 int main() 
 {
-    int a = 10;
-    printf("%5.3d\n", a);
+    int a = 12345;
+    printf("%3.3d\n", a);
+    char c[] = "thisis a test";
+    printf("%5.3s\n", c);
 }
