@@ -42,6 +42,18 @@ godep restore
 go build -o wskdeploy
 sudo cp wskdeploy /usr/local/bin
 ```
+# 4. install openwhisk
+
+```
+git clone https://github.com/apache/openwhisk.git
+cd openwhisk
+ ./gradlew core:standalone:bootRun
+```
+
+to install npm
+```
+sudo apt-get install npm
+```
 
 # 5. troubleshooting
 ## 5.1 error downloagding dep
@@ -77,16 +89,4 @@ go1.13以上
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
 
-```
-# 6. install openwhisk
-
-```
-git clone https://github.com/apache/openwhisk.git
-cd openwhisk
- ./gradlew core:standalone:bootRun
-```
-
-to install npm
-```
-sudo apt-get install npm
 ```
