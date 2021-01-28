@@ -794,4 +794,33 @@ nmcli dev wifi connect essid（网络名称） password password（密码）
 dd if=/dev/urandom bs=1 count=16 | xxd -ps
 ```
 
+## 40. docker permission
 
+## 40.1 问题描述  
+在终端执行"docker version"命令，出现如下报错：
+
+```
+”Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.26/images/json: dial unix /var/run/docker.sock: connect: permission denied“
+```
+## 40.2 原因分析  
+
+来自docker mannual：
+```
+Manage Docker as a non-root user
+
+The docker daemon binds to a Unix socket instead of a TCP port. By default that Unix socket is owned by the user root and other users can only access it using sudo. The docker daemon always runs as the root user.
+
+If you don’t want to use sudo when you use the docker command, create a Unix group called docker and add users to it. When the docker daemon starts, it makes the ownership of the Unix socket read/writable by the docker group.
+```
+
+docker进程使用 Unix Socket 而不是 TCP 端口。而默认情况下，Unix socket 属于 root 用户，因此需要 root权限 才能访问。
+
+## 40.3 解决方法  
+
+```
+sudo groupadd docker          #添加docker用户组
+sudo gpasswd -a $XXX docker   #检测当前用户是否已经在docker用户组中，其中XXX为用户名，例如我的，rd
+sudo gpasswd -a $USER docker  #将当前用户添加至docker用户组
+newgrp docker                 #更新docker用户组
+sudo chmod a+rw /var/run/docker.sock
+```
