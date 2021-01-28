@@ -38,12 +38,11 @@ godep: error downloading dep (golang.org/x/sys/unix): unrecognized import path "
 ```
 to do 
 ```
-export GO111MODULE=on
-export GOPROXY=https://goproxy.io
 mkdir $GOPATH/src/golang.org/x -p
 cd $GOPATH/src/golang.org/x
 git clone git@github.com:golang/text.git --depth=1
-rm -rf text/.git
+cd $GOPATH/src/
+go install -x golang.org/x/text   //在$GOPATH/pkg目录下生成一个text.a的包文件
 ```
 
 
