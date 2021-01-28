@@ -12,7 +12,7 @@ sudo apt-get install go-dep
 ```
 or `go get github.com/tools/godep`
 
-# 2. get sourcecode from GitHub
+# 2. get openwhisk-wskdeploy sourcecode from GitHub
 
 ```
 mkdir go
@@ -65,4 +65,15 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
 
 ```
+# 5. install openwhisk
 
+```
+git clone https://github.com/apache/openwhisk.git
+cd openwhisk
+ ./gradlew core:standalone:bootRun
+```
+
+to install npm
+```
+sudo apt-get install npm
+```
