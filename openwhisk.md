@@ -27,7 +27,7 @@ sudo mv ./wsk /usr/local/bin/wsk
 ```
 mkdir go
 cd go
-export GOPATH = `pwd`
+export GOPATH=`pwd`
 cd $GOPATH
 go get github.com/apache/openwhisk-wskdeploy  # see known issues below if you get an error
 go get github.com/tools/godep # get the dependency manager, a godep executable file produced in $gopath/bin
