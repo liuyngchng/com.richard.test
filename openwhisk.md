@@ -1,5 +1,5 @@
 # 1. golang setup
-
+the document below can be foud [!doc](https://openwhisk.apache.org/documentation.html)
 setup golang, Upgrade to Go 1.15
 ```
 sudo apt-get install golang
