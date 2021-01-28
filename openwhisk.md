@@ -1,6 +1,6 @@
 # 1. golang setup
 
-setup golang
+setup golang, Upgrade to Go 1.15
 ```
 sudo apt-get install golang
 ```
@@ -22,7 +22,8 @@ wget https://github.com/apache/openwhisk-cli/releases/download/1.1.0/OpenWhisk_C
 sudo mv ./wsk /usr/local/bin/wsk
 ```
 
-# 3. get openwhisk-wskdeploy sourcecode from GitHub
+# 3. build openwhisk-wskdeploy 
+# 3.1 get openwhisk-wskdeploy sourcecode from GitHub
 
 ```
 mkdir go
@@ -31,13 +32,15 @@ export GOPATH=`pwd`
 cd $GOPATH
 go get github.com/apache/openwhisk-wskdeploy  # see known issues below if you get an error
 go get github.com/tools/godep # get the dependency manager, a godep executable file produced in $gopath/bin
+sudo cp bin/godep /usr/local/bin
 
 ```
-# 4. build binary
+# 3.2. build binary
 ```
 cd src/github.com/apache/openwhisk-wskdeploy/
 godep restore
 go build -o wskdeploy
+sudo cp wskdeploy /usr/local/bin
 ```
 
 # 5. troubleshooting
