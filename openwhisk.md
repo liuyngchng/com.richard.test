@@ -12,7 +12,17 @@ sudo apt-get install go-dep
 ```
 or `go get github.com/tools/godep`
 
-# 2. get openwhisk-wskdeploy sourcecode from GitHub
+# 2. install wsk Cli
+
+OpenWhisk_CLI-1.1.0
+```
+mkdir openwhisk-cli
+cd openwhisk-cli
+wget https://github.com/apache/openwhisk-cli/releases/download/1.1.0/OpenWhisk_CLI-1.1.0-linux-amd64.tgz
+sudo mv ./wsk /usr/local/bin/wsk
+```
+
+# 3. get openwhisk-wskdeploy sourcecode from GitHub
 
 ```
 mkdir go
@@ -23,15 +33,15 @@ go get github.com/apache/openwhisk-wskdeploy  # see known issues below if you ge
 go get github.com/tools/godep # get the dependency manager, a godep executable file produced in $gopath/bin
 
 ```
-# 3. build binary
+# 4. build binary
 ```
 cd src/github.com/apache/openwhisk-wskdeploy/
 godep restore
 go build -o wskdeploy
 ```
 
-# 4. troubleshooting
-## 4.1 error downloagding dep
+# 5. troubleshooting
+## 5.1 error downloagding dep
 ```
 godep: error downloading dep (golang.org/x/sys/unix): unrecognized import path "golang.org/x/sys/unix"
 
@@ -44,7 +54,7 @@ git clone git@github.com:golang/text.git --depth=1
 cd $GOPATH/src/
 go install -x golang.org/x/text   //在$GOPATH/pkg目录下生成一个text.a的包文件
 ```
-## 4.2 i/o timeout
+## 5.2 i/o timeout
 
 ```
 go: github.com/apache/openwhisk-client-go@v0.0.0-20191018191012-ee5b8709787c: Get https://proxy.golang.org/github.com/apache/openwhisk-client-go/@v/v0.0.0-20191018191012-ee5b8709787c.mod: dial tcp 172.217.27.145:443: i/o timeout
@@ -65,7 +75,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
 
 ```
-# 5. install openwhisk
+# 6. install openwhisk
 
 ```
 git clone https://github.com/apache/openwhisk.git
