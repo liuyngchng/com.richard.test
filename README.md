@@ -824,3 +824,8 @@ sudo gpasswd -a $USER docker  #将当前用户添加至docker用户组
 newgrp docker                 #更新docker用户组
 sudo chmod a+rw /var/run/docker.sock
 ```
+
+# 41. dns lookup
+```
+dig @114.114.114.114 registry-1.docker.io
+```
