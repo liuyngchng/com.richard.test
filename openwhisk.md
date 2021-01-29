@@ -1,4 +1,5 @@
 # 1. golang setup
+an architectureal view of apache openwhisk as [!this](https://thenewstack.io/behind-scenes-apache-openwhisk-serverless-platform/)
 the document below can be foud [!doc](https://openwhisk.apache.org/documentation.html)
 setup golang, Upgrade to Go 1.15
 ```
