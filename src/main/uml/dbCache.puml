@@ -1,0 +1,14 @@
+@startuml
+App --> Service: update
+Service --> Cache: deleteCache
+note left: updateCache?
+Service -> Redis: setNX+expire
+Redis --> Redis: Lock
+Service --> DB: updateDB
+App --> Service: select
+Service --> Cache: select
+Cache --> Cache: Nothing
+Service --> DB: select
+Service --> Cache: addCache
+
+@enduml
