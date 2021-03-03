@@ -4,11 +4,11 @@ App --> Service: update
 Service --> Cache: deleteCache
 note left: updateCache?
 Service -> Redis: setNX+expire
-Redis --> Redis: Lock
+Redis --> Redis: lock
 Service --> DB: updateDB
 App --> Service: select
 Service --> Cache: select
-Cache --> Cache: Nothing
+Cache --> Cache: nothing
 Service --> DB: select
 Service --> Cache: addCache
 
