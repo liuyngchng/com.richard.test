@@ -1,5 +1,5 @@
 @startuml
-== deleteCacheFirstPatten ==
+== deleteCacheFirstPattern ==
 App --> Service: update
 Service --> Cache: deleteCache
 note left: updateCache?
