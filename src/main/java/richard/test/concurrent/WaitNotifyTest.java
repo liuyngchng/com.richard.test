@@ -7,20 +7,22 @@ public class WaitNotifyTest {
 
     private static volatile List productList = new ArrayList();
 
+    private static final int SIZE_LIMIT = 10;
+
     /**
      * continue to work until something happen.
      */
-    public void continueWork() {
+    public void produceProduct() {
         synchronized (WaitNotifyTest.productList) {
             System.out.println(Thread.currentThread().getName() + " 线程启动生产任务……");
-            for (int i = 0; i < 20; i++) {
+            while (true) {
                 WaitNotifyTest.productList.add("myProduct.");
-                System.out.println("线程"+Thread.currentThread().getName()+"生产货物，总数" + WaitNotifyTest.productList.size());
+                System.out.println("线程" + Thread.currentThread().getName() + "生产货物，总数" + WaitNotifyTest.productList.size());
                 try {
-                    Thread.sleep(500);
-                    if(WaitNotifyTest.productList.size() == 5) {
-                        System.out.println("货物数量达到5，发出通知，清点货物。。");
-                        productList.notify();
+                    Thread.sleep(100);
+                    if (WaitNotifyTest.productList.size() == SIZE_LIMIT) {
+                        System.out.println("货物数量达到仓库上限，停止生产，等待消费。");
+                        productList.wait();
                     }
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
@@ -33,19 +35,31 @@ public class WaitNotifyTest {
     /**
      * start count product until something happen.
      */
-    public void startCountProduct() {
+    public void consumeProduct() {
         synchronized (WaitNotifyTest.productList) {
-            System.out.println(Thread.currentThread().getName() + " 线程启动清点货物任务……");
-            if(productList.size() < 5) {
+            while (true) {
+
+                if (!productList.isEmpty()) {
+                    productList.remove(1);
+                    System.out.println(Thread.currentThread().getName() + " 线程消费产品， " + productList.size());
+                }
                 try {
-                    productList.wait();
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+                if (productList.size() < SIZE_LIMIT) {
+                    try {
+                        productList.notify();
+                        System.out.println(Thread.currentThread().getName() + " 线程,仓库有空余位置，通知进行生产， " + productList.size());
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("线程：" + Thread.currentThread().getName()
+                        + "收到通知，清点货物数量为 " + WaitNotifyTest.productList.size());
             }
-            System.out.println("线程：" + Thread.currentThread().getName()
-                + "收到通知，清点货物数量为 " + WaitNotifyTest.productList.size());
         }
     }
 
@@ -56,10 +70,10 @@ public class WaitNotifyTest {
     public static void main(String[] args) {
 
         WaitNotifyTest test = new WaitNotifyTest();
-        Thread t1 = new Thread(() -> test.continueWork());
+        Thread t1 = new Thread(() -> test.produceProduct());
         t1.setName("t1");
 
-        Thread t2 = new Thread (() -> test.startCountProduct());
+        Thread t2 = new Thread (() -> test.consumeProduct());
         t2.setName("t2");
         t2.start();
         t1.start();
