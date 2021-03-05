@@ -1,11 +1,13 @@
 package richard.test.concurrent;
 
 public class NotifyTest {
+
+    public Object lock = new Object();
     public void testWait() {
-        synchronized (this) {
+        synchronized (this.lock) {
             System.out.println(Thread.currentThread().getName() + " start-----");
             try {
-                this.wait(0);
+                this.lock.wait(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -24,17 +26,17 @@ public class NotifyTest {
             }).start();
         }
 
-        synchronized (test) {
+        synchronized (test.lock) {
             System.out.println("---notify---");
-            test.notify();
+            test.lock.notify();
         }
         System.out.println("i am sleeping.");
         Thread.sleep(3000);
 
         System.out.println("----notifyAll----");
 
-        synchronized (test) {
-            test.notifyAll();
+        synchronized (test.lock) {
+            test.lock.notifyAll();
         }
     }
 }
