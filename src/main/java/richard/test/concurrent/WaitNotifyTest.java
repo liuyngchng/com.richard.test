@@ -13,21 +13,19 @@ public class WaitNotifyTest {
      * continue to work until something happen.
      */
     public void produceProduct() {
-        synchronized (WaitNotifyTest.productList) {
-            System.out.println(Thread.currentThread().getName() + " 线程启动生产任务……");
-            while (true) {
-                WaitNotifyTest.productList.add("myProduct.");
-                System.out.println("线程" + Thread.currentThread().getName() + "生产货物，总数" + WaitNotifyTest.productList.size());
-                try {
-                    Thread.sleep(100);
-                    if (WaitNotifyTest.productList.size() == SIZE_LIMIT) {
-                        System.out.println("货物数量达到仓库上限，停止生产，等待消费。");
-                        productList.wait();
-                    }
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+        System.out.println(Thread.currentThread().getName() + " 线程启动生产任务");
+        while (true) {
+            WaitNotifyTest.productList.add("myProduct.");
+            System.out.println("线程" + Thread.currentThread().getName() + "生产货物，总数" + WaitNotifyTest.productList.size());
+            try {
+                Thread.sleep(100);
+                if (WaitNotifyTest.productList.size() == SIZE_LIMIT) {
+                    System.out.println("货物数量达到仓库上限，停止生产，等待消费。");
+                    productList.wait();
                 }
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
     }
