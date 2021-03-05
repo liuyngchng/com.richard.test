@@ -30,7 +30,7 @@ class Hide {
 		car.fuelUp();
 		car.run();
 		if (car instanceof MyCar) {
-			(MyCar)car.autoDrive();
+//			(MyCar)car.autoDrive();
 		}
 		System.out.println("carType = " + car.getClass().getName());	
 		if (debug) {
