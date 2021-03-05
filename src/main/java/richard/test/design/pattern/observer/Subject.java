@@ -1,4 +1,4 @@
-package richard.test.design.patten.observer;
+package richard.test.design.pattern.observer;
 
 /**
  * Created by Richard on 1/9/18.

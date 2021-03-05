@@ -1,4 +1,4 @@
-package richard.test.design.patten.observer;
+package richard.test.design.pattern.observer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
