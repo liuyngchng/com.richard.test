@@ -44,7 +44,8 @@ public class WaitNotifyTest {
                     e.printStackTrace();
                 }
             }
-            System.out.println("线程：" + Thread.currentThread().getName() + "收到通知，清点货物数量为 " + WaitNotifyTest.productList.size());
+            System.out.println("线程：" + Thread.currentThread().getName()
+                + "收到通知，清点货物数量为 " + WaitNotifyTest.productList.size());
         }
     }
 
