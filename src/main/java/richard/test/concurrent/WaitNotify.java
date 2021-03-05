@@ -19,7 +19,7 @@ public class WaitNotify {
         synchronized (this) {
             while (status) {
                 try {
-                    LOGGER.info("I am waiting.");
+                    LOGGER.info("I am waiting in thread {}.", Thread.currentThread().getName());
                     try {
                         if (i ++ == 10) {
                             status = false;
@@ -28,12 +28,13 @@ public class WaitNotify {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+//                    LOGGER.info("run wait() in thread {}.", Thread.currentThread().getName());
 //                    this.wait();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            LOGGER.info("finish wait");
+            LOGGER.info("finish wait in thread ()", Thread.currentThread().getName());
         }
     }
 
@@ -59,19 +60,19 @@ public class WaitNotify {
 
     public static void main(String[] args) throws InterruptedException {
         final WaitNotify waitNotify = new WaitNotify();
-        Thread thread1 = new Thread(new Runnable() {
-            public void run() {
-                waitNotify.doWait();
-            }
-        });
+        Thread thread1 = new Thread(() -> waitNotify.doWait());
+        thread1.setName("thread1");
 
         Thread thread2 = new Thread(new Runnable() {
             public void run() {
                 waitNotify.doNotify();
             }
         });
+        thread2.setName("thread2");
+
+        thread2.start();
         thread1.start();
-//        thread2.start();
+
         LOGGER.info("i am going to join.");
 //        Thread.sleep(10000L);
 //        LOGGER.info("start to call do wait.");
