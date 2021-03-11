@@ -88,3 +88,25 @@ show variables like '%log_bin%';
 ## 2.3 browse binlog
 
 sudo mysqlbinlog  -d dbname --base64-output=decode-rows  /var/log/mysql/mysql-bin.000001
+
+## 3. general query log
+
+修改 my.cnf  
+查看my.cnf的位置 `file /etc/mysql/my.cnf`  
+```
+cd /etc/mysql/mysql.conf.d
+vim mysqld.cnf
+
+```
+去掉以下两项的注释
+
+```
+general_log_file        = /var/log/mysql/mysql.log
+general_log             = 1
+```
+
+查看日志
+
+```
+tail -f /var/log/mysql/mysql.log
+```
