@@ -7,6 +7,10 @@ import org.jsoup.Jsoup;
 import java.io.*;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
+
+/**
+ * 将非maven项目转换为maven项目
+ */
 public class PomGenerator {
     public static void main(String[] args) throws IOException {
         File file = new File("pomDependency.xml");
