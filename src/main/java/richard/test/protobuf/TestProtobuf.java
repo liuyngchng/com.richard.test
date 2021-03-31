@@ -25,16 +25,16 @@ public class TestProtobuf {
 //        System.out.printf("gpsInfo string is %s", info.toString());
         System.out.println("===== gps Byte 开始=====");
         byte[] pbArray = gps_data.toByteArray();
-//        FileOutputStream fs = new FileOutputStream("gpsInfo");
-//        ObjectOutputStream os = new ObjectOutputStream(fs);
-//        os.writeObject(info);
-//        os.close();
-//        fs.close();
-//        fs = new FileOutputStream("gps_data");
-//        os = new ObjectOutputStream(fs);
-//        os.writeObject(gps_data);
-//        os.close();
-//        fs.close();
+        FileOutputStream fs = new FileOutputStream("gpsInfo");
+        ObjectOutputStream os = new ObjectOutputStream(fs);
+        os.writeObject(info);
+        os.close();
+        fs.close();
+        fs = new FileOutputStream("gps_data");
+        os = new ObjectOutputStream(fs);
+        os.writeObject(gps_data);
+        os.close();
+        fs.close();
         System.out.printf(
             "pbArray length is %s\n",
             pbArray.length
