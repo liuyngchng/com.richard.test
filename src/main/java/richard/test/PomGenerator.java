@@ -20,7 +20,6 @@ public class PomGenerator {
         for (File jar : dir.listFiles()) {
             dependencies.add(readFile(jar));
         }
-
         FileWriter writer = new FileWriter(file);
         writer.write(dependencies.asXML().replace("><", ">\r\n<"));
         writer.close();
