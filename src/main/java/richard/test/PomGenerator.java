@@ -4,69 +4,88 @@ import com.alibaba.fastjson.JSONObject;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 import org.jsoup.Jsoup;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 public class PomGenerator {
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws IOException {
+        File file = new File("pomDependency.xml");
+        if (file.exists()) {
+            file.delete();
+        } else {
+            file.createNewFile();
+        }
         Element dependencies = new DOMElement("dependencies");
         File dir = new File("/home/rd/workspace/access.client/lib");        //需生成pom.xml 文件的 lib路径
         for (File jar : dir.listFiles()) {
-            JarInputStream jis = new JarInputStream(new FileInputStream(jar));
-            Manifest mainmanifest = jis.getManifest();
-            jis.close();
-            String bundleName = mainmanifest.getMainAttributes().getValue("Bundle-Name");
-            String bundleVersion = mainmanifest.getMainAttributes().getValue("Bundle-Version");
-            Element ele = null;
+            dependencies.add(readFile(jar));
+        }
+
+        FileWriter writer = new FileWriter(file);
+        writer.write(dependencies.asXML().replace("><", ">\r\n<"));
+        writer.close();
+        System.out.println("finished, pom output as file " + file.getName());
+    }
+
+    /**
+     * Read jar file.
+     * @param jar
+     * @return
+     * @throws IOException
+     */
+    public static Element readFile(File jar) throws IOException {
+        JarInputStream jis = new JarInputStream(new FileInputStream(jar));
+        Manifest mainmanifest = jis.getManifest();
+        jis.close();
+        String bundleName = mainmanifest.getMainAttributes().getValue("Bundle-Name");
+        String bundleVersion = mainmanifest.getMainAttributes().getValue("Bundle-Version");
+        Element ele = null;
 //            System.out.println(jar.getName());
-            StringBuffer sb = new StringBuffer(jar.getName());
-            if (bundleName != null) {
-                bundleName = bundleName.toLowerCase().replace(" ", "-");
-                sb.append(bundleName+"\t").append(bundleVersion);
-                ele = getDependices(bundleName, bundleVersion);
+        StringBuffer sb = new StringBuffer(jar.getName());
+        if (bundleName != null) {
+            bundleName = bundleName.toLowerCase().replace(" ", "-");
+            sb.append(bundleName+"\t").append(bundleVersion);
+            ele = getDependencies(bundleName, bundleVersion);
 //                System.out.println(sb.toString());
 //                System.out.println(ele.asXML());
-            }
-            if (ele == null || ele.elements().size() == 0) {
-                bundleName = "";
-                bundleVersion = "";
-                String[] ns = jar.getName().replace(".jar", "").split("-");
-                for (String s : ns) {
-                    if (Character.isDigit(s.charAt(0))) {
-                        bundleVersion += s + "-";
-                    } else {
-                        bundleName += s + "-";
-                    }
-                }
-                if (bundleVersion.endsWith("-")) {
-                    bundleVersion = bundleVersion.substring(0, bundleVersion.length() - 1);
-                }
-                if (bundleName.endsWith("-")) {
-                    bundleName = bundleName.substring(0, bundleName.length() - 1);
-                }
-                ele = getDependices(bundleName, bundleVersion);
-                sb.setLength(0);
-                sb.append(bundleName+"\t").append(bundleVersion);
-//                System.out.println(sb.toString());
-                System.out.println(ele.asXML());
-            }
-
-            ele = getDependices(bundleName, bundleVersion);
-            if (ele.elements().size() == 0) {
-                ele.add(new DOMElement("groupId").addText("not found"));
-                ele.add(new DOMElement("artifactId").addText(bundleName));
-                ele.add(new DOMElement("version").addText(bundleVersion));
-            }
-            dependencies.add(ele);
-            System.out.println();
         }
-        System.out.println(dependencies.asXML().replace("><", ">\r\n<"));
+        if (ele == null || ele.elements().size() == 0) {
+            bundleName = "";
+            bundleVersion = "";
+            String[] ns = jar.getName().replace(".jar", "").split("-");
+            for (String s : ns) {
+                if (Character.isDigit(s.charAt(0))) {
+                    bundleVersion += s + "-";
+                } else {
+                    bundleName += s + "-";
+                }
+            }
+            if (bundleVersion.endsWith("-")) {
+                bundleVersion = bundleVersion.substring(0, bundleVersion.length() - 1);
+            }
+            if (bundleName.endsWith("-")) {
+                bundleName = bundleName.substring(0, bundleName.length() - 1);
+            }
+            ele = getDependencies(bundleName, bundleVersion);
+            sb.setLength(0);
+            sb.append(bundleName+"\t").append(bundleVersion);
+//                System.out.println(sb.toString());
+            System.out.println("found element:" +ele.asXML());
+        }
+
+        ele = getDependencies(bundleName, bundleVersion);
+        if (ele.elements().size() == 0) {
+            ele.add(new DOMElement("groupId").addText("not found"));
+            ele.add(new DOMElement("artifactId").addText(bundleName));
+            ele.add(new DOMElement("version").addText(bundleVersion));
+            ele.add(new DOMElement("scope").addText("system"));
+            ele.add(new DOMElement("systemPath").addText("${basedir}/lib/" + jar.getName()));
+        }
+//        System.out.println();
+        return ele;
     }
-    public static Element getDependices(String key, String ver) {
+
+    public static Element getDependencies(String key, String ver) {
         Element dependency = new DOMElement("dependency");
         // 设置代理
         // System.setProperty("http.proxyHost", "127.0.0.1");
