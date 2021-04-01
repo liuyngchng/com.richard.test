@@ -9,6 +9,7 @@ import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 /**
+ *
  * 将非maven项目转换为maven项目
  */
 public class PomGenerator {
@@ -78,6 +79,10 @@ public class PomGenerator {
 
         ele = getDependencies(bundleName, bundleVersion);
         if (ele.elements().size() == 0) {
+//            ele.add(new DOMElement("groupId").addText("com.richard"));
+//            ele.add(new DOMElement("artifactId").addText(jar.getName().replace(".jar", "")));
+//            ele.add(new DOMElement("version").addText("1.0.0"));
+
             ele.add(new DOMElement("groupId").addText("not found"));
             ele.add(new DOMElement("artifactId").addText(bundleName));
             ele.add(new DOMElement("version").addText(bundleVersion));
