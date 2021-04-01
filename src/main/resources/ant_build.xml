@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="lzg_dlna"  basedir="D:\Android\android_tool\ant_test" default="makeSuperJar" >
+    <target name="makeSuperJar" description="description" >
+        <jar destfile="lzg_dlna.jar" >
+            <zipfileset src="cdi-api.jar" />
+            <zipfileset src="http-2.2.1.jar" />
+            <zipfileset src="httpclient-4.2.2.jar"/>
+            <zipfileset src="httpcore-4.2.3.jar" />
+            <zipfileset src="javax.annotation_1.0.jar" />
+            <zipfileset src="javax.inject.jar" />
+            <zipfileset src="javax.servlet-3.0.0.v201103241009.jar" />
+            <zipfileset src="jetty-client-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-continuation-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-http-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-io-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-security-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-server-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-servlet-8.1.9.v20130131.jar" />
+            <zipfileset src="jetty-util-8.1.9.v20130131.jar" />
+            <zipfileset src="seamless-http-1.0-alpha2.jar" />
+            <zipfileset src="seamless-util-1.0-alpha2.jar" />
+            <zipfileset src="seamless-xml-1.0-alpha2.jar" />
+            <zipfileset src="slf4j-api-1.6.1.jar" />
+            <zipfileset src="slf4j-jdk14-1.6.1.jar" />
+        </jar>
+    </target>
+</project>

@@ -1,4 +1,4 @@
-package richard.test;
+package richard.test.tools;
 
 import com.alibaba.fastjson.JSONObject;
 import org.dom4j.Element;
