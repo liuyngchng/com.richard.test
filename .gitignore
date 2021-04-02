@@ -37,3 +37,5 @@ _*
 
 # java 
 *.class
+ant_build_input.xml
+pomDependency.xml
