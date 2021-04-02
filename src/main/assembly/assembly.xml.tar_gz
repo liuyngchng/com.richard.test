@@ -1,0 +1,100 @@
+<assembly>
+    <id>bin</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+
+    <dependencySets>
+        <!--把依赖都打包进libs文件夹-->
+        <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>libs</outputDirectory>
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
+
+    <files>
+        <!--把pom.xml打包进source文件夹-->
+        <file>
+            <source>${project.basedir}/pom.xml</source>
+            <outputDirectory>sources</outputDirectory>
+        </file>
+        <!--把assembly.xml打包放到source文件夹-->
+        <file>
+            <source>${project.basedir}/src/main/assembly/assembly.xml</source>
+            <outputDirectory>sources</outputDirectory>
+        </file>
+    </files>
+
+    <!--用于指定文件目录-->
+    <fileSets>
+        <!--把src文件夹也打包进来-->
+        <fileSet>
+            <directory>${project.basedir}/src</directory>
+            <outputDirectory>sources/src</outputDirectory>
+        </fileSet>
+        <!--如果有proto文件打包到source/proto文件夹下，需要在main下创建proto文件夹存放.proto文件-->
+        <fileSet>
+            <directory>${project.basedir}/src/main/proto</directory>
+            <outputDirectory>sources/proto</outputDirectory>
+            <includes>
+                <include>*.proto</include>
+            </includes>
+        </fileSet>
+
+        <!--配置source中的.xml和.properties文件输出到conf文件中-->
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <include>*.xml</include>
+                <include>*.properties</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>${project.basedir}/conf</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <include>*.xml</include>
+                <include>*.properties</include>
+                <include>*.yml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>${project.basedir}/conf/${conf.subdir}</directory>
+            <outputDirectory>conf</outputDirectory>
+            <includes>
+                <include>*.xml</include>
+                <include>*.properties</include>
+                <include>*.yml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <outputDirectory>doc</outputDirectory>
+            <includes>
+                <include>*.txt</include>
+                <include>*.md</include>
+            </includes>
+        </fileSet>
+
+        <!--配置bin文件输出位置-->
+        <fileSet>
+            <directory>${project.basedir}/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>755</fileMode>
+        </fileSet>
+
+        <!--<fileSet>  -->
+        <!--<directory>${project.build.directory}</directory>  -->
+        <!--<outputDirectory>/</outputDirectory>  -->
+        <!--<includes>  -->
+        <!--<include>*.jar</include>  -->
+        <!--</includes>  -->
+        <!--</fileSet>  -->
+    </fileSets>
+
+</assembly>
