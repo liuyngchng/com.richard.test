@@ -21,9 +21,19 @@ public class PomGenerator {
             file.createNewFile();
         }
         Element dependencies = new DOMElement("dependencies");
-        File dir = new File("/home/rd/workspace/access.client/lib");        //需生成pom.xml 文件的 lib路径
+        File dir = new File("/home/rd/workspace/publisherForSubject/src/main/webapp/WEB-INF/lib");        //需生成pom.xml 文件的 lib路径
         for (File jar : dir.listFiles()) {
-            dependencies.add(readFile(jar));
+            if (dir.isDirectory()) {
+                System.out.println("this is a directory:" + jar.getName());
+                continue;
+            }
+            System.out.println("read file:" + jar.getName());
+            try {
+                dependencies.add(readFile(jar));
+            } catch (Exception ex) {
+                System.out.println("error to read file: " + jar.getName());
+            }
+
         }
         FileWriter writer = new FileWriter(file);
         writer.write(dependencies.asXML().replace("><", ">\r\n<"));
@@ -87,7 +97,7 @@ public class PomGenerator {
             ele.add(new DOMElement("artifactId").addText(bundleName));
             ele.add(new DOMElement("version").addText(bundleVersion));
             ele.add(new DOMElement("scope").addText("system"));
-            ele.add(new DOMElement("systemPath").addText("${basedir}/lib/" + jar.getName()));
+            ele.add(new DOMElement("systemPath").addText("${pom.basedir}/lib/" + jar.getName()));
         }
 //        System.out.println();
         return ele;
