@@ -829,3 +829,11 @@ sudo chmod a+rw /var/run/docker.sock
 ```
 dig @114.114.114.114 registry-1.docker.io
 ```
+
+# 42. network interface card up down
+
+```
+ifdown eth1  /  ifconfig eth1 down 　　　　禁用网卡
+
+ifup eth1  / ifconfig eth1 up 　　　　　　 启用网卡
+```
