@@ -6,7 +6,11 @@ mkdir ubuntu
 ```
 ## 1.2 install fuse-ext2  
 see `https://github.com/alperakcan/fuse-ext2`  
-## 1.2 mout  
+## 1.3 mout  
 ```
 sudo mount -t fuse-ext2 /dev/disk0s3 ./ubuntu/
+```
+## 1.4 umount
+```
+sudo umount /dev/disk0s3
 ```
