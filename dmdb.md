@@ -42,6 +42,14 @@ cd dmdbms/bin
 /dmserver -i ../data/test/dm.ini &
 ```
 
+docker
+
+```
+docker network create --subnet=172.18.0.0/16 mynetwork
+docker network ls
+docker run -dit -p 5236:5236 --name test --net mynetwork --ip 172.18.0.2  209c24a7f1c1
+```
+
 ## 1.2 setup unixODBC
 
 ```
