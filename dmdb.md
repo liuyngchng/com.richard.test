@@ -34,12 +34,12 @@ quit
 ```
 cd dameng_x86
 ./DMInstall.bin -i
-cd dmdbms/bin
+cd /opt/dmdbms/bin 
 ./dminit
 ```
 若初始化的数据库名称为test，则启动时执行
 ```
-/dmserver -i ../data/test/dm.ini &
+./dmserver -i ../data/test/dm.ini &
 ```
 
 docker
