@@ -50,7 +50,7 @@ docker network ls
 docker run -dit -p 5236:5236 --name test --net mynetwork --ip 172.18.0.2  209c24a7f1c1
 ```
 
-## 1.2 setup unixODBC
+## 1.3 setup unixODBC
 
 ```
 tar -zxf unixODBC-2.3.9.tar.gz
@@ -81,7 +81,7 @@ SQLULEN Size.......: 8
 SQLLEN Size........: 8
 SQLSETPOSIROW Size.: 8
 ```
-## 1.3 config odbc
+## 1.4 config odbc
 
 sudo vim /user/local/etc/odbcinst.ini,
 content as following
@@ -102,7 +102,7 @@ UID			= SYSDBA
 PWD			= SYSDBA
 TCP_PORT 	= 5236
 ```
-## 1.4 config LD_LIBRARY_PATH
+## 1.5 config LD_LIBRARY_PATH
 add dm libdodbc.so to LD_LIBRARY_PATH
 sudo vim /etc/profile
 ```
@@ -151,3 +151,41 @@ to check what's wrong.
 让系统统一自动都转化为大写；
 ## 2.4 以上两点主要针对大小写敏感的库而言，大小写不敏感的库则不存在上述问题。  
 基于以上两点，在初始化数据库的过程中就可以对字符串比较大小写敏感这个参数做出合理的选择了。
+## 2.5 SQL
+
+```
+select * from v$version;
+
+-- 查看所有表空间（schema）---
+select name from v$tablespace;
+
+-- 查看所有表空间物理文件 --
+select * from v$datafile;
+
+-- 执行sql脚本 --
+SQL> start /a/b/c.sql
+
+-- 编辑SQL脚本 --
+SQL> edit /a/b/c.sql
+
+
+-- 查看表空间物理文件的名称及大小 --
+select t.name tablespace_name,t.id file_id,d.path file_name,d.total_size*sf_get_page_size()/1024/1024||'m' total_space from v$tablespace t, v$datafile d where t.id=d.group_id;
+
+-- 查看数据库实例信息 --
+select name inst_name from v$instance;
+
+-- 确定高负载的 SQL(慢查询) --
+select * from v$long_exec_sqls;
+
+
+select owner, table_name, tablespace_name from dba_tables where owner = 'sysdba';
+
+-- 查询当前用户下所有的表名--
+select NAME from sysobjects where "SUBTYPE='SCH');
+
+-- 有开源的客户端工具可以连DM ?--
+-- 基于JDBC的工具就可以，比如：SQuirrel SQL、DbVisualizer --
+
+``
+
