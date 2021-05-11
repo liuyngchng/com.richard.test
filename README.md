@@ -837,3 +837,7 @@ ifdown eth1  /  ifconfig eth1 down 　　　　禁用网卡
 
 ifup eth1  / ifconfig eth1 up 　　　　　　 启用网卡
 ```
+# 43. mvn install
+```
+mvn install:install-file -DgroupId=com.dm -DartifactId=dmjdbc7 -Dversion=1.7.0 -Dpackaging=jar -Dfile=Dm7JdbcDriver17.jar
+```

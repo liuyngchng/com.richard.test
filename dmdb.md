@@ -36,7 +36,36 @@ cd dameng_x86
 ./DMInstall.bin -i
 cd /opt/dmdbms/bin 
 ./dminit
+input system dir: /opt/dmdbms/data		// 数据文件存放路径
+input db name: dm5252		   //实例/数据库名
+input port num: 5252			//服务端口
+input page size(4,8,16,32): 8	//数据库页大小
+input extent size(16,32): 32	//扩展大小
+input sec priv mode(0,1): 0		//安全特权模式
+input time zone(-12:59,+14:00): +8	//时区 ，选东8区
+input case sensitive? ([Y]es,[N]o): Y	//标识符是否区分大小写
+which charset to use? (0[GB18030],1[UTF-8],2[EUC-KR]): 1	//字符集
+length in char? ([Y]es,[N]o): Y		//字符长度
+enable database encrypt? ([Y]es,[N]o): N	//是否启用数据库加密
+input slice size(512,4096): 512
+page check mode? (0/1/2): 0		//是否开启页页检查模式
+input elog path: 		//日志路径
+auto_overwrite mode? (0/1/2): 0		//自动覆盖模式
 ```
+注册服务
+```
+cd /opt/dmdbms/script/root
+dm_service_installer.sh -t dmserver -i /opt/dmdbms/test/dm.ini -p TEST
+cd /opt/dmdbms
+chmod -R 777 test
+cd /opt/dmdbms/bin
+./DmServiceTEST start	#启动
+./DmServiceTEST stop	#停止
+./DmServiceTEST status	#查看服务状态
+
+```
+
+
 若初始化的数据库名称为test，则启动时执行
 ```
 ./dmserver ../data/test/dm.ini &
@@ -49,7 +78,14 @@ docker network create --subnet=172.18.0.0/16 mynetwork
 docker network ls
 docker run -dit -p 5236:5236 --name test --net mynetwork --ip 172.18.0.2  209c24a7f1c1
 ```
+create user
+```
 
+```
+import data
+```
+/dimp SYSDBA/SYSDBA IGNORE=Y ROWS=Y FULL=Y
+```
 ## 1.3 setup unixODBC
 
 ```
@@ -186,6 +222,7 @@ select NAME from sysobjects where "SUBTYPE='SCH');
 
 -- 有开源的客户端工具可以连DM ?--
 -- 基于JDBC的工具就可以，比如：SQuirrel SQL、DbVisualizer --
-
-``
+--  create user --
+create user USNAME IDENTIFIED BY PSWORD;
+```
 
