@@ -1,12 +1,13 @@
 # 1. Dameng DB
-## 1.1 setup dm db
+## 1.1 setup dmdb in GUI mode
+
 ```
 cd dameng_x86
 ./DMInstall.bin
 cd /home/rd/Desktop/DMDBMS
-
 ```
 add path for cmd
+
 ```
 sudo vim /etc/profile
 PATH=/home/rd/dmdbms/bin:$PATH
@@ -14,6 +15,7 @@ export PATH
 source /etc/profile
 ```
 start DmServiceDMSERVER, to run
+
 ```
 DmServiceDMSERVER start
 ```
@@ -25,6 +27,19 @@ insert into t values(1,2,3);
 insert into t values(11,22,33);
 commit;
 quit
+```
+
+## 1.2 setup dmdb in terminal (no GUI)
+
+```
+cd dameng_x86
+./DMInstall.bin -i
+cd dmdbms/bin
+./dminit
+```
+若初始化的数据库名称为test，则启动时执行
+```
+/dmserver -i ../data/test/dm.ini &
 ```
 
 ## 1.2 setup unixODBC
