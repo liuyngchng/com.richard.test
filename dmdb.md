@@ -84,7 +84,7 @@ create user
 ```
 import data
 ```
-/dimp SYSDBA/SYSDBA IGNORE=Y ROWS=Y FULL=Y
+./dimp SYSDBA/SYSDBA IGNORE=N ROWS=Y FULL=Y file="/opt/DBXXFW.dmp"
 ```
 ## 1.3 setup unixODBC
 
@@ -224,5 +224,20 @@ select NAME from sysobjects where "SUBTYPE='SCH');
 -- 基于JDBC的工具就可以，比如：SQuirrel SQL、DbVisualizer --
 --  create user --
 create user USNAME IDENTIFIED BY PSWORD;
+-- delete user and default schema --
+DROP USER username cascade;
+
+-- 创建schema --
+create schema SCHEMA_NAME authorization SCHEMA_OWNER 
+
+-- 删除 schema --
+drop schema SCHEMA_NAME
+
+-- 查询所有的表以及其拥有者 --
+select distinct table_name, owner from all_tables; 
+
+-- 查询所有的schema --
+select distinct object_name  from all_objects where object_type = 'SCH';
+
 ```
 
