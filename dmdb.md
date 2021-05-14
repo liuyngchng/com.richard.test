@@ -36,21 +36,21 @@ cd dameng_x86
 ./DMInstall.bin -i
 cd /opt/dmdbms/bin 
 ./dminit
-input system dir: /opt/dmdbms/data		// 数据文件存放路径
-input db name: dm5252		   //实例/数据库名
-input port num: 5252			//服务端口
-input page size(4,8,16,32): 8	//数据库页大小
-input extent size(16,32): 32	//扩展大小
-input sec priv mode(0,1): 0		//安全特权模式
-input time zone(-12:59,+14:00): +8	//时区 ，选东8区
-input case sensitive? ([Y]es,[N]o): Y	//标识符是否区分大小写
+input system dir: /opt/dmdbms/data			// 数据文件存放路径
+input db name: dm5252						//实例/数据库名
+input port num: 5252						//服务端口
+input page size(4,8,16,32): 8				//数据库页大小
+input extent size(16,32): 32				//扩展大小
+input sec priv mode(0,1): 0					//安全特权模式
+input time zone(-12:59,+14:00): +8			//时区 ，选东8区
+input case sensitive? ([Y]es,[N]o): Y		//标识符是否区分大小写
 which charset to use? (0[GB18030],1[UTF-8],2[EUC-KR]): 1	//字符集
-length in char? ([Y]es,[N]o): Y		//字符长度
+length in char? ([Y]es,[N]o): Y				//字符长度, N for DBXXFW.dmp
 enable database encrypt? ([Y]es,[N]o): N	//是否启用数据库加密
 input slice size(512,4096): 512
-page check mode? (0/1/2): 0		//是否开启页页检查模式
-input elog path: 		//日志路径
-auto_overwrite mode? (0/1/2): 0		//自动覆盖模式
+page check mode? (0/1/2): 0					//是否开启页页检查模式
+input elog path:							//日志路径
+auto_overwrite mode? (0/1/2): 0				//自动覆盖模式
 ```
 注册服务
 ```
