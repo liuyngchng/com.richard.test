@@ -218,8 +218,7 @@ select * from v$long_exec_sqls;
 select owner, table_name, tablespace_name from dba_tables where owner = 'sysdba';
 
 -- 查询当前用户下所有的表名--
-select NAME from sysobjects where "SUBTYPE='SCH');
-
+select NAME from sysobjects where "SUBTYPE$"='UTAB'AND SCHID=(SELECT ID FROM sysobjects WHERE NAME=USER AND TYPE$='SCH');
 -- 有开源的客户端工具可以连DM ?--
 -- 基于JDBC的工具就可以，比如：SQuirrel SQL、DbVisualizer --
 --  create user --
