@@ -201,6 +201,9 @@ select * from v$datafile;
 -- 执行sql脚本 --
 SQL> start /a/b/c.sql
 
+-- disql 执行SQL脚本 (./test.sql为文件路径)--
+disql SYSDBA/SYSDBA@localhost \` ./test.sql 
+
 -- 编辑SQL脚本 --
 SQL> edit /a/b/c.sql
 
@@ -226,8 +229,9 @@ create user USNAME IDENTIFIED BY PSWORD;
 -- delete user and default schema --
 DROP USER username cascade;
 
--- 创建schema --
-create schema SCHEMA_NAME authorization SCHEMA_OWNER 
+-- 创建schema(注意：必须要有第二行的斜杠) --
+create schema SCHEMA_NAME authorization SCHEMA_OWNER; 
+/
 
 -- 删除 schema --
 drop schema SCHEMA_NAME
