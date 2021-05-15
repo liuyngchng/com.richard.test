@@ -76,7 +76,7 @@ docker
 ```
 docker network create --subnet=172.18.0.0/16 mynetwork
 docker network ls
-docker run -dit -p 5236:5236 --name test --net mynetwork --ip 172.18.0.2  209c24a7f1c1
+docker run -dit -p 5236:5236 -p 18088:18088 -p 2181:2181 -p 9092:9092 -p 18011:18011 -p 12808:12808 -v /Users/rd/dky:/dky  --name test  209c24a7f1c1
 ```
 create user
 ```
