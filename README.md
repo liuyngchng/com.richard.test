@@ -212,6 +212,30 @@ rpm -qa | xargs yum reinstall -y
 exit
 docker commit bbb046a8fefe image_repository
 ```
+## 2.11 docker容器内设置ubuntu语言为中文
+### 2.11.1 查看当前语言
+`locale`
+### 2.11.2 查看当前已安装的语言
+`locale -a`
+```
+### 2.11.3 安装语言包
+```   
+apt-get install language-pack-zh-hans
+locale-gen zh_CN.UTF-8
+```
+再次查看  
+```   
+locale -a
+```  
+### 2.11.4 添加到文件
+```
+echo "export LC_ALL=zh_CN.UTF-8">> /etc/profile
+source /etc/profile
+```
+如果这里添加失败，提示没有这种语言包，退出容器，再重新进入，就可以添加了
+### 2.11. 5 完成
+`locale`
+
 # 3. Setup Redis
 ```
 yum install -y epel-release

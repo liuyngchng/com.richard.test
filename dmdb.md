@@ -30,11 +30,14 @@ quit
 ```
 
 ## 1.2 setup dmdb in terminal (no GUI)
-
+install db server
 ```
 cd dameng_x86
 ./DMInstall.bin -i
-cd /opt/dmdbms/bin 
+cd /opt/dmdbms/bin
+```
+init server instance
+```
 ./dminit
 input system dir: /opt/dmdbms/data			// 数据文件存放路径
 input db name: dm5252						//实例/数据库名
@@ -64,13 +67,19 @@ cd /opt/dmdbms/bin
 ./DmServiceTEST status	#查看服务状态
 
 ```
-
-
-若初始化的数据库名称为test，则启动时执行
+start port listening, 若初始化的数据库名称为test，则启动时执行
 ```
 ./dmserver ../data/test/dm.ini &
 ```
-
+delete server instance named 'test' 
+```
+cd dmdbms/script/root
+./dm_service_uninstaller.sh -n test
+cd /dmdbms/data
+rm -fr test
+ps -ef | grep dmserver
+kill -9 xxxx
+```
 docker
 
 ```
@@ -80,11 +89,13 @@ docker run -dit -p 5236:5236 -p 18088:18088 -p 2181:2181 -p 9092:9092 -p 18011:1
 ```
 create user
 ```
+create user DBXXFW identified by DBXXFW123456;
+grant DBA to DBXXFW;
 
 ```
 import data
 ```
-./dimp SYSDBA/SYSDBA IGNORE=N ROWS=Y FULL=Y file="/opt/DBXXFW.dmp"
+./dimp SYSDBA/SYSDBA IGNORE=N ROWS=Y FULL=Y file="/dky/xxfw/DBXXFW.dmp"
 ```
 ## 1.3 setup unixODBC
 
@@ -226,6 +237,8 @@ select NAME from sysobjects where "SUBTYPE$"='UTAB'AND SCHID=(SELECT ID FROM sys
 -- 基于JDBC的工具就可以，比如：SQuirrel SQL、DbVisualizer --
 --  create user --
 create user USNAME IDENTIFIED BY PSWORD;
+-- grant role to user --
+grant DBA to username;
 -- delete user and default schema --
 DROP USER username cascade;
 
