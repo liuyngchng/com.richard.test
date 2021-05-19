@@ -184,6 +184,11 @@
             <artifactId>jsoup</artifactId>
             <version>1.8.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.32.3.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -219,7 +224,7 @@
                     </descriptors>
                     <archive>
                         <manifest>
-                            <mainClass>SnowflakeIdGenerator</mainClass>
+                            <mainClass>richard.test.sqlite.SQLiteTest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
