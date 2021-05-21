@@ -209,6 +209,9 @@ select name from v$tablespace;
 -- 查看所有表空间物理文件 --
 select * from v$datafile;
 
+-- 查看表定义 --
+CALL SP_TABLEDEF('schema_name', 'table_name');
+
 -- 执行sql脚本 --
 SQL> start /a/b/c.sql
 
@@ -255,5 +258,8 @@ select distinct table_name, owner from all_tables;
 -- 查询所有的schema --
 select distinct object_name  from all_objects where object_type = 'SCH';
 
+-- 切换schema --
+set schema schema_name;		//前提条件是schema_name 的owner 属于当前用户，否则无法切换；
+ 
 ```
 
