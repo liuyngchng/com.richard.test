@@ -865,3 +865,14 @@ ifup eth1  / ifconfig eth1 up 　　　　　　 启用网卡
 ```
 mvn install:install-file -DgroupId=com.dm -DartifactId=dmjdbc7 -Dversion=1.7.0 -Dpackaging=jar -Dfile=Dm7JdbcDriver17.jar
 ```
+
+# 44. docker group 
+when you run `docker ps` in Ubuntu and it says as following
+```
+Got permission denied while trying to connect to the Docker daemon socket at
+```
+则只需要将当前用户加入到docker组中即可， 执行
+```
+sudo gpasswd -a $USER docker
+newgrp docker
+```
