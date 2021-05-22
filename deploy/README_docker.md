@@ -12,7 +12,7 @@ and then run
 ## 1.2 pull docker image
 ```
 docker pull ubuntu
-docker run -dit --name test ubuntu
+docker run -dit -v /home/rd/work/dky:/home/rd/work/dky --network host --name test ubuntu
 docker exec -it test bash
 ```
 
@@ -34,11 +34,37 @@ tar -zxf dm.tar.gz
 cd /opt/dameng_x86
 ./DMInstall.bin -i
 ```
+采用定制化安装，如下所示
+```
+Installation Type:
+1 Typical
+2 Server
+3 Client
+4 Custom
+Please Input the number of the Installation Type [1 Typical]:4
+1 Server component
+2 Client component
+  2.1 Manager
+  2.2 Monitor
+  2.3 DTS
+  2.4 Console
+  2.5 Analyzer
+  2.6 DISQL
+3 DM Drivers
+4 Manual component
+5 DBMS Service
+  5.1 Realtime Audit Service
+  5.2 Job Service
+  5.3 Instance Monitor Service
+  5.4 Assistant Plug-In Service
+Please Input the number of the Installation Type [1 2 3 4 5]:1 2 3
+```
 按照提示操作即可
 
 ### 2.1.2 初始化服务实例
 假定输入的实例名称为test  
 ```
+cd /opt/dmdbms/bin
 ./dminit
 input system dir: /opt/dmdbms/data          // 数据文件存放路径
 input db name: dm5252                       //实例/数据库名
@@ -47,7 +73,7 @@ input page size(4,8,16,32): 8               //数据库页大小
 input extent size(16,32): 32                //扩展大小
 input sec priv mode(0,1): 0                 //安全特权模式
 input time zone(-12:59,+14:00): +8          //时区 ，选东8区
-input case sensitive? ([Y]es,[N]o): Y       //标识符是否区分大小写
+input case sensitive? ([Y]es,[N]o): N       //标识符是否区分大小写
 which charset to use? (0[GB18030],1[UTF-8],2[EUC-KR]): 1    //字符集
 length in char? ([Y]es,[N]o): Y             //字符长度, N for DBXXFW.dmp
 enable database encrypt? ([Y]es,[N]o): N    //是否启用数据库加密
@@ -103,6 +129,7 @@ cd /opt/dmdbms/bin
 ./disql SYSDBA/SYSDBA@localhost
 SQL> create user DBXXFW identified by DBXXFW123456;
 SQL> grant DBA to DBXXFW;
+SQL> quit;
 ```
 ## 2.4 import data for service xxfw
 ```
@@ -170,12 +197,20 @@ vi cetc-access-core.properties
 采用host网络模式的好处是，在容器内的网络和宿主机完全一样，IP一样，不引入额外的网络和IP问题  
 这样docker内的IP完全采用宿主机的IP  
 ```
+docker images
 docker run -dit -v /home/rd/work/dky:/home/rd/work/dky --network host --name test image_id
 docker exec -it test bash
-```
+
 接下来，在docker 容器中启动服务  
 
-## 4.1 start up kafka and zk
+```
+## 4.1 start up dmdb
+```
+cd /opt/dmdbms/bin
+./DmServiceTEST start
+```
+
+## 4.2 start up kafka and zk
 
 ```
 cd /home/rd/work/dky/subject/kafka_2.11-2.0.0/bin
@@ -192,7 +227,7 @@ sudo netstat -anpl | grep 9092
 ```
 如果9092没有监听，则再执行一遍 `./startZK-Kafka.sh`  
 
-## 4.2 start up solr
+## 4.3 start up solr
 
 ```
 cd /home/rd/work/dky/xxfw/apache-tomcat-solr/bin
@@ -203,21 +238,22 @@ test
 curl -i http://127.0.0.1:18011/solr/#/
 HTTP/1.1 200 OK
 ```
-## 4.3 start up xxfw
+## 4.4 start up xxfw
 
 ```
 cd /home/rd/work/dky/xxfw/apache-tomcat-xxfw/bin
-./startup.sh
+./startup.sh &
 ```
 test
 ```
 sudo netstat -anpl | grep 18088
+curl http://127.0.0.1:18088/ds
 ```
 login
 
 [入口地址](http://127.0.0.1:18088/ds), admin, xxgxzc  
 
-## 4.4  start up subject
+## 4.5  start up subject
 ```
 cd /home/rd/work/dky/subject/apache-tomcat-subject/bin
 ./startup.sh
