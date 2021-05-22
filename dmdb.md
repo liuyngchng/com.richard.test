@@ -69,7 +69,8 @@ cd /opt/dmdbms/bin
 ```
 start port listening, 若初始化的数据库名称为test，则启动时执行
 ```
-./dmserver ../data/test/dm.ini &
+cd /opt/dmdbms/bin
+nohup ./dmserver ../data/test/dm.ini > dm.log 2>&1 &
 ```
 delete server instance named 'test' 
 ```
@@ -83,9 +84,7 @@ kill -9 xxxx
 docker
 
 ```
-docker network create --subnet=172.18.0.0/16 mynetwork
-docker network ls
-docker run -dit -p 5236:5236 -p 18088:18088 -p 2181:2181 -p 9092:9092 -p 18011:18011 -p 12808:12808 -v /Users/rd/dky:/dky  --name test  209c24a7f1c1
+docker run -dit -v /home/rd/work/dky:/dky --network host --name test 209c24a7f1c1
 ```
 create user
 ```
