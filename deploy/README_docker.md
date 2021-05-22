@@ -139,8 +139,14 @@ cd /opt/dmdbms/bin
 整个导入过程不能报错，导入日志详见DBXXFW.dmp同级目录下文件
 
 ## 2.5 install Java
+
 ```
-sudo apt install openjdk-8-jre
+sudo apt install openjdk-8-jdk
+```
+注意，需要安装JDK，而不是JRE，否则，xxfw会报错
+```
+Caused by: java.lang.RuntimeException: compiler is null maybe you are on JRE enviroment please change to JDK enviroment.
+    at com.baidu.bjf.remoting.protobuf.utils.compiler.JdkCompiler.<init>(JdkCompiler.java:94)
 ```
 验证java 版本，
 `java -version` version = 1.8
