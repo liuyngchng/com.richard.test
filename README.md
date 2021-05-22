@@ -170,7 +170,8 @@ show
 | top           | 按 1 键，查看各个 CPU 的利用率，验证 CPU 限制是否生效 |
 | docker stats | 查看  MEM USAGE / LIMIT ，验证配置是否生效 |
 
-## 2.8 为容器设置固定的 IP 地址
+## 2.8 docker network
+### 2.8.1 为容器设置固定的 IP 地址
 
 ```
 启动Docker容器的时候，使用默认的网络是不支持指派固定IP的，如下
@@ -183,6 +184,12 @@ docker: Error response from daemon: User specified IP address is supported on us
 | docker network create --subnet=172.18.0.0/16 mynetwork | 创建自定义网络 |
 | docker network ls | 查看自定义网络 |
 | docker run -itd --name networkTest1 --net mynetwork --ip 172.18.0.2 centos:latest /bin/bash | 启动容器 |
+
+### 2.8.2 使用host 网络模式
+使用`docker network ls` 中的 host模式，容器的网络配置与宿主机完全一样，这样也不需要在做容器内外的端口映射了。
+```
+docker run -dit --name container_name --network host image_id
+```
 
 ## 2.9 gdb in docker
 linux 内核为了安全起见，采用了Seccomp(secure computing)的沙箱机制来保证系统不被破坏   
