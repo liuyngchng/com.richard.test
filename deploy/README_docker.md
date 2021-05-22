@@ -10,9 +10,17 @@ for ubuntu, install from package, follow [instruction](https://docs.docker.com/e
 and then run   
 `sudo dpkg -i /path/to/package.deb`  
 ## 1.2 pull docker image
+
+当执行`docker ps`提示无权限时，执行以下语句
+```
+sudo gpasswd -a $USER docker
+newgrp docker
+```
+
+拉取ubuntu镜像，将软件包dky目录以及达梦目录deploy_tool映射至容器
 ```
 docker pull ubuntu
-docker run -dit -v /home/rd/work/dky:/home/rd/work/dky --network host --name test ubuntu
+docker run -dit -v /home/rd/work/dky:/home/rd/work/dky -v /home/rd/work/deploy_tool:/opt/deploy --network host --name test ubuntu
 docker exec -it test bash
 ```
 
@@ -20,11 +28,17 @@ docker exec -it test bash
 ## 2.1 setup DmDB
 
 ### 2.1.1 安装service
-拷贝达梦安装包到docker容器(或者进行容器和宿主机的目录映射)
+若已经将宿主机达梦的目录映射至容器，则启动容器，进入达梦目录
+```
+docker exec -it test bash
+cd /opt
+```
+否则， 拷贝达梦安装包到docker容器
 ```
 docker cp dm.tar.gz test:/opt      # 将容器外的文件dm.tar.gz拷贝到容器test的/opt目录下
+cd /opt/
 ```
-启动docker 容器
+启动 容器
 ```
 docker exec -it test bash
 tar -zxf dm.tar.gz 
@@ -67,15 +81,15 @@ Please Input the number of the Installation Type [1 2 3 4 5]:1 2 3
 cd /opt/dmdbms/bin
 ./dminit
 input system dir: /opt/dmdbms/data          // 数据文件存放路径
-input db name: dm5252                       //实例/数据库名
-input port num: 5252                        //服务端口
+input db name: test                        //实例/数据库名
+input port num: 5236                        //服务端口
 input page size(4,8,16,32): 8               //数据库页大小
 input extent size(16,32): 32                //扩展大小
 input sec priv mode(0,1): 0                 //安全特权模式
 input time zone(-12:59,+14:00): +8          //时区 ，选东8区
 input case sensitive? ([Y]es,[N]o): N       //标识符是否区分大小写
 which charset to use? (0[GB18030],1[UTF-8],2[EUC-KR]): 1    //字符集
-length in char? ([Y]es,[N]o): Y             //字符长度, N for DBXXFW.dmp
+length in char? ([Y]es,[N]o): N             //字符长度, N for DBXXFW.dmp
 enable database encrypt? ([Y]es,[N]o): N    //是否启用数据库加密
 input slice size(512,4096): 512
 page check mode? (0/1/2): 0                 //是否开启页页检查模式
@@ -141,7 +155,8 @@ cd /opt/dmdbms/bin
 ## 2.5 install Java
 
 ```
-sudo apt install openjdk-8-jdk
+apt update
+apt install openjdk-8-jdk
 ```
 注意，需要安装JDK，而不是JRE，否则，xxfw会报错
 ```
@@ -237,7 +252,7 @@ sudo netstat -anpl | grep 9092
 
 ```
 cd /home/rd/work/dky/xxfw/apache-tomcat-solr/bin
-./startup.sh
+./startup.sh &
 ```
 test
 ```
@@ -262,7 +277,7 @@ login
 ## 4.5  start up subject
 ```
 cd /home/rd/work/dky/subject/apache-tomcat-subject/bin
-./startup.sh
+./startup.sh &
 ```
 test
 ```
