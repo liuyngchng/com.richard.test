@@ -883,3 +883,11 @@ Got permission denied while trying to connect to the Docker daemon socket at
 sudo gpasswd -a $USER docker
 newgrp docker
 ```
+# 45. set root password
+```
+sudo passwd
+```
+# 46. start sshd service
+```
+sudo /etc/init.d/ssh start
+```
