@@ -901,3 +901,12 @@ allow-guest=false
 
 ```
 save and reboot
+
+# 48. set IP use command
+```
+ifconfig 												//获取网卡名称，enp0
+sudo ifconfig enp0 192.168.10.163 netmask 255.255.255.0	//set IP
+sudo route add default gw 192.168.10.1					// set gateway
+sudo /etc/init.d/network-manager stop
+sudo /etc/init.d/network-manager start
+```
