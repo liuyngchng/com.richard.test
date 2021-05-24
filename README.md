@@ -891,3 +891,13 @@ sudo passwd
 ```
 sudo /etc/init.d/ssh start
 ```
+# 47. kylin 开启root登录
+```
+cd /usr/share/lightm/ightm.conf.d
+vi 50-unity-greeter.conf
+add
+greeter-show-manual-login=true   
+allow-guest=false 
+
+```
+save and reboot
