@@ -910,3 +910,24 @@ sudo route add default gw 192.168.10.1					// set gateway
 sudo /etc/init.d/networking stop
 sudo /etc/init.d/networking start
 ```
+
+## 49. use GUI in docker
+
+在宿主机中运行
+
+```
+sudo apt-get install x11-xserver-utils
+xhost +
+```
+拉取docker 镜像并运行
+```
+docker pull jess/libreoffice
+docker run -d \
+-v /etc/localtime:/etc/localtime:ro \
+-v /tmp/.X11-unix:/tmp/.X11-unix \
+-e DISPLAY=unix$DISPLAY \
+-e GDK_SCALE \
+-e GDK_DPI_SCALE \
+--name libreoffice \
+jess/libreoffice
+```
