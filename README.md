@@ -931,3 +931,44 @@ docker run -d \
 --name libreoffice \
 jess/libreoffice
 ```
+
+## 50. ubuntu x11 forwarding
+
+通过ssh X11 转发使用远程 GUI 程序 
+
+client IP ：192.168.0.13  
+server IP ：192.168.0.200
+
+### 50.1 on server
+
+```
+sudo vim /etc/ssh/sshd_config 
+修改或添加
+
+X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost yes
+```
+restart sshd `sudo systemctl restart sshd.service`
+
+### 50.2 on client
+
+```
+sudo vim /etc/ssh/ssh_config
+修改或添加
+
+ForwardAgent yes
+ForwardX11 yes
+ForwardX11Trusted yes
+```
+restart ssh `sudo systemctl restart ssh.service`
+
+
+### 50.3 connect server with xhost
+on client, run 
+```
+xhost +　　//允许服务器的的x11界面连接过来
+
+ssh -X user@server_ip　　　　　　//-X参数表示转发X11数据， 把用户名称tsfh 以及服务器S的ip地址替换为你自己的
+```
+
