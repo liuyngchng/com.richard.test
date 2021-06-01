@@ -972,3 +972,30 @@ xhost +　　//允许服务器的的x11界面连接过来
 ssh -X user@server_ip　　　　　　//-X参数表示转发X11数据， 把用户名称tsfh 以及服务器S的ip地址替换为你自己的
 ```
 
+## 51. Ubuntu Linux下修改docker镜像源
+## 51.1 国内亲测可用的几个镜像源
+```
+Docker 官方中国区：https://registry.docker-cn.com
+网易：http://hub-mirror.c.163.com
+中国科技大学：https://docker.mirrors.ustc.edu.cn
+阿里云：https://y0qd3iq.mirror.aliyuncs.com
+```
+## 51.2 修改配置文件
+ 
+增加Docker的镜像源配置文件 /etc/docker/daemon.json，  
+如果没有配置过镜像该文件默认是不存的，在其中增加如下内容  
+  
+```
+{
+  "registry-mirrors": ["https://y0qd3iq.mirror.aliyuncs.com"]
+}
+```
+## 51.3 restart service
+```
+service docker restart
+```
+查看配置是否生效  
+
+```
+docker info|grep Mirrors -A 1
+```
