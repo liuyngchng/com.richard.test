@@ -173,13 +173,13 @@ docker exec -it test bash
 exit
 docker stop test;
 docker ps -a
-docker commit container_id ubuntu_dm
-docker save ubuntu_dm -o ./ubuntu_dm.tar
+docker commit container_id ubuntu_dm &
+docker save ubuntu_dm -o ./ubuntu_dm.tar &
 ```
 导入docker 镜像文件
 
 ```
-docker load -i ./ubuntu_dm.tar
+docker load -i ./ubuntu_dm.tar &
 ```
 
 # 3. config service in or out docker 

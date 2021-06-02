@@ -999,3 +999,18 @@ service docker restart
 ```
 docker info|grep Mirrors -A 1
 ```
+## 52. deploy gitlab-ce in docker
+```
+docker pull gitlab/gitlab-ce:latest
+mkdir -p /docker/gitlab/config
+mkdir -p /docker/gitlab/logs
+mkdir -p /docker/gitlab/data
+docker run -d -p 8083:80 -p 8082:443 -p 8084:22 \
+    -v /docker/gitlab/config:/etc/gitlab \
+    -v /docker/gitlab/logs:/var/log/gitlab \
+    -v /docker/gitlab/data:/var/opt/gitlab \ 
+    --name=gitlab --privileged=true \
+    gitlab/gitlab-ce:latest
+```
+浏览`http://192.168.0.1:8083`， 修改密码为 psword，  
+然后使用 username=root, psword=psword 进行登录
