@@ -1001,25 +1001,45 @@ docker info|grep Mirrors -A 1
 ```
 ## 52. deploy gitlab-ce in docker
 ```
+// 创建数据目录
 docker pull gitlab/gitlab-ce:latest
 mkdir -p /docker/gitlab/config
 mkdir -p /docker/gitlab/logs
 mkdir -p /docker/gitlab/data
-docker run -d -p 8083:80 -p 8082:443 -p 8084:22 \
-    -v /docker/gitlab/config:/etc/gitlab \
-    -v /docker/gitlab/logs:/var/log/gitlab \
-    -v /docker/gitlab/data:/var/opt/gitlab \ 
-    --name=gitlab --privileged=true \
-    gitlab/gitlab-ce:latest
+
+// docker启动，直接安装镜像，这里外部访问端口使用82， ssh端口为2222
+docker run -d -p 5443:443 -p 82:82 -p 2222:22 \
+-v /docker/gitlab/config:/etc/gitlab \
+-v /docker/gitlab/logs:/var/log/gitlab \
+-v /docker/gitlab/data:/var/opt/gitlab \ 
+--name=gitlab --privileged=true \
+gitlab/gitlab-ce:latest
 ```
-修改默认git host地址
+修改配置
 ```
-docker exec -it gitlab test
-vi /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
+vim /docker/gitlab/config/gitlab.rb
+
+// 访问地址
+external_url 'http://192.168.0.1:82'
+
+// redirect http to https
+nginx['redirect_http_to_https_port'] = 82
+
+//host listern port
+nginx['listen_port'] = 82
+
+// config ssh port for ssh login
+gitlab_rails['gitlab_shell_ssh_port'] = 2222
+docker restart gitlab
 ```
-修改 host 为部署服务器的IP，例如：host: 192.168.12.1
-浏览`http://192.168.0.1:8083`， 修改密码为 psword，  
+浏览`http://192.168.0.1:82`， 修改密码为 psword，  
 然后使用 username=root, psword=psword 进行登录
+
+测试git ssh 是否可以正常登录，查看 gitlab ssh登录日志
+```
+ssh -vT git@192.168.0.1 -p 2222
+gitlab-ctl tail | grep ssh
+```
 
 ## 53. ubuntu firewall
 
