@@ -1012,6 +1012,12 @@ docker run -d -p 8083:80 -p 8082:443 -p 8084:22 \
     --name=gitlab --privileged=true \
     gitlab/gitlab-ce:latest
 ```
+修改默认git host地址
+```
+docker exec -it gitlab test
+vi /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
+```
+修改 host 为部署服务器的IP，例如：host: 192.168.12.1
 浏览`http://192.168.0.1:8083`， 修改密码为 psword，  
 然后使用 username=root, psword=psword 进行登录
 
