@@ -1014,3 +1014,10 @@ docker run -d -p 8083:80 -p 8082:443 -p 8084:22 \
 ```
 浏览`http://192.168.0.1:8083`， 修改密码为 psword，  
 然后使用 username=root, psword=psword 进行登录
+
+## 53. ubuntu firewall
+
+```
+sudo ufw status
+sudo ufw disable
+```
