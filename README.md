@@ -1047,3 +1047,19 @@ gitlab-ctl tail | grep ssh
 sudo ufw status
 sudo ufw disable
 ```
+
+## 54. sonatype nexus 3.3
+### 54.1 docker
+```
+docker pull sonatype/nexus3:3.13.0
+docker run -d -p 8081:8081 --name nexus sonatype/nexus3
+```
+http://192.168.0.99:8081
+使用 admin 登录，系统会提示密码存储的位置，  
+按照提示找到文件，输入密码，修改米啊	
+### 54.2 bare metal
+```
+cd /opt
+wget https://download.sonatype.com/nexus/3/nexus-3.2.0-01-unix.tar.gz
+tar zxvf nexus-3.2.0-01-unix.tar.gz
+```
