@@ -12,6 +12,13 @@
         <fastjson_version>1.2.31</fastjson_version>
         <logback.version>1.1.7</logback.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>maven-releases</id>
+            <name>maven releases</name>
+            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.apache.curator</groupId>
@@ -190,6 +197,7 @@
             <version>3.32.3.1</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
