@@ -14,12 +14,12 @@ wget http://repo.mysql.com/mysql57-community-release-el7-8.noarch.rpm
 rpm -ivh mysql57-community-release-el7-8.noarch.rpm
 yum -y install mysql-server
 ```
-## 1.2 默认配置文件路径 
+## 1.2 默认配置文件路径 
 
 ```
-配置文件：/etc/my.cnf 
-日志文件：/var/log/var/log/mysqld.log 
-服务启动脚本：/usr/lib/systemd/system/mysqld.service 
+配置文件：/etc/my.cnf 
+日志文件：/var/log/var/log/mysqld.log 
+服务启动脚本：/usr/lib/systemd/system/mysqld.service 
 socket文件：/var/run/mysqld/mysqld.pid
 ```
 
@@ -51,7 +51,7 @@ A temporary password is generated for root@localhost: ab*******m1
 ```
 mysql -hlocalhost -uroot -p
 alter user 'root'@'localhost' identified
-i```
+```
 
 # 2. Docker
 
@@ -61,7 +61,8 @@ i```
 | --- |  --- |
 | yum install docker -y     | setup docker      |
 | dockerd &                 | startup dockerd   |
-| docker pull centos        | pull centos image |
+| docker pull centos        | pull centos image |  
+
 ## 2.2 start
 
 执行
@@ -134,6 +135,7 @@ docker cp jre.tar.gz test:/opt      # 将容器外的文件拷贝到容器里
 | ln -s /usr/libexec/docker/docker-proxy-current /usr/bin/docker-proxy | 建立软链 |
 | docker run -dit -p 9088:9088 image bash | 启动 |
 | docker run -dit -v /hostdir:/containerdir --name test repository_id | 目录映射 |
+
 ## 2.6 修改默认镜像存储目录
 
 CentOS 下 docker 默认的存储路径在 /var/lib/docker下面。 
@@ -223,8 +225,9 @@ docker commit bbb046a8fefe image_repository
 ### 2.11.1 查看当前语言
 `locale`
 ### 2.11.2 查看当前已安装的语言
+
 `locale -a`
-```
+
 ### 2.11.3 安装语言包
 ```   
 apt-get install language-pack-zh-hans
@@ -249,7 +252,8 @@ yum install -y epel-release
 yum install -y redis
 
 ```
-# Install MySQL in windows
+# 4. Install MySQL
+## 4.1 Install MySQL in windows
 ```
 unzip mysql-8.0.16-winx64.zip
 config ENV for ./mysql-8.0.16-winx64/bin/
@@ -257,7 +261,7 @@ mysqld.exe --initialize-insecure
 mysqld.exe --install
 net start mysql
 ```
-# 4. Setup MySQL on ubuntu
+## 4.2 Setup MySQL on ubuntu
 
 ```
 sudo apt-get install mysql-server
@@ -286,13 +290,13 @@ restart MySQL
 fdisk -l
 lsblk
 ```
-# 6. yun
+# 6. yum on centOS  
 download rpm package only
 ```
 yum install --downloadonly --downloaddir=/opt/rpms mysql
 ```
-# 7. make a iso start up flash disk  
-#7.1 under MacOS
+# 7. make a ISO start up flash disk  
+## 7.1 under MacOS
 如果是在Mac系统下，则 需要把下载的Ubuntu安装文件（.iso）  
 转换成(.dmg)格式的文件,方便在Mac OS上面进行操作，转换命令
 ```
@@ -313,7 +317,7 @@ diskutil list
 ```
 diskutil unmountDisk [硬碟位置]
 ```
-#7.2  Create the installation medium in linux
+##7.2  Create the installation medium in linux
 Either you can burn the image onto CD/DVD, you use usb stick for the installation.  
 Under linux, you can use the dd for that:
 ```
@@ -324,7 +328,7 @@ Make sure that the device does not include partition number, so example from my 
 dd if=~/Downloads/alpine-standard-3.10.2-x86_64.iso of=/dev/sdb bs=4M
 ```
 The target device will be erased, so make sure you use something without any data you do not want to lose.
-#7.3 然后移除U盘
+##7.3 然后移除U盘
 on MacOS
 ```
 diskutil eject /path/to/USB
@@ -540,7 +544,7 @@ apt-get update
 docker pull gitlab/gitlab-ce
 ```
 
-## 24.2
+## 24.2 bare metal
 install gitlab
 ```
 https://about.gitlab.com/install/#ubuntu
@@ -583,7 +587,7 @@ sudo update-grub
 即可。
 
 如果想进入图形界面，输入命令：   
-sudo lightdm 
+sudo lightdm 
 
 # 29. after install ubuntu on Mac and then delete ubuntu, efi boot is redundant.
 
@@ -679,19 +683,19 @@ cat /home/user/id_pub.rsa >> ~/.ssh/authroized_keys
 ```
 hava fun!
 
-# 32. config ubuntu wifi driver, chinese and grub timeout input method after installed
-# 32.1 wifi
+# 33. config ubuntu wifi driver, chinese and grub timeout input method after installed
+## 33.1 wifi
 ```
 sudo apt-get --reinstall install bcmwl-kernel-source
 ```
-# 32.2 zh languge pack
+## 33.2 zh languge pack
 ```
 sudo apt-get install  language-pack-zh-han*
 sudo apt install $(check-language-support)
 sudo apt install ibus-pinyin
 sudo apt install ibus-libpinyin
 ```
-#32.3 grub time out
+## 33.3 grub time out
 
 ```
 sudo vim /etc/default/grub
@@ -705,7 +709,7 @@ close bluetooth when sys boot
 sudo gedit /etc/rc.local
 rfkill block bluetooth
 ```
-# 33. Fn key in ubuntu
+# 34. Fn key in ubuntu
 make F1 work as F1, Fn+F1 work as something else.  
 
 ```
@@ -713,18 +717,18 @@ sudo vim /etc/modprobe.d/hid_apple.conf
 options hid_apple fnmode=2
 sudo update-initramfs -u
 ```
-# 34. 查看动态库so文件所在的目录
+# 35. 查看动态库so文件所在的目录
 
 run `ldconfig -p`
 
-# 35 ubuntu  share network between hosts (通过网线共享网络)
+# 36. ubuntu  share network between hosts (通过网线共享网络)
 
 [url](https://blog.csdn.net/qq1187239259/article/details/80022272) 
 
 host A：ubuntu16.04, 有两个网卡，一个接外网，一个与主机B相接  
 hostB：ubuntu16.04  
 
-## 35.1 config host A 
+## 36.1 config host A 
 run `iwconfig`  
 wlp2s0 :这个是无线网卡。
 enp1s0 :有线网卡，与B主机通过网线相连的网卡  
@@ -744,7 +748,7 @@ ifdonw enp1s0
 ifup enp1s0
 ifconfig  命令查看enp1s0 ip配置是否成功
 ```
-## 35.2 config host B
+## 36.2 config host B
 
 run  `iwconfig` 
 获取网络接口卡名称 enpxxxx    
@@ -764,7 +768,7 @@ ifconfig  命令查看enpxxxx ip配置是否成功
 ```
 ping host A OK `ping 192.168.49.1`
 
-## 35.3 config NAT on host A
+## 36.3 config NAT on host A
 
 这一步是为了B主机能通过A主机访问外网  
 
@@ -775,7 +779,7 @@ iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -t nat -A POSTROUTING -o wlp2s0 -j MASQUERADE     （wlp2s0为host A接外网的网卡）
 ```
-## 35.4 debug
+## 36.4 debug
 
 配置完以上信息后，若发现 host A 无法上网，则是默认路由导致的，
 执行
@@ -784,17 +788,17 @@ ip route show
 sudo route del default gw 192.168.49.1
 ```
 
-# 36. git clone with shallow history
+# 37. git clone with shallow history
 
 ```
 git clone xxxx.git --depth 1
 ```
 
-# 37. fix the `/dev/loop* 100%` problem
+# 38. fix the `/dev/loop* 100%` problem
 
 run `sudo apt autoremove --purge snapd `
 
-# 38. ubuntu 16.04 remote access desktop of windows 7/10
+# 39. ubuntu 16.04 remote access desktop of windows 7/10
 setup rdesktop first,
 ```
 sudo apt-get install rdesktop libgssglue1
@@ -809,7 +813,7 @@ run `crtl+alt+enter` to exit remote desktop
 如果看到报错`ERROR:CREDSSP..... CredSSP required by Server`,则需要在windows上
 开启远程桌面(我的电脑->属性->远程设置->允许远程连接到此计算机)时，  
 取消勾选`仅允许使用网络级别身份认证...`
-# 37. connect wifi via terminal on Ubuntu
+# 40. connect wifi via terminal on Ubuntu
 
 查看可用wifi，
 ```
@@ -820,20 +824,20 @@ nmcli dev wifi
 ```
 nmcli dev wifi connect essid（网络名称） password password（密码）
 ```
-# 39. get random number
+# 41. get random number
 ```
 dd if=/dev/urandom bs=1 count=16 | xxd -ps
 ```
 
-## 40. docker permission
+# 42. docker permission
 
-## 40.1 问题描述  
+## 42.1 问题描述  
 在终端执行"docker version"命令，出现如下报错：
 
 ```
 ”Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.26/images/json: dial unix /var/run/docker.sock: connect: permission denied“
 ```
-## 40.2 原因分析  
+## 42.2 原因分析  
 
 来自docker mannual：
 ```
@@ -846,7 +850,7 @@ If you don’t want to use sudo when you use the docker command, create a Unix g
 
 docker进程使用 Unix Socket 而不是 TCP 端口。而默认情况下，Unix socket 属于 root 用户，因此需要 root权限 才能访问。
 
-## 40.3 解决方法  
+## 42.3 解决方法  
 
 ```
 sudo groupadd docker          #添加docker用户组
@@ -856,24 +860,24 @@ newgrp docker                 #更新docker用户组
 sudo chmod a+rw /var/run/docker.sock
 ```
 
-# 41. dns lookup
+# 43. dns lookup
 ```
 dig @114.114.114.114 registry-1.docker.io
 ```
 
-# 42. network interface card up down
+# 44. network interface card up down
 
 ```
 ifdown eth1  /  ifconfig eth1 down 　　　　禁用网卡
 
 ifup eth1  / ifconfig eth1 up 　　　　　　 启用网卡
 ```
-# 43. mvn install
+# 45. mvn install
 ```
 mvn install:install-file -DgroupId=com.dm -DartifactId=dmjdbc7 -Dversion=1.7.0 -Dpackaging=jar -Dfile=Dm7JdbcDriver17.jar
 ```
 
-# 44. docker group 
+# 46. docker group 
 when you run `docker ps` in Ubuntu and it says as following
 ```
 Got permission denied while trying to connect to the Docker daemon socket at
@@ -883,15 +887,15 @@ Got permission denied while trying to connect to the Docker daemon socket at
 sudo gpasswd -a $USER docker
 newgrp docker
 ```
-# 45. set root password
+# 47. set root password
 ```
 sudo passwd
 ```
-# 46. start sshd service
+# 48. start sshd service
 ```
 sudo /etc/init.d/ssh start
 ```
-# 47. kylin 开启root登录
+# 49. kylin 开启root登录
 ```
 cd /usr/share/lightm/ightm.conf.d
 vi 50-unity-greeter.conf
@@ -902,7 +906,7 @@ allow-guest=false
 ```
 save and reboot
 
-# 48. set IP use command
+# 50. set IP use command
 ```
 ifconfig 												//获取网卡名称，enp0
 sudo ifconfig enp0 192.168.10.163 netmask 255.255.255.0	//set IP
@@ -911,8 +915,9 @@ sudo /etc/init.d/networking stop
 sudo /etc/init.d/networking start
 ```
 
-## 49. use GUI in docker
+# 51. use GUI in docker
 
+warning：非正常操作  
 在宿主机中运行
 
 ```
@@ -932,14 +937,14 @@ docker run -d \
 jess/libreoffice
 ```
 
-## 50. ubuntu x11 forwarding
+# 52. ubuntu x11 forwarding
 
 通过ssh X11 转发使用远程 GUI 程序 
 
 client IP ：192.168.0.13  
 server IP ：192.168.0.200
 
-### 50.1 on server
+## 52.1 on server
 
 ```
 sudo vim /etc/ssh/sshd_config 
@@ -951,7 +956,7 @@ X11UseLocalhost yes
 ```
 restart sshd `sudo systemctl restart sshd.service`
 
-### 50.2 on client
+## 52.2 on client
 
 ```
 sudo vim /etc/ssh/ssh_config
@@ -964,7 +969,7 @@ ForwardX11Trusted yes
 restart ssh `sudo systemctl restart ssh.service`
 
 
-### 50.3 connect server with xhost
+## 52.3 connect server with xhost
 on client, run 
 ```
 xhost +　　//允许服务器的的x11界面连接过来
@@ -972,15 +977,15 @@ xhost +　　//允许服务器的的x11界面连接过来
 ssh -X user@server_ip　　　　　　//-X参数表示转发X11数据， 把用户名称tsfh 以及服务器S的ip地址替换为你自己的
 ```
 
-## 51. Ubuntu Linux下修改docker镜像源
-## 51.1 国内亲测可用的几个镜像源
+# 53. Ubuntu Linux下修改docker镜像源  
+## 53.1 国内亲测可用的几个镜像源  
 ```
 Docker 官方中国区：https://registry.docker-cn.com
 网易：http://hub-mirror.c.163.com
 中国科技大学：https://docker.mirrors.ustc.edu.cn
 阿里云：https://y0qd3iq.mirror.aliyuncs.com
 ```
-## 51.2 修改配置文件
+## 53.2 修改配置文件  
  
 增加Docker的镜像源配置文件 /etc/docker/daemon.json，  
 如果没有配置过镜像该文件默认是不存的，在其中增加如下内容  
@@ -990,7 +995,7 @@ Docker 官方中国区：https://registry.docker-cn.com
   "registry-mirrors": ["https://y0qd3iq.mirror.aliyuncs.com"]
 }
 ```
-## 51.3 restart service
+## 53.3 restart service  
 ```
 service docker restart
 ```
@@ -999,7 +1004,7 @@ service docker restart
 ```
 docker info|grep Mirrors -A 1
 ```
-## 52. deploy gitlab-ce in docker
+# 54. deploy gitlab-ce in docker
 ```
 // 创建数据目录
 docker pull gitlab/gitlab-ce:latest
@@ -1041,15 +1046,15 @@ ssh -vT git@192.168.0.1 -p 2222
 gitlab-ctl tail | grep ssh
 ```
 
-## 53. ubuntu firewall
+# 55. ubuntu firewall
 
 ```
 sudo ufw status
 sudo ufw disable
 ```
 
-## 54. sonatype nexus 3.3
-### 54.1 docker
+# 56. sonatype nexus 3.3
+## 56.1 docker
 ```
 docker pull sonatype/nexus3:3.13.0
 docker run -d -p 8081:8081 --name nexus sonatype/nexus3
@@ -1058,7 +1063,7 @@ http://192.168.0.99:8081
 使用 admin 登录，系统会提示密码存储的位置，  
 按照提示找到文件，输入密码，修改密码	
 
-### 54.2 bare metal
+## 56.2 bare metal
 
 ```
 cd /opt
