@@ -308,15 +308,17 @@ hdiutil转换的文件后缀名为.dmg,所以需要把文件重命名为.iso，�
 mv ubuntu.dmg ubuntu.iso
 ```
 
-打开终端，输入
+打开终端，输入  
+
 ```
 diskutil list
 ```
-记录下U盘的地址
-然后卸载U盘命令
+
+记录下U盘的地址, 然后卸载U盘命令  
 ```
 diskutil unmountDisk [硬碟位置]
 ```
+
 ##7.2  Create the installation medium in linux
 Either you can burn the image onto CD/DVD, you use usb stick for the installation.  
 Under linux, you can use the dd for that:
