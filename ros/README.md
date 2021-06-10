@@ -14,3 +14,12 @@ sudo vi gbpdistro_support.py
 sudo vi rep3.py
 ```
 修改 DOWNLOAD_TIMEOUT =50.0值
+
+# 4. CMD
+
+```
+rospack = ros + pack(age)
+roscd = ros + cd
+rosls = ros + ls 
+```
+
