@@ -1,10 +1,4 @@
-A demo mail system.
-
-# 1. protobuf
-```
-protoc ./Message.proto --java_out=./
-```
-# 2. use mvn offline
+# 1. use mvn offline
 ```shell
  mvn clean compile  -s ~/user/.m2/settings.xml -Dencoding=UTF-8
 
@@ -23,7 +17,7 @@ settings.xml can be as following
       <id>mirrorId</id>
       <mirrorOf>central</mirrorOf>
       <name>localMirror</name>
-      <url>file:///home/whoami/.m2/repository</url>
+      <url>file:///home/$USER/.m2/repository</url>
     </mirror>
   </mirrors>
 </settings>

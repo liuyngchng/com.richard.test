@@ -646,3 +646,6 @@ sudo ufw status
 sudo ufw disable
 ```
 
+# 47. protobuf
+```
+protoc ./Message.proto --java_out=./
