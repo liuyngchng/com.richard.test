@@ -18,3 +18,7 @@ docker run \
 #3. docx to txt
 
 soffice --headless --convert-to txt 2.docx --outdir 2.txt
+g/^\s*$/d
+%s/\s//g
+%s/\r//g
+%s/\n//g
