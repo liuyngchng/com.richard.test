@@ -649,3 +649,11 @@ sudo ufw disable
 # 47. protobuf
 ```
 protoc ./Message.proto --java_out=./
+
+# 48. vim 空格和换行的删除和替换
+
+ %s/\s//g
+
+%s/\r//g
+
+%s/\n//g
