@@ -23,3 +23,8 @@ roscd = ros + cd
 rosls = ros + ls 
 ```
 
+# 5. install joint-state-publisher
+```
+sudo apt-get install ros-kinetic-joint-state-publisher-gui
+```
+
