@@ -22,3 +22,11 @@ g/^\s*$/d
 %s/\s//g
 %s/\r//g
 %s/\n//g
+
+#4. Non-UTF-8 code starting with ‘\xe8‘ in file解决方案
+
+Python中出现Non-UTF-8 code starting with ‘\xe8’ in file 的问题
+在程序的开头加上：
+```
+# -*- coding:utf-8 -*-
+```
