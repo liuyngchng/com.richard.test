@@ -27,6 +27,13 @@ g/^\s*$/d
 
 Python中出现Non-UTF-8 code starting with ‘\xe8’ in file 的问题
 在程序的开头加上：
+
 ```
 # -*- coding:utf-8 -*-
 ```
+
+# 5. python3.7 error
+
+ModuleNotFoundError: No module named '_ctypes' 解决办法 
+
+sudo apt-get install libffi-dev
