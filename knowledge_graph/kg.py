@@ -6,6 +6,6 @@ import sys
 print(sys.argv[1])
 text = str(sys.argv[1])
 print(text)
-print(' ')
+print('-----result ----- ')
 knowledge = jiagu.knowledge(text)
 print(knowledge)
