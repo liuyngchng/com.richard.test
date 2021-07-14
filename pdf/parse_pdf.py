@@ -24,12 +24,12 @@ print(text)
 #import pandas as pd
 
 # 第二页pdfplumber.Page实例
-first_page = pdf.pages[1]
+first_page = pdf.pages[0]
 
 # 自动读取表格信息，返回列表
 table = first_page.extract_tables()
 
 # 将列表转为df
-table_df = pd.DataFrame(table_2[1:],columns=table_2[0])
+table_df = pd.DataFrame(table[1:],columns=table[0])
 
 table_df
