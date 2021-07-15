@@ -1,13 +1,13 @@
 import pdfplumber
 import pandas as pd
 # 读取pdf文件，返回pdfplumber.PDF类的实例
-pdf = pdfplumber.open("/Users/rd/Documents/test.pdf")
+pdf = pdfplumber.open("/home/rd/Documents/test.pdf")
 # 通过pdfplumber.PDF类的metadata属性获取pdf信息
 pdf.metadata
 # 通过pdfplumber.PDF类的metadata属性获取pdf页数
 len(pdf.pages)
 # 第一页pdfplumber.Page实例
-first_page = pdf.pages[0]
+first_page = pdf.pages[7]
 
 # 查看页码
 print('页码：',first_page.page_number)
@@ -24,7 +24,7 @@ print(text)
 #import pandas as pd
 
 # 第二页pdfplumber.Page实例
-first_page = pdf.pages[0]
+first_page = pdf.pages[7]
 
 # 自动读取表格信息，返回列表
 table = first_page.extract_tables()
