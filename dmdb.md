@@ -262,3 +262,11 @@ set schema schema_name;		//前提条件是schema_name 的owner 属于当前用�
  
 ```
 
+-- 查看schema编码 --  
+
+0 表示 GB18030，1 表示 UTF-8，2 表示 EUC-KR  
+
+select SF_GET_UNICODE_FLAG();  
+select  UNICODE ();  
+
+字符集在安装初始化库的时候指定，设定后不可更改  
