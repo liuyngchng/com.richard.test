@@ -12,3 +12,7 @@ sudo apt install torbrowser-launcher
 ```
 sudo apt remove torbrowser-launcher
 ```
+
+# 2. URL
+
+https://linux.cn/article-2531-1.html
