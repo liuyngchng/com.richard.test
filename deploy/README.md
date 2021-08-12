@@ -15,7 +15,7 @@ cd /home/rd/dmdbms/tool
 使用GUI界面，进入 Users-> Administrate User,  
 点击右键，'New User', 在General 选项卡输入用户名(XX)和密码()，  
 在Owner选项卡中勾选"DBA", "PUBLIC", "RESOURCE","VTI"三个角色，点击确定
-
+	
 ## 1.3 import data for service xxfw  
 
 ```
