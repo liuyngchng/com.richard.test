@@ -33,7 +33,7 @@ DBXXFW.dmp 文件所在的目录， 选择 DBXXFW.dmp 文件， dmp 文件所在
 ```
 Caused by: java.lang.RuntimeException: compiler is null maybe you are on JRE enviroment please change to JDK enviroment.
     at com.baidu.bjf.remoting.protobuf.utils.compiler.JdkCompiler.<init>(JdkCompiler.java:94)
-    ```
+```
 `java -version` version = 1.8
 
 # 2. config service
