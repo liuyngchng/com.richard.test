@@ -39,3 +39,6 @@ _*
 *.class
 ant_build_input.xml
 pomDependency.xml
+
+# sqlite
+db/*
