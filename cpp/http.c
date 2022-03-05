@@ -14,8 +14,8 @@
 #include <arpa/inet.h>
 
 #define IPSTR "127.0.0.1"
-#define PORT 8000
-#define BUFSIZE 1024
+#define PORT 80
+#define BUFSIZE 4096 
 
 
 int get_data()
@@ -76,13 +76,11 @@ int get_data()
     FD_ZERO(&t_set1);
     FD_SET(sockfd, &t_set1);
     while(1) {
-        sleep(2);
+		sleep(1);
         tv.tv_sec= 0;
         tv.tv_usec= 0;
         h = 0;
-        printf("--------------->1");
         h = select(sockfd +1, &t_set1, NULL, NULL, &tv);
-        printf("--------------->2 h = %d", h);
         if (h == 0) continue;
         if (h < 0) {
             close(sockfd);
