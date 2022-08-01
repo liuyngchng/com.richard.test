@@ -19,6 +19,12 @@
 <!--            <url>http://127.0.0.1:8081/repository/maven-public/</url>-->
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
+<!--        <repository>-->
+<!--            <id>maven-central</id>-->
+<!--            <name>maven central</name>-->
+<!--            &lt;!&ndash;            <url>http://127.0.0.1:8081/repository/maven-public/</url>&ndash;&gt;-->
+<!--            <url>https://mvnrepository.com/</url>-->
+<!--        </repository>-->
     </repositories>
     <dependencies>
         <dependency>
@@ -235,6 +241,11 @@
             <artifactId>kafka-clients</artifactId>
             <version>3.1.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.sourceforge.tess4j</groupId>-->
+<!--            <artifactId>tess4j</artifactId>-->
+<!--            <version>5.3.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
