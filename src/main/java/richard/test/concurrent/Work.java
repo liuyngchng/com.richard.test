@@ -1,7 +1,5 @@
 package richard.test.concurrent;
 
-import org.omg.CORBA.*;
-import org.omg.CORBA.Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -16,8 +16,8 @@
         <repository>
             <id>maven-public</id>
             <name>maven public</name>
-            <url>http://127.0.0.1:8081/repository/maven-public/</url>
-<!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--            <url>http://127.0.0.1:8081/repository/maven-public/</url>-->
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
     <dependencies>
@@ -298,14 +298,6 @@
                     <overwrite>true</overwrite>
                     <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                 </configuration>
-                <!-- 数据库连接选择8.0以上的，因为用的mysql8.0-->
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>8.0.16</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

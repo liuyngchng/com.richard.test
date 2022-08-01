@@ -2,8 +2,6 @@ package richard.test.encrypt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -39,8 +37,7 @@ public class EncryptAES {
         keyGenerator = KeyGenerator.getInstance("AES");
         //生成密钥
         key = keyGenerator.generateKey();
-        BASE64Encoder base64Encoder = new BASE64Encoder();
-        LOGGER.info("key is {}", base64Encoder.encode(key.getEncoded()) );
+        LOGGER.info("key is {}", java.util.Base64.getEncoder().encode(key.getEncoded()) );
         //生成Cipher对象,指定其支持的DES算法
         cipher = Cipher.getInstance("AES");
     }

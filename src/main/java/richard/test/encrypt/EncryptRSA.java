@@ -2,8 +2,6 @@ package richard.test.encrypt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -11,6 +9,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Base64;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -65,11 +64,10 @@ public class EncryptRSA {
         KeyPair keyPair = keyPairGen.generateKeyPair();
         //得到私钥
         RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();
-        BASE64Encoder encoder = new BASE64Encoder();
-        LOGGER.info("privateKey is \r\n{}", encoder.encodeBuffer(privateKey.getEncoded()));
+        LOGGER.info("privateKey is \r\n{}", java.util.Base64.getEncoder().encode(privateKey.getEncoded()));
         //得到公钥
         RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
-        LOGGER.info("publicKey is \r\n{}", encoder.encodeBuffer(publicKey.getEncoded()));
+        LOGGER.info("publicKey is \r\n{}", java.util.Base64.getEncoder().encode(publicKey.getEncoded()));
         //用公钥加密
         byte[] srcBytes = msg.getBytes();
         byte[] resultBytes = rsa.encrypt(publicKey, srcBytes);

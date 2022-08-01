@@ -3,7 +3,6 @@ package richard.test.encrypt;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -68,8 +67,7 @@ public class Demo {
             sb.append(line);
         }
         reader.close();
-        BASE64Decoder base64 = new BASE64Decoder();
-        byte[] buffer = base64.decodeBuffer(sb.toString());
+        byte[] buffer = java.util.Base64.getDecoder().decode(sb.toString());
     //        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         X509EncodedKeySpec spec1 = new X509EncodedKeySpec(buffer);
 
