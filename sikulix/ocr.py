@@ -1,4 +1,4 @@
-Settings.OcrDataPath = "/home/rd/workspace/sikulix"
+#Settings.OcrDataPath = "/home/rd/workspace/sikulix"
 #Settings.OcrLanguage = "chi_sim"
 Settings.OcrLanguage = "eng"
 
