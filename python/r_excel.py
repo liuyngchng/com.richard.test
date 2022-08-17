@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # excel_r.py
 
 # 导入 xlrd 库
