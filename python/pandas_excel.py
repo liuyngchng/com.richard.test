@@ -67,10 +67,6 @@ with pd.ExcelWriter(norm_file, mode='a', engine="openpyxl") as writer:          
     dft41.to_excel(writer, sheet_name=sheet2_name)
 
 # start filter data in excel
-#df1=pd.read_excel(norm_file, index_col = price_col)
-#print("[%s] price_col_uniq= %s" %(sys._getframe().f_lineno,df1.index.unique()))
-#filters = ['2.58', '']
-#df2=df1.filter(like='2.58', axis=0)
 df1=dft3.loc[dft3[price_col]==2.58]
 sum1 = df1[sum_col1].sum()
 print("[%s] 2.58_sum=%s" %(sys._getframe().f_lineno, sum1))
