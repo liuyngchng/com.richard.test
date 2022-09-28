@@ -27,7 +27,7 @@ public class Server extends AbstractActor {
 
     @Override
     public void preStart() throws Exception {
-        final ActorRef tcp = Tcp.get(getContext().getSystem()).manager();
+        final ActorRef tcp = null; //Tcp.get(getContext().getSystem()).manager();
         //老样子，是用来通知进行创建服务端actor
         tcp.tell(TcpMessage.bind(getSelf(),
             new InetSocketAddress("localhost", 0), 100), getSelf());

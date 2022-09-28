@@ -30,7 +30,7 @@ public class Client extends AbstractActor {
         this.listener = listener;
 
         //客户端的actor的创建
-        final ActorRef tcp = Tcp.get(getContext().getSystem()).manager();
+        final ActorRef tcp = null; //Tcp.get(getContext().getSystem()).manager();
         tcp.tell(TcpMessage.connect(remote), getSelf());
     }
 

@@ -16,9 +16,19 @@
         <repository>
             <id>maven-public</id>
             <name>maven public</name>
+<<<<<<< HEAD
      <!--       <url>http://127.0.0.1:8081/repository/maven-public/</url> -->
+=======
+<!--            <url>http://127.0.0.1:8081/repository/maven-public/</url>-->
+>>>>>>> faf6b1662e66ac62e68de3757b406052ec60f642
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
+<!--        <repository>-->
+<!--            <id>maven-central</id>-->
+<!--            <name>maven central</name>-->
+<!--            &lt;!&ndash;            <url>http://127.0.0.1:8081/repository/maven-public/</url>&ndash;&gt;-->
+<!--            <url>https://mvnrepository.com/</url>-->
+<!--        </repository>-->
     </repositories>
     <dependencies>
         <dependency>
@@ -235,6 +245,11 @@
             <artifactId>kafka-clients</artifactId>
             <version>3.1.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.sourceforge.tess4j</groupId>-->
+<!--            <artifactId>tess4j</artifactId>-->
+<!--            <version>5.3.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -298,14 +313,6 @@
                     <overwrite>true</overwrite>
                     <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                 </configuration>
-                <!-- 数据库连接选择8.0以上的，因为用的mysql8.0-->
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>8.0.16</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

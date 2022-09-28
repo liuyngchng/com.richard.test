@@ -15,8 +15,7 @@ public class TestGzip {
         String s = "this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.this is a text.";
         char[] c = s.toCharArray();
         byte[] bytes = s.getBytes();
-        sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
-        String cipher = encoder.encode(bytes);
+        String cipher = java.util.Base64.getEncoder().encodeToString(bytes);
         System.out.println(cipher);
         byte[] compressed = TestGzip.compress(s, "utf-8");
         System.out.println(compressed);
