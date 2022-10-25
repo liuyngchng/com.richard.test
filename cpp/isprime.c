@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 int isprime(int num);
+
 int main()
 {
 	 int i=0,N=3;
