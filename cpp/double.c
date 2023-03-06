@@ -17,13 +17,12 @@ int hexcharToInt(char c)
 	return 0;
 }
 //
-void hex2bin(unsigned char *bin, const char *hex, int binlength) {
+void hex2bin(unsigned char *bin, const char *hex) {
 	int i = 0;
-	for (i = 0; i <= strlen(hex); i += 2) {
-		bin[i / 2] = (char)((hexcharToInt(hex[i]) << 4)
-			| hexcharToInt(hex[i + 1]));
+	for (i = 0; i < strlen(hex); i += 2) {
+		bin[i / 2] = (char)((hexcharToInt(hex[i]) << 4) | hexcharToInt(hex[i + 1]));
+        printf("bin[%d]=%02X\n", i/2, bin[i/2]);
 	}
-	bin[i/2] = 0;
 }
 
 
@@ -50,16 +49,17 @@ int main()
 	for(int i = 0; i< strlen(y); i++) {
 		printf("byte%d=%c\n", i, *(y+i));
 	}
-	unsigned char z[(int)strlen(y)/2];
-	hex2bin(z, y, strlen(y));
+	unsigned char z[8];
+    printf("copcy hex str char *y to bin str char *z\n");
+	hex2bin(z, y);
 	size_t size = strlen((const char*)z);
 	printf("strlen(z)=%lu\n", size);
 	printf("bin char str: unsigned char *z=");
-	for (int i = 0; i <= strlen((const char*)z); i++) {
+	for (int i = 0; i < 8; i++) {
 		printf("%02X", *(z+i));
 	}
 	printf("\n");
-	for (int i = 0; i <= strlen((const char*)z); i++) {
+	for (int i = 0; i < 8; i++) {
 		unsigned char c = *(z+i);
 		printf("byte%d=", i);
 		print_bin(c);
@@ -67,12 +67,13 @@ int main()
 	}
 	double *c = (double*)z;
 	printf("double c=%f\n", *c);
-	unsigned char dz[strlen((const char*)z)];
-	for(int i = 0; i <=strlen((const char*)dz); i++) {
-		*(dz+i) = *(z+strlen((const char*)z -i));
+	unsigned char dz[8];
+	for(int i = 0; i < 8; i++) {
+		*(dz+i) = *(z + 7 -i);
 	}
-	printf("bin char str: unsigned char *dz=");
-	for (int i = 0; i <= strlen((const char*)dz); i++) {
+	printf("bin char str in small end: unsigned char *dz=\n");
+	for (int i = 7; i >=0; i--) {
 		printf("%02X", *(dz+i));
 	}
+    printf("\ndouble value of *dz=%f\n", *(double *)dz);
 }

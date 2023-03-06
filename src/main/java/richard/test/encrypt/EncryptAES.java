@@ -32,14 +32,14 @@ public class EncryptAES {
     private byte[] cipherByte;
 
     public EncryptAES() throws NoSuchAlgorithmException, NoSuchPaddingException{
-        Security.addProvider(new com.sun.crypto.provider.SunJCE());
-        //实例化支持DES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)
-        keyGenerator = KeyGenerator.getInstance("AES");
-        //生成密钥
-        key = keyGenerator.generateKey();
-        LOGGER.info("key is {}", java.util.Base64.getEncoder().encode(key.getEncoded()) );
-        //生成Cipher对象,指定其支持的DES算法
-        cipher = Cipher.getInstance("AES");
+//        Security.addProvider(new com.sun.crypto.provider.SunJCE());
+//        //实例化支持DES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)
+//        keyGenerator = KeyGenerator.getInstance("AES");
+//        //生成密钥
+//        key = keyGenerator.generateKey();
+//        LOGGER.info("key is {}", java.util.Base64.getEncoder().encode(key.getEncoded()) );
+//        //生成Cipher对象,指定其支持的DES算法
+//        cipher = Cipher.getInstance("AES");
     }
 
     /**
