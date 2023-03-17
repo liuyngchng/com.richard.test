@@ -16,11 +16,7 @@
         <repository>
             <id>maven-public</id>
             <name>maven public</name>
-<<<<<<< HEAD
      <!--       <url>http://127.0.0.1:8081/repository/maven-public/</url> -->
-=======
-<!--            <url>http://127.0.0.1:8081/repository/maven-public/</url>-->
->>>>>>> faf6b1662e66ac62e68de3757b406052ec60f642
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
 <!--        <repository>-->
