@@ -1,31 +1,27 @@
 package richard.test.util;
 
 import org.jfree.graphics2d.svg.SVGGraphics2D;
+import org.jfree.graphics2d.svg.SVGUnits;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
- * 生成动态验证码图片示例.
+ * 生成SVG格式的动态验证码图片示例.
  */
-public class VerificationCode {
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+public class VerificationCodeSvg {
     private static int imgWidth = 0;//验证码图片的宽度
     private static int imgHeight = 0;//验证码图片的高度
     private static int codeCount = 0;//验证码的个数
@@ -35,18 +31,6 @@ public class VerificationCode {
     private static String fontStyle;
     private static final long serialVersionUID = 128554012633034503L;
 
-    public static void test(){
-        init();
-        try {
-//            response = ServletActionContext.getResponse();
-//            request = ServletActionContext.getRequest();
-//            response.setCharacterEncoding("UTF-8");
-//            request.setCharacterEncoding("UTF-8");
-//            response.setContentType("text/html;charset=UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     /**
      * 初始化配置参数
      */
@@ -70,42 +54,14 @@ public class VerificationCode {
         codeY = imgHeight - 12;
     }
 
-    /**
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    private void processRequest(HttpServletRequest request,
-                               HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("image/jpg");
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        HttpSession session = request.getSession();
-        BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = getGraph2D(image);
-        String sRand = addNum(g);
-        // 图象生效
-        g.dispose();
-        session.setAttribute("rand", sRand);
-        ServletOutputStream responseOutputStream = response.getOutputStream();
-        // 输出图象到页面
-        ImageIO.write(image, "JPG", responseOutputStream);
-        //
-        // // 以下关闭输入流！
-        responseOutputStream.flush();
-        responseOutputStream.close();
-    }
+
 
     /**
-     * 生成2D图形
-     * @param image
+     * 生成2D SVG图形
      * @return
      */
-    private static Graphics2D getGraph2D(BufferedImage image) {
-        Graphics2D g = image.createGraphics();      // 获取图形上下文
+    private static SVGGraphics2D getGraph2D() {
+        SVGGraphics2D g = new SVGGraphics2D(imgWidth, imgHeight, SVGUnits.EM);
         g.setColor(Color.WHITE);                    // 设定背景色
         g.fillRect(0, 0, imgWidth, imgHeight);
         // 设定字体
@@ -124,7 +80,7 @@ public class VerificationCode {
      * 随机产生100条干扰线，使图像中的认证码不易被自动识别
      * @param g
      */
-    private static void drawLines(Graphics2D g) {
+    private static void drawLines(SVGGraphics2D g) {
         Random random = new Random();               // 生成随机类
         for (int i = 0; i < 100; i++) {
             int x = random.nextInt(imgWidth);
@@ -140,7 +96,7 @@ public class VerificationCode {
      * @param g
      * @return
      */
-    private static String addNum(Graphics2D g) {
+    private static String addNum(SVGGraphics2D g) {
         Random random = new Random();               // 生成随机类
         String sRand = "";
         int red = 0, green = 0, blue = 0;
@@ -201,52 +157,34 @@ public class VerificationCode {
         return (char) ret;
     }
 
-    /**
-     * 示范
-     */
-    public void execute(){
-        try {
-            processRequest(request,response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static List<Object> getNumGraph() {
-        List<Object> list = new ArrayList<>(2);
+    public static List<String> getNumGraph() {
+        List<String> list = new ArrayList<>(2);
         init();
-        BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = getGraph2D(image);
+        SVGGraphics2D g = getGraph2D();
         String sRand = addNum(g);
         System.out.println("number=" + sRand);
         g.dispose();
         list.add(sRand);
-        list.add(image);
+        list.add(g.getSVGDocument());
         return list;
     }
 
     public static void main(String[] args) {
 
-        List<Object> list = getNumGraph();
-        if (list.get(0).getClass().equals(String.class)) {
-            System.out.println("num=" + (String)list.get(0));
-        }
-        BufferedImage image = null;
-        if (list.get(1).getClass().equals(BufferedImage.class)) {
-            image = (BufferedImage)list.get(1);
-        }
-        if (null == image) {
-            return;
-        }
+        List<String> list = getNumGraph();
+        System.out.println("num=" + list.get(0));
+        System.out.println("svg=\r\n" + list.get(1));
         try {
-            File file = new File("test.jpg");
+            File file = new File("test.svg");
             if (file.exists()) {
                 file.delete();
             } else {
                 file.createNewFile();
             }
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ImageIO.write(image, "JPG", fileOutputStream);
+            fileOutputStream.write(list.get(1).getBytes());
+            fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
