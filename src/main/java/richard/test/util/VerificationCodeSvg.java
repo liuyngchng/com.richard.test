@@ -25,33 +25,29 @@ public class VerificationCodeSvg {
     private static int imgWidth = 0;//验证码图片的宽度
     private static int imgHeight = 0;//验证码图片的高度
     private static int codeCount = 0;//验证码的个数
+    private static int codeXOffset = 18;
+    private static int codeYoffset = 1;
     private static int x = 0;
     private static int fontHeight;
     private static int codeY;
     private static String fontStyle;
     private static final long serialVersionUID = 128554012633034503L;
 
+    private static void init(int imgWidth, int imgHeight, int codeCount){
+        fontStyle = "Times New Roman";
+        VerificationCodeSvg.imgWidth = imgWidth;
+        VerificationCodeSvg.imgHeight = imgHeight;
+        VerificationCodeSvg.codeCount = codeCount;
+        x = imgWidth / (codeCount + 1);
+        fontHeight = imgHeight - 2;
+        codeY = imgHeight - 12;
+    }
+
     /**
      * 初始化配置参数
      */
     private static void init(){
-        String strWidth = "100";            // 宽度
-        String strHeight ="30";             // 高度
-        String strCodeCount = "4";          // 字符个数
-
-        fontStyle = "Times New Roman";
-
-        // 将配置的信息转换成数值
-        try {
-            imgWidth = Integer.parseInt(strWidth);
-            imgHeight = Integer.parseInt(strHeight);
-            codeCount = Integer.parseInt(strCodeCount);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        x = imgWidth / (codeCount + 1);
-        fontHeight = imgHeight - 2;
-        codeY = imgHeight - 12;
+        VerificationCodeSvg.init(100, 30, 4);
     }
 
 
@@ -61,18 +57,16 @@ public class VerificationCodeSvg {
      * @return
      */
     private static SVGGraphics2D getGraph2D() {
-        SVGGraphics2D g = new SVGGraphics2D(imgWidth, imgHeight, SVGUnits.EM);
-        g.setColor(Color.WHITE);                    // 设定背景色
-        g.fillRect(0, 0, imgWidth, imgHeight);
+        final SVGGraphics2D svg = new SVGGraphics2D(imgWidth, imgHeight, SVGUnits.PX);
+        svg.setColor(Color.WHITE);                    // 设定背景色
+        svg.fillRect(0, 0, imgWidth, imgHeight);
         // 设定字体
-        g.setFont(new Font(fontStyle, Font.PLAIN + Font.ITALIC, fontHeight));
-        g.setColor(new Color(55, 55, 12));  // 画边框
-        g.drawRect(0, 0, imgWidth - 1, imgHeight - 1);
-
-
-        g.setColor(getRandColor(160, 200));
-        drawLines(g);
-        return g;
+        svg.setFont(new Font(fontStyle, Font.PLAIN + Font.ITALIC, fontHeight));
+        svg.setColor(new Color(55, 55, 12));  // 画边框
+        svg.drawRect(0, 0, imgWidth - 1, imgHeight - 1);
+        svg.setColor(getRandColor(160, 200));
+        VerificationCodeSvg.drawLines(svg);
+        return svg;
     }
 
 
@@ -83,8 +77,8 @@ public class VerificationCodeSvg {
     private static void drawLines(SVGGraphics2D g) {
         Random random = new Random();               // 生成随机类
         for (int i = 0; i < 100; i++) {
-            int x = random.nextInt(imgWidth);
-            int y = random.nextInt(imgHeight);
+            int x = random.nextInt(VerificationCodeSvg.imgWidth);
+            int y = random.nextInt(VerificationCodeSvg.imgHeight);
             int xl = random.nextInt(12);
             int yl = random.nextInt(12);
             g.drawLine(x, y, x + xl, y + yl);
@@ -100,7 +94,7 @@ public class VerificationCodeSvg {
         Random random = new Random();               // 生成随机类
         String sRand = "";
         int red = 0, green = 0, blue = 0;
-        for (int i = 0; i < codeCount; i++) {
+        for (int i = 0; i < VerificationCodeSvg.codeCount; i++) {
             red = random.nextInt(255);
             green = random.nextInt(255);
             blue = random.nextInt(255);
@@ -111,16 +105,16 @@ public class VerificationCodeSvg {
                     retWord = getSingleNumberChar();
                     break;
                 case 1:
-                    retWord = getLowerOrUpperChar(0);
+                    retWord = getUpperChar(0);
                     break;
                 case 2:
-                    retWord = getLowerOrUpperChar(1);
+                    retWord = getUpperChar(1);
                     break;
             }
             sRand += String.valueOf(retWord);
             g.setColor(new Color(red, green, blue));
             //关系到验证码是否居中显示。要根据大小进行调整。
-            g.drawString(String.valueOf(retWord), (i) * x + 10, codeY + 7);
+            g.drawString(String.valueOf(retWord), i * (x + codeXOffset), codeY + codeYoffset);
         }
         sRand=sRand.toLowerCase();
         return sRand;
@@ -157,17 +151,28 @@ public class VerificationCodeSvg {
         return (char) ret;
     }
 
+    private static char getUpperChar(int upper) {
+        Random random = new Random();
+        int numberResult = random.nextInt(26);
+        int ret = numberResult + 65;
+        return (char) ret;
+    }
 
-    public static List<String> getNumGraph() {
+    public static List<String> getNumGraph(int imgWidth, int imgHeight, int codeCount) {
         List<String> list = new ArrayList<>(2);
-        init();
-        SVGGraphics2D g = getGraph2D();
+        init(imgWidth, imgHeight, codeCount);
+        SVGGraphics2D g = VerificationCodeSvg.getGraph2D();
         String sRand = addNum(g);
         System.out.println("number=" + sRand);
         g.dispose();
         list.add(sRand);
-        list.add(g.getSVGDocument());
+        list.add(g.getSVGElement("svg"));
         return list;
+    }
+
+
+    public static List<String> getNumGraph() {
+        return getNumGraph(300, 100, 4);
     }
 
     public static void main(String[] args) {
