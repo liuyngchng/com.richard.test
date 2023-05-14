@@ -1,0 +1,73 @@
+<html>
+	<header>
+		<meta charset="UTF-8">
+		<title>this is a test</title>
+	</header>
+	<body>
+		<div> begin</div>
+		<canvas id = "c1" width="400px" height="160px">
+		
+		</canvas>
+		<div> end</div>
+	</body>
+	<script>
+		var canvas = document.getElementById("c1");
+		var ctx = canvas.getContext('2d');
+		ctx.lineWidth=2;
+		ctx.strokeStyle='gray';
+
+		// test1
+		// ctx.moveTo(0,0);
+		// ctx.lineTo(300, 0);
+		// ctx.lineTo(300, 150);
+		// ctx.lineTo(0, 150);
+		// ctx.lineTo(0, 0);
+		// //ctx.closePath();
+		// ctx.stroke();
+		// ctx.fillStyle='gray';
+		// ctx.fill();
+
+		// ctx.rect(x, y, weight, height);
+		// ctx.rect(0, 0, 300, 150);
+		// ctx.stroke();
+
+		// ctx.strokeRect(x, y, weight, height);
+		// ctx.clearRect(x, y, weight, height);
+		// ctx.strokeRect(0, 0, 410, 170);
+
+		// ctx.arc(x, y, r, sAngle, eAngle, counterClockWise);
+		// ctx.strokeStyle='black';
+		// ctx.arc(200, 80, 78, 0, 2* Math.PI, 0);
+		// ctx.stroke();
+
+		// add txt
+		var txt ='哥，你看我走得帅不';
+		ctx.strokeStyle='gray';
+		ctx.font='10px "微软雅黑"';
+		ctx.fillText(txt, 10, 80);
+
+		// draw img
+		// ctx.drawImage(img, x, y);
+		// ctx.drawImage(img, x, y, width, height); 指定宽度和高度
+		// ctx.drawImage(img, sx, sy, swidth, sheight, x, y, width, height); s,剪裁位置坐标及剪裁宽度和高度
+		var img = new Image();
+		img.src = "https://img-blog.csdnimg.cn/e2521e4cb8ad4aa0987e85f0df2cc696.png";
+		// ctx.drawImage(img, 0, 0);
+		// ctx.drawImage(img, 0, 0, 400, 160);
+		// ctx.drawImage(img, 7, 0, 74, 175, 160, 0, 80, 160);
+		// ctx.clearRect(160, 14, 80, 130);
+		var idx = 0;
+		img.onload= function() {
+			
+			setInterval(do_draw,1000/6);
+		}
+
+		function do_draw() {
+			ctx.clearRect(120, 0, 400, 160);
+			ctx.drawImage(img, 80 * idx + 7, 0, 74, 200, 160, 0, 80, 160);
+			idx ++;
+			idx %= 5;
+		};
+
+	</script>
+</html>
