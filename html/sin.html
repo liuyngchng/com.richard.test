@@ -5,13 +5,15 @@
     <title>正弦波</title>
   </head>
   <body>
-  <canvas id="canvas" width="600" height="300"> 你使用的浏览器不支持需要的功能，请升级或更换！</canvas>
+    <canvas id="canvas" width="600" height="300">
+      你使用的浏览器不支持需要的功能，请升级或更换！
+    </canvas>
     <script type="text/javascript">
       const canvas = document.getElementById('canvas'),
       context = canvas.getContext('2d'),
-      h=canvas.height/2,
-      k=8*(Math.PI/canvas.width-0);
-      function draw(ctx,t){
+      h = canvas.height/2,
+      k = 8*(Math.PI/canvas.width-0);
+      function draw(ctx,t) {
         let y,start=h*Math.sin(k*t)/2;
         ctx.beginPath();
         ctx.moveTo(0,h+start);
@@ -21,20 +23,20 @@
         }
         context.stroke();
       }
+      let step=0;
       window.onload=function(){
         context.lineWidth=2;
         context.strokeStyle="#888888";
-        let step=0;
-        (
-			function drawFrame() {
-          		window.requestAnimationFrame(drawFrame);
-          		context.clearRect(0,0,canvas.width,canvas.height);
-          		draw(context,step);
-          		step+=1;
-          		if(step>canvas.width) step=0;
-        	}()
-		);
+        drawFrame();
       };
+
+      function drawFrame() {
+        window.requestAnimationFrame(drawFrame);
+        context.clearRect(0,0,canvas.width,canvas.height);
+        draw(context,step);
+        step+=1;
+        if(step>canvas.width) step=0;
+      }
     </script>
   </body>
 </html>
