@@ -25,13 +25,15 @@
         context.lineWidth=2;
         context.strokeStyle="#888888";
         let step=0;
-        (function drawFrame() {
-          window.requestAnimationFrame(drawFrame);
-          context.clearRect(0,0,canvas.width,canvas.height);
-          draw(context,step);
-          step+=1;
-          if(step>canvas.width) step=0;
-        }());
+        (
+			function drawFrame() {
+          		window.requestAnimationFrame(drawFrame);
+          		context.clearRect(0,0,canvas.width,canvas.height);
+          		draw(context,step);
+          		step+=1;
+          		if(step>canvas.width) step=0;
+        	}()
+		);
       };
     </script>
   </body>
