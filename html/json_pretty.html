@@ -1,0 +1,98 @@
+<html>
+	<header>
+		<meta charset="UTF-8">
+		<title>json pretty</title>
+		<style>
+			span.key {color: chocolate;}
+			table, th, td {border: solid 1px #DDD;border-collapse: collapse;padding: 2px 3px;text-align: center;}
+
+		</style>
+	</header>
+	<body>
+		<table>
+			<tr>
+				<th>1</th><th>2</th><th>3</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>{"a":"b", "c":[{"d":"e", "f":"g"}],<br> "h":{"i":"J","K":"l"}}</td>
+				<td><a href="javascript:void(0);" onclick="my_click(this)">查看</a> </td>
+			</tr>
+		</table>
+		<div id="dt"> </div>
+
+	</body>
+	<script>
+		var a = '{"a":"b", "c":[{"d":"e", "f":"g"}]\r\n' +
+				', "h":{"i":"J","K":"l"}}';
+		document.getElementById("dt").innerHTML = format_json(a);
+		function format_json(str) {
+			var b = str.replace(/\r|\n|\u0085|\u2028|\u2029/ig,'');
+			// var c = JSON.parse(b);
+			var d = pretty_json(b);
+			var e = '';
+			var space = '&nbsp;&nbsp;&nbsp;&nbsp;';
+			var indent = 0;
+			for (var i =0; i < d.length; i++) {
+
+				if (d[i] == '{' || d[i] == '[' ) {
+					indent ++;
+					e += d[i] + '<br>' + space.repeat(indent);
+				} else if (d[i] == '}' || d[i] == ']' ) {
+					indent --;
+					e +=  '<br>' + space.repeat(indent) + d[i];
+				} else if (d[i] == ',') {
+					e += d[i] + '<br>' + space.repeat(indent);
+				} else {
+					e += d[i]
+				}
+			}
+			return e;
+		}
+
+		function pretty_json(str) {
+			try {
+				str = JSON.stringify(JSON.parse(str), null, 2);
+				str = str
+						.replace(/&/g, '&amp;')
+						.replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;');
+				return str.replace(
+						/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+						function (match) {
+							var cls = 'number';
+							if (/^"/.test(match)) {
+								if (/:$/.test(match)) {
+									cls = 'key';
+								} else {
+									cls = 'string';
+								}
+							} else if (/true|false/.test(match)) {
+								cls = 'boolean';
+							} else if (/null/.test(match)) {
+								cls = 'null';
+							}
+							return '<span class="' + cls + '">' + match + '</span>';
+						}
+				);
+			} catch (e) {
+				alert("异常信息:" + e);
+			}
+
+		}
+		function my_click(a) {
+			// var a = document.getElementsByTagName("a");
+			var b = a.parentElement.previousElementSibling.innerText;
+			// alert(format_json(b));
+			a.parentElement.previousElementSibling.innerHTML = format_json(b);
+			// var w = window.open();
+			// w.document.write(
+			// 		'<html><header><title>PRETTY_JSON</title><style>' +
+			// 		'span.key {color: chocolate;}\n' +
+			// 		'</style></header><body>' + format_json(b) +'</body></html>'
+			// )
+		}
+
+
+	</script>
+</html>
