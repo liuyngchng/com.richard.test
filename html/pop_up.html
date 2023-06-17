@@ -1,0 +1,117 @@
+<html>
+    <title>弹出窗口</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta lang="ZH">
+        <script type="text/javascript">
+            function pop_div(a) {
+                // 获取div元素
+                var popBox = document.getElementById("popDiv");
+                // var popLayer = document.getElementById("popLayer");
+                // 控制两个div的显示与隐藏
+                popBox.style.display = "block";
+                // popLayer.style.display = "block";
+                var body = document.getElementById("body");
+                body.style.backgroundColor="gray";
+                var dt = document.getElementById("dt");
+                var b = a.parentElement.previousElementSibling.innerText;
+                dt.innerHTML = format_json(b);
+            }
+            function close_pop() {
+                // 获取弹出窗口元素let
+                var pop_div = document.getElementById("popDiv");
+                pop_div.style.display = "none";
+                var body = document.getElementById("body");
+                body.style.backgroundColor="white";
+            }
+        </script>
+        <style type="text/css">
+            body {background-color: white;}
+            #popDiv{display: none;background-color: wheat;
+                z-index: 11;width: 600px;height: 600px;position:fixed;top:0;right:0;left:0;bottom:0;margin:auto;
+            }
+            /* 关闭按钮样式 */
+            #popDiv.close a {text-decoration: none;color: #2D2C3B;}
+            /* 弹出界面的关闭按钮 */
+            #popDiv.close {text-align: right;margin-right: 5px;background-color:gray;}
+            #popDiv p{text-align: center;font-size: 25px;font-weight: bold;}
+        </style>
+    </head>
+    <body id="body">
+        <table>
+            <tr>
+                <th>1</th><th>2</th><th>3</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>{"a":"b", "c":[{"d":"e", "f":"g"}],<br> "h":{"i":"J","K":"l"}}</td>
+                <td><a href="javascript:void(0);" onclick="pop_div(this)">查看</a> </td>
+            </tr>
+        </table>
+<!--        <div id="popLayer">-->
+<!--            <button onclick="pop_div();">弹窗</button>-->
+<!--        </div>-->
+        <div id="popDiv" style="text-align: left">
+            <div class="close">
+                <a href="javascript:void(0);" onclick="close_pop()">关闭</a>
+            </div>
+            <p id="dt" >此处为弹出窗口</p>
+        </div>
+    </body>
+    <script>
+        function format_json(str) {
+            var b = str.replace(/\r|\n|\u0085|\u2028|\u2029/ig,'');
+            // var c = JSON.parse(b);
+            var d = pretty_json(b);
+            var e = '';
+            var space = '&nbsp;&nbsp;&nbsp;&nbsp;';
+            var indent = 0;
+            for (var i =0; i < d.length; i++) {
+
+                if (d[i] == '{' || d[i] == '[' ) {
+                    indent ++;
+                    e += d[i] + '<br>' + space.repeat(indent);
+                } else if (d[i] == '}' || d[i] == ']' ) {
+                    indent --;
+                    e +=  '<br>' + space.repeat(indent) + d[i];
+                } else if (d[i] == ',') {
+                    e += d[i] + '<br>' + space.repeat(indent);
+                } else {
+                    e += d[i]
+                }
+            }
+            return e;
+        }
+
+        function pretty_json(str) {
+            try {
+                str = JSON.stringify(JSON.parse(str), null, 2);
+                str = str
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+                return str.replace(
+                    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                    function (match) {
+                        var cls = 'number';
+                        if (/^"/.test(match)) {
+                            if (/:$/.test(match)) {
+                                cls = 'key';
+                            } else {
+                                cls = 'string';
+                            }
+                        } else if (/true|false/.test(match)) {
+                            cls = 'boolean';
+                        } else if (/null/.test(match)) {
+                            cls = 'null';
+                        }
+                        return '<span class="' + cls + '">' + match + '</span>';
+                    }
+                );
+            } catch (e) {
+                alert("异常信息:" + e);
+            }
+
+        }
+    </script>
+</html>
