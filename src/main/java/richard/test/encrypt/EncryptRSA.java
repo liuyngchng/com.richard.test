@@ -59,7 +59,7 @@ public class EncryptRSA {
         //KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
         //初始化密钥对生成器，密钥大小为1024位
-        keyPairGen.initialize(1024);
+        keyPairGen.initialize(2048);
         //生成一个密钥对，保存在keyPair中
         KeyPair keyPair = keyPairGen.generateKeyPair();
         //得到私钥

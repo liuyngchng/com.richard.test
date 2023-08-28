@@ -77,6 +77,7 @@ public class EncryptAES {
         System.out.println("明文是:" + msg);
         System.out.println("加密后:" + new String(enContent));
         System.out.println("解密后:" + new String(deContent));
+
     }
 
 }
