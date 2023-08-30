@@ -33,8 +33,7 @@ if __name__ == '__main__':
             consumer.assign(partitions)
 
     # Subscribe to topic
-    # topic = "test-up-rpt-dt"
-    topic = "reg-info"
+    topic = "my-topic"
     consumer.subscribe([topic], on_assign=reset_offset)
     print("consumer.subscribe", topic)
     # Poll for new messages from Kafka and print them.
