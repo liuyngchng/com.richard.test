@@ -1,4 +1,4 @@
-#include </Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/include/jni.h>
+#include </home/rd/software/jdk1.8.0_333/include/jni.h>
 #include "richard_test_jni_TestJNI.h"
 #include <stdio.h>
 
