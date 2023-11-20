@@ -28,7 +28,8 @@ void hex2bin(unsigned char *bin, const char *hex) {
 
 int main()
 {
-	unsigned long x = 0x40E743CD1BF68000;
+	//unsigned long x = 0x40E743CD1BF68000;
+	unsigned long x = 0x47BF716620000000;
 	printf("unsigned long x=%lX\n", x);
 	double *a = (double*)&x;
 	printf("double a=%f, sizeof(a)=%lu\n", *a, sizeof(a));
