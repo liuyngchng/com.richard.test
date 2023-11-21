@@ -2,8 +2,9 @@
 #include <string.h>
 #include "dtparser.h"
 
-void prs_dt(char* s) {
-    printf("%s\n",prs_up_rpt_dt(s));
+char* prs_dt(char* s) {
+//    printf("%s\n",prs_up_rpt_dt(s));
+    return prs_up_rpt_dt(s);
 }
 
 char* prs_up_rpt_dt(char* s) {
