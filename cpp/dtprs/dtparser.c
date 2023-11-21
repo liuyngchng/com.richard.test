@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include "dt_parser.h"
+#include "dtparser.h"
 
-//char* prs_up_rpt_dt(char* s);
-//char* prs_dt_u(char* s); 
-//char* prs_up_rpt_dt_obj(char* id, char* s); 
-//char* prs_evt_ext(char* s);
-//char* prs_at_ext(char* s);
+void prs_dt(char* s) {
+    printf("%s\n",prs_up_rpt_dt(s));
+}
 
 char* prs_up_rpt_dt(char* s) {
     static char dt[1024];
@@ -55,8 +53,10 @@ char* prs_up_rpt_dt(char* s) {
         strcat(dt_obj, s+i);
         strcat(dt_obj, "\"}}");
         return dt_obj;
+//        printf("%s\n",dt_obj);
     }
     return prs_dt_u(s+i);
+//    printf("%s\n", prs_dt_u(s+i));
 }
 
 char* prs_dt_u(char* s) {
@@ -200,11 +200,11 @@ char* prs_at_ext(char *s) {
     strcat(dt, "\"}");
     return dt;
  }
-int hi(){
-    printf("hi\n");
+int test(int a){
+    printf("hi, %d\n", a);
     return 0;
 }
-int test(int argc, char* argv[]) {
+int test1(int argc, char* argv[]) {
 //int main(int argc, char* argv[]) {
     if(NULL == argv[1]) {
         printf("pls input dt\n");
