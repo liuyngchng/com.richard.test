@@ -1,0 +1,1 @@
+gcc -fPIC -shared func.c -o libfunc.so

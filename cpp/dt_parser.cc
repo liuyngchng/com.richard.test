@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include "dt_parser.h"
 
-char* prs_up_rpt_dt(char* s);
-char* prs_dt_u(char* s); 
-char* prs_up_rpt_dt_obj(char* id, char* s); 
-char* prs_evt_ext(char* s);
-char* prs_at_ext(char* s);
+//char* prs_up_rpt_dt(char* s);
+//char* prs_dt_u(char* s); 
+//char* prs_up_rpt_dt_obj(char* id, char* s); 
+//char* prs_evt_ext(char* s);
+//char* prs_at_ext(char* s);
 
 char* prs_up_rpt_dt(char* s) {
     static char dt[1024];
@@ -35,7 +36,7 @@ char* prs_up_rpt_dt(char* s) {
     memset(seq,0,sizeof(seq));
     strncat(seq, s+i, 2);
     i+=2;
-    printf("[seq]%s\n", seq);
+  //  printf("[seq]%s\n", seq);
     if(s[i-1]=='0') {
         strcat(dt, "\",\"appId\":\"");
         strncat(dt, s+i, 46);
@@ -45,7 +46,7 @@ char* prs_up_rpt_dt(char* s) {
     strcat(dt, s+i);
     strcat(dt, "\"}");
     // return dt json
-    printf("[dt]%s\n", dt);
+    //printf("[dt]%s\n", dt);
     //return dt;
     if (ctrl[1] == '2' && seq[1] =='1') {
         static char dt_obj[512];
@@ -78,7 +79,7 @@ char* prs_dt_u(char* s) {
     strcat(dt_u, s+i);
     strcat(dt_u, "\"}");
     // return data union
-    printf("[dt_u]%s\n", dt_u);
+    //printf("[dt_u]%s\n", dt_u);
     //return dt_u;
     return prs_up_rpt_dt_obj(id, s+i);
 }
@@ -144,7 +145,7 @@ char* prs_up_rpt_dt_obj(char* id, char* s) {
     strcat(dt, "\",\"rnf\":\"");
     strncat(dt, s+i, 4);
     i+=4;
-    printf("[obj_id]%s\n", id);
+    //printf("[obj_id]%s\n", id);
     strcat(dt, "\",\"ext\":");
     if (id[3] == '3') {
         strcat(dt, prs_evt_ext(s+i));
@@ -199,7 +200,12 @@ char* prs_at_ext(char *s) {
     strcat(dt, "\"}");
     return dt;
  }
-int main(int argc, char* argv[]) {
+int hi(){
+    printf("hi\n");
+    return 0;
+}
+int test(int argc, char* argv[]) {
+//int main(int argc, char* argv[]) {
     if(NULL == argv[1]) {
         printf("pls input dt\n");
         return -1;
