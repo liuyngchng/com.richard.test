@@ -4,6 +4,11 @@ import ctypes
 import sys
 
 def prs_dt(dt):
+    '''
+    调用 C 的 lib.so文件中的函数
+    :param dt: a hex string
+    :return: a json string
+    '''
     # 定义C函数的返回类型和参数类型
     prs_dt = ctypes.CDLL("./libdtparser.so").prs_dt
     prs_dt.restype = ctypes.c_char_p
