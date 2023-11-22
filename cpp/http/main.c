@@ -1,12 +1,14 @@
-#include "read_line.h"
+#include "tcp.h"
 #include "http.h"
 #include<stdio.h>
 
 void main(int argc, char* argv[]) {
-    char *s = "\nline1\nline2\nlin33333\nline4";
+    char *s = "GET / HTTP/1.1";
+    // char *s = "key1=value1&key2=value2&key3=value3";
     char t[20] = {0};
-    read_line(s, t, sizeof(t), 3);
+    // readline(s, t, sizeof(t), 2);
+    // getmethod(s, t, 10);
+    geturi(s, t, 10);
     printf("t, %s\n", t);
-    start_srv();
-
+    startsrv();
 }
