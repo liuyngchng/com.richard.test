@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 #include "http.h"
 
 #define SRV_PORT 8083
@@ -30,7 +31,7 @@ int startsrv() {
 
     res = bind(sfd, (struct sockaddr *)&srvaddr, sizeof(srvaddr));
     if(res < 0) {
-        printf("bind error, port %d\n", SRV_PORT);
+        printf("bind error, port %d, cause %d,%s\n", SRV_PORT, errno, strerror(errno));
         close(sfd);
         return -1;
     }
@@ -44,7 +45,7 @@ int startsrv() {
         int cfd;
         cfd = accept(sfd, (struct sockaddr *)&cliaddr, &len);
         if(cfd < 0) {
-            printf("accept error\n");
+            printf("socket error, errno is %d, errstring is %s\n", errno, strerror(errno));
             close(sfd);
             return -1;
         }
@@ -65,8 +66,42 @@ int startsrv() {
         geturi(l0, uri, sizeof(uri));
         printf("method %s, uri %s\n", method, uri);
         write(cfd, MSG, strlen(MSG));
+        printf("return msg\n%s\n", MSG);
         close(cfd);
+        printf("connect closed\n");
     }
     close(sfd);
     return 0;
+}
+
+int writemsg(char *ip, int port, char *req, char *response) {
+    struct sockaddr_in server_sock;
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) {
+        printf("socket error, errno is %d, errstring is %s\n", errno, strerror(errno));
+    }
+    bzero(&server_sock, sizeof(server_sock));
+    server_sock.sin_family = AF_INET;
+    inet_pton(AF_INET, ip, &server_sock.sin_addr);
+    server_sock.sin_port = htons(port);
+    int ret = connect(sock, (struct sockaddr*)& server_sock, sizeof(server_sock));
+    if (ret < 0) {
+        printf("connect error, errno is %d, errstring is %s\n", errno, strerror(errno));
+        return 1;
+    }
+    // printf("connected to %s:%d\n", ip, port);
+    write(sock, req, strlen(req));
+    // printf("write msg, %s", req);
+    int n=0;
+    int m=0;
+    // printf("read buf\n");
+    do {
+        char buf[64] = {0};
+        m=read(sock, buf, sizeof(buf));
+        // printf("%s", buf);
+        strncat(response, buf, m);
+        n+=m;
+    } while (m>0);
+    close(sock);
+    return n;
 }

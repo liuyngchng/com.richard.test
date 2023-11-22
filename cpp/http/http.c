@@ -23,7 +23,7 @@ void readline(char *s, char *t, int n, int l) {
     t[k]='\0';
 }
 
-void getmethod(char* s, char* t, int n) {
+void getmethod(char *s, char *t, int n) {
     int i = 0;
     for (; i < strlen(s); i++){
         if(i>= n) {
@@ -39,7 +39,7 @@ void getmethod(char* s, char* t, int n) {
 }
 
 
-void geturi(char* s, char* t, int n) {
+void geturi(char *s, char *t, int n) {
     int i=0;    // index for s
     int j=0;    // count for space
     int k=0;    // index for t
@@ -59,4 +59,33 @@ void geturi(char* s, char* t, int n) {
         }
     }
     t[k]='\0';
+}
+
+
+/* 
+GET / HTTP/1.1
+Host: localhost:8083
+User-Agent: curl/7.68.0
+Accept: text/html
+Content-Type:application/json; 
+*/
+
+
+/* 
+POST /v2/api/?login HTTP/1.1
+
+Accept:text/html
+Accept-Encoding: gzip, deflate, br
+Host: passport.baidu.com
+
+username=admin&password=admin 
+*/
+
+/**
+ * http request 
+ **/
+void httpreq(char *method, char *host, char *path, char *param, char *result){
+
+
+
 }
