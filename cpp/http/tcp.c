@@ -89,19 +89,27 @@ int writemsg(char *ip, int port, char *req, char *response) {
         printf("connect error, errno is %d, errstring is %s\n", errno, strerror(errno));
         return 1;
     }
-    // printf("connected to %s:%d\n", ip, port);
+    printf("connected to %s:%d\n", ip, port);
     write(sock, req, strlen(req));
     // printf("write msg, %s", req);
     int n=0;
-    int m=0;
     // printf("read buf\n");
-    do {
-        char buf[64] = {0};
-        m=read(sock, buf, sizeof(buf));
-        // printf("%s", buf);
+    int count = 0;
+    while(1) {
+        char buf[256] = {0};
+        // m=read(sock, buf, sizeof(buf));
+        int m=recv(sock, buf, sizeof(buf), 0);
+        n+=m; 
+        printf("\n%d, =====buf====\n%s", count++, buf);
+        fflush;
         strncat(response, buf, m);
-        n+=m;
-    } while (m>0);
+        int a = (m!=sizeof(buf));
+        if (a) {
+            printf("rec finished");
+            break;
+        } 
+    }
+    response[n]='\0';
     close(sock);
     return n;
 }
