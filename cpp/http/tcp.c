@@ -74,7 +74,7 @@ int startsrv() {
     return 0;
 }
 
-int writemsg(char *ip, int port, char *req, char *response) {
+int writemsg(char *ip, int port, char *req, char *resp) {
     struct sockaddr_in server_sock;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
@@ -100,16 +100,16 @@ int writemsg(char *ip, int port, char *req, char *response) {
         // m=read(sock, buf, sizeof(buf));
         int m=recv(sock, buf, sizeof(buf), 0);
         n+=m; 
-        printf("\n%d, =====buf====\n%s", count++, buf);
+        // printf("\n%d, =====buf====\n%s\n", count++, buf);
         fflush;
-        strncat(response, buf, m);
+        strncat(resp, buf, m);
         int a = (m!=sizeof(buf));
         if (a) {
-            printf("rec finished");
+            printf("rec finished\n");
             break;
         } 
     }
-    response[n]='\0';
+    resp[n]='\0';
     close(sock);
     return n;
 }
