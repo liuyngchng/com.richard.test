@@ -78,18 +78,32 @@ void *rcvdata(void* sockfd) {
     int cfd = *(int*)sockfd;
     int size = read(cfd, buf, sizeof(buf));
     printf("[%s][%s-%d] %d bytes recieved\n%s\n",gettime(), filename(__FILE__),__LINE__, size, buf);
-    char l0[100]={0};
-    getln(buf, l0, sizeof(l0), 0);
-    char method[5]={0};
-    char uri[50]={0};
-    getmethod(l0, method, sizeof(method));
-    geturi(l0, uri, sizeof(uri));
-    printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
-    write(cfd, _MSG_, strlen(_MSG_));
-    printf("[%s][%s-%d]return msg\n%s\n", gettime(), filename(__FILE__), __LINE__, _MSG_);
+    char resp[1024] = {0};
+    getresponse(buf,resp);
+    write(cfd, resp, strlen(resp));
+    printf("[%s][%s-%d]return msg\n%s\n", gettime(), filename(__FILE__), __LINE__, resp);
     close(cfd);
     printf("[%s][%s-%d]connection closed\n", gettime(), filename(__FILE__), __LINE__);
     return NULL;
+}
+
+int getresponse(char *buf, char *resp) {
+    char l0[100]={0};
+    char method[5]={0};
+    char uri[50]={0};
+    char body[1024] = {0};
+    getln(buf, l0, sizeof(l0), 0);
+    getln(buf, body, sizof(body), 2);
+    getmethod(l0, method, sizeof(method));
+    geturi(l0, uri, sizeof(uri));
+    printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
+    char *prsdt="/prs/dt";
+    if(strncmp(uri, prsdt, strlen(prsdt))) {
+        strcat(resp, "prsdt");
+    } else {
+        strcat(resp, _MSG_);
+    }
+    
 }
 
 int main(int argc, char* argv[]) {

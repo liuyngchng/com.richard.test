@@ -19,6 +19,7 @@ void geturi(char *s, char *t, int n);
  */
 void getln(char *s, char *t, int n, int l);
 
+
 /**
  * 获取当前时间
  **/
