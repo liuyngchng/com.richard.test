@@ -8,10 +8,9 @@ char *myhttpreq(char *response);
 void httpreq();
 
 int main(int argc, char* argv[]) {
-    int i=0;
-    if(i) {
-        printf("OK");
-    }
+    char *t ="hello"
+             "world";
+    printf("%s\n", t);
     // char *s = "GET / HTTP/1.1";
     // char *s = "key1=value1&key2=value2&key3=value3";
     // char t[20] = {0};

@@ -43,7 +43,7 @@ void geturi(char *s, char *t, int n) {
     int i=0;    // index for s
     int j=0;    // count for space
     int k=0;    // index for t
-    for (; i < strlen(s); i++){
+    for (; i <strlen(s); i++){
         if (j==1) {
             if (s[i]==' ') {
                 break;
@@ -110,7 +110,7 @@ POST /v2/api/?login HTTP/1.1
 
 Accept:text/html
 Accept-Encoding: gzip, deflate, br
-Host: passport.baidu.com
+Host: www.baidu.com
 
 username=admin&password=admin 
 */
@@ -119,7 +119,11 @@ username=admin&password=admin
 char *req(char *ip, int port, char *method, char *path, char *body, char *resp, int n) {
     char req[1024] = {0};
     sprintf(req, 
-        "%s %s HTTP/1.1\r\nHost: %s:%d\r\nContent-Type: application/json\r\nContent-Length:%ld\r\n\r\n%s",
+        "%s %s HTTP/1.1\r\n"
+        "Host: %s:%d\r\n"
+        "Content-Type: application/json\r\n"
+        "Content-Length:%ld\r\n\r\n"
+        "%s",
         method,path,ip, port, strlen(body),body
     );
     printf("[%s-%d] req_msg\n%s\n",filename(__FILE__), __LINE__, req);
