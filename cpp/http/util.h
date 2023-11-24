@@ -22,4 +22,10 @@ void getln(char *s, char *t, int n, int l);
 /**
  * 获取当前时间
  **/
-char* gettime(char *t);
+// char* gettime(char *t);
+
+
+/**
+ * 获取当前时间
+ **/
+char* gettime();

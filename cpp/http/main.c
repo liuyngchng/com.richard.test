@@ -40,7 +40,7 @@ void httpreq(){
     // char reqeust[1024]={0};
     // req(resp);
     req(ip, port, method, path, bd, resp, sizeof(resp));
-    printf("[%s-%d]read bodytxt\n%s\n", filename(__FILE__), __LINE__, resp);
+    printf("[%s][%s-%d]read body\n%s\n",gettime(), filename(__FILE__), __LINE__, resp);
 }
 
 char *myhttpreq(char *response) {
