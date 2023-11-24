@@ -101,11 +101,11 @@ int writemsg(char *ip, int port, char *req, char *resp) {
         int m=recv(sock, buf, sizeof(buf), 0);
         n+=m; 
         // printf("\n%d, =====buf====\n%s\n", count++, buf);
-        fflush;
+        // fflush;
         strncat(resp, buf, m);
         int a = (m!=sizeof(buf));
         if (a) {
-            printf("rcv finish\n");
+            printf("[%s-%d]rcv finish\n", filename(__FILE__), __LINE__);
             break;
         } 
     }
