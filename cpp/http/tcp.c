@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "http.h"
+#include "util.h"
 
 #define SRV_PORT 8083
 #define MSG "HTTP/1.1 200 OK\r\nContent-Length: 14\r\n\r\n{\"status\":200}"
@@ -20,10 +20,10 @@ int startsrv() {
     /*创建一个套接字*/
     sfd = socket(AF_INET, SOCK_STREAM, 0);
     if(sfd < 0) {
-        printf("create socket error\n");
+        printf("[%s][%s-%d]create socket error\n", gettime(), filename(__FILE__),__LINE__);
         return -1;
     }
-    printf("socket ready\n");
+    printf("[%s][%s-%d]socket ready\n", gettime(), filename(__FILE__),__LINE__);
     srvaddr.sin_family = AF_INET;
     srvaddr.sin_port = htons(SRV_PORT);
     srvaddr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -31,44 +31,43 @@ int startsrv() {
 
     res = bind(sfd, (struct sockaddr *)&srvaddr, sizeof(srvaddr));
     if(res < 0) {
-        printf("bind error, port %d, cause %d,%s\n", SRV_PORT, errno, strerror(errno));
+        printf("[%s][%s-%d]bind error, port %d, cause %d,%s\n",gettime(), filename(__FILE__),__LINE__, SRV_PORT, errno, strerror(errno));
         close(sfd);
         return -1;
     }
-    printf("bind ready, port %d\n", SRV_PORT);
+    printf("[%s][%s-%d]bind ready, port %d\n", gettime(), filename(__FILE__),__LINE__,SRV_PORT);
     /*listen, 监听端口*/
     listen(sfd, 10);
-    printf("wait for connect\n");
+    printf("[%s][%s-%d]listening\n",gettime(), filename(__FILE__),__LINE__);
     while (1) {
         struct sockaddr_in cliaddr;
         socklen_t len = sizeof(cliaddr);
         int cfd;
         cfd = accept(sfd, (struct sockaddr *)&cliaddr, &len);
         if(cfd < 0) {
-            printf("socket error, errno is %d, errstring is %s\n", errno, strerror(errno));
+            printf("[%s][%s-%d]socket error, cause %d,%s\n", gettime(), filename(__FILE__),__LINE__, errno, strerror(errno));
             close(sfd);
             return -1;
         }
         // output client info
         char *ip = inet_ntoa(cliaddr.sin_addr);
-        printf("client %s connected\n", ip);
+        printf("[%s][%s-%d] client %s connected\n", gettime(), filename(__FILE__),__LINE__,ip);
 
         // output client request info
         char buf[1024] = {0};
         int size = read(cfd, buf, sizeof(buf));
-        printf("%d bytes,request info:\n%s\n", size, buf);
+        printf("[%s][%s-%d] %d bytes,request info:\n%s\n",gettime(), filename(__FILE__),__LINE__, size, buf);
         char l0[100]={0};
-        readline(buf, l0, sizeof(l0), 0);
-        printf("line0, %s\n", l0);
+        getln(buf, l0, sizeof(l0), 0);
         char method[5]={0};
         char uri[50]={0};
         getmethod(l0, method, sizeof(method));
         geturi(l0, uri, sizeof(uri));
-        printf("method %s, uri %s\n", method, uri);
+        printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
         write(cfd, MSG, strlen(MSG));
-        printf("return msg\n%s\n", MSG);
+        printf("[%s][%s-%d]return msg\n%s\n", gettime(), filename(__FILE__), __LINE__, MSG);
         close(cfd);
-        printf("connect closed\n");
+        printf("[%s][%s-%d]connect closed\n", gettime(), filename(__FILE__), __LINE__);
     }
     close(sfd);
     return 0;
@@ -101,11 +100,11 @@ int writemsg(char *ip, int port, char *req, char *resp) {
         int m=recv(sock, buf, sizeof(buf), 0);
         n+=m; 
         // printf("\n%d, =====buf====\n%s\n", count++, buf);
-        fflush;
+        // fflush;
         strncat(resp, buf, m);
         int a = (m!=sizeof(buf));
         if (a) {
-            printf("rec finished\n");
+            printf("[%s][%s-%d]rcv finish\n", gettime(),filename(__FILE__), __LINE__);
             break;
         } 
     }
