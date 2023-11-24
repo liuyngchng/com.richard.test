@@ -24,8 +24,8 @@ int main(int argc, char* argv[]) {
     //  startsrv();
     // char resp[8096]={0};
     // myhttpreq(resp);
-    // httpreq1();
-   httpreq();
+    httpreq1();
+//    httpreq();
     
     return 0;
 }
