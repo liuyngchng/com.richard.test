@@ -41,7 +41,7 @@ void httpreq1(){
     // char reqeust[1024]={0};
     // req(resp);
     req(ip, port, method, path, bd, resp, sizeof(resp), 0);
-    printf("[%s][%s-%d]read body\n%s\n",gettime(), filename(__FILE__), __LINE__, resp);
+    printf("[%s][%s-%d]resp body\n%s\n",gettime(), filename(__FILE__), __LINE__, resp);
 }
 
 void httpreq(){
@@ -55,7 +55,7 @@ void httpreq(){
     // char reqeust[1024]={0};
     // req(resp);
     req(ip, port, method, path, bd, resp, sizeof(resp), 2);
-    printf("[%s][%s-%d]read body\n%s\n",gettime(), filename(__FILE__), __LINE__, resp);
+    printf("[%s][%s-%d]resp body\n%s\n",gettime(), filename(__FILE__), __LINE__, resp);
 }
 
 char *myhttpreq(char *response) {
