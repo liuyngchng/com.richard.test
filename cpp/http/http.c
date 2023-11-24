@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "tcp.h"
+#include <string.h>
+#include "client.h"
 #include "util.h"
 
 // HTTP/1.1 200 
@@ -75,8 +76,6 @@ char *req(char *ip, int port, char *method, char *path, char *body, char *resp, 
             method, path, ip, port, strlen(body), body
         );
     }
-    
-    
     printf("[%s][%s-%d]req msg\n%s\n", gettime(),filename(__FILE__), __LINE__, req);
     char raw_resp[4096] = {0};
     writemsg(ip, port, req, raw_resp);
