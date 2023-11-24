@@ -57,14 +57,26 @@ username=admin&password=admin
 
 char *req(char *ip, int port, char *method, char *path, char *body, char *resp, int n, int bodyline) {
     char req[1024] = {0};
-    sprintf(req, 
-        "%s %s HTTP/1.1\r\n"
-        "Host: %s:%d\r\n"
-        "Content-Type: application/json\r\n"
-        "Content-Length:%ld\r\n\r\n"
-        "%s",
-        method,path,ip, port, strlen(body),body
-    );
+    if (method[0]=='G' && method[1]=='E'){
+        sprintf(req, 
+            "%s %s HTTP/1.1\r\n"
+            "Host: %s:%d\r\n"
+            "Content-Type: application/json\r\n"
+            "Content-Length:0\r\n\r\n",
+            method, path, ip, port
+        );
+    } else {
+        sprintf(req, 
+            "%s %s HTTP/1.1\r\n"
+            "Host: %s:%d\r\n"
+            "Content-Type: application/json\r\n"
+            "Content-Length:%ld\r\n\r\n"
+            "%s",
+            method, path, ip, port, strlen(body), body
+        );
+    }
+    
+    
     printf("[%s][%s-%d]req msg\n%s\n", gettime(),filename(__FILE__), __LINE__, req);
     char raw_resp[4096] = {0};
     writemsg(ip, port, req, raw_resp);

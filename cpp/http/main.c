@@ -40,7 +40,7 @@ void httpreq1(){
     char *bd = "123";
     // char reqeust[1024]={0};
     // req(resp);
-    req(ip, port, method, path, bd, resp, sizeof(resp), 2);
+    req(ip, port, method, path, bd, resp, sizeof(resp), 0);
     printf("[%s][%s-%d]read body\n%s\n",gettime(), filename(__FILE__), __LINE__, resp);
 }
 
