@@ -58,7 +58,7 @@ int startsrv() {
         int size = read(cfd, buf, sizeof(buf));
         printf("%d bytes,request info:\n%s\n", size, buf);
         char l0[100]={0};
-        readline(buf, l0, sizeof(l0), 0);
+        getln(buf, l0, sizeof(l0), 0);
         printf("line0, %s\n", l0);
         char method[5]={0};
         char uri[50]={0};

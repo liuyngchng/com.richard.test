@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "tcp.h"
 
-void readline(char *s, char *t, int n, int l) {
+void getln(char *s, char *t, int n, int l) {
     int i=0;    // s index
     int j=0;    // l index
     int k=0;    // t index
@@ -70,7 +70,7 @@ void geturi(char *s, char *t, int n) {
 
 // 206
 // {"code":200,"message":"test"}
-void readbody(char *s, char *t, int n) {
+void getbody(char *s, char *t, int n) {
     int i = 0;
     int j = 0;
     int k = 0;      // start flag
@@ -130,7 +130,7 @@ char *req(char *ip, int port, char *method, char *path, char *body, char *resp, 
     char raw_resp[4096] = {0};
     writemsg(ip, port, req, raw_resp);
     char raw_body[4096] = {0};
-    readbody(raw_resp, raw_body, sizeof(raw_body));
-    readline(raw_body, resp, n, 2);
+    getbody(raw_resp, raw_body, sizeof(raw_body));
+    getln(raw_body, resp, n, 2);
     return resp;
 }
