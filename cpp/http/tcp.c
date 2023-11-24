@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include "http.h"
+#include "tcp.h"
 
 #define SRV_PORT 8083
 #define MSG "HTTP/1.1 200 OK\r\nContent-Length: 14\r\n\r\n{\"status\":200}"
@@ -89,7 +90,7 @@ int writemsg(char *ip, int port, char *req, char *resp) {
         printf("connect error, errno is %d, errstring is %s\n", errno, strerror(errno));
         return 1;
     }
-    printf("connected to %s:%d\n", ip, port);
+    printf("[%s-%d]connected to %s:%d\n", filename(__FILE__), __LINE__, ip, port);
     write(sock, req, strlen(req));
     // printf("write msg, %s", req);
     int n=0;
@@ -101,11 +102,11 @@ int writemsg(char *ip, int port, char *req, char *resp) {
         int m=recv(sock, buf, sizeof(buf), 0);
         n+=m; 
         // printf("\n%d, =====buf====\n%s\n", count++, buf);
-        fflush;
+        // fflush;
         strncat(resp, buf, m);
         int a = (m!=sizeof(buf));
         if (a) {
-            printf("rec finished\n");
+            printf("rcv finish\n");
             break;
         } 
     }
