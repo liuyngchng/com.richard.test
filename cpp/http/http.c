@@ -26,7 +26,6 @@ void getbody(char *s, char *t, int n) {
             t[j++] = s[i];
             continue;
         }
-    
         if (s[i-3] == '\r' && s[i-2] == '\n' && s[i-1] == '\r' && s[i] == '\n') {
             k=1;
         }
@@ -56,17 +55,17 @@ username=admin&password=admin
 */
 
 
-char *req(char *ip, int port, char *method, char *path, char *body, char *resp, int n) {
+char *req(char *ip, int port, char *method, char *path, char *body, char *resp, int n, int bodyline) {
     char req[1024] = {0};
     sprintf(req, 
         "%s %s HTTP/1.1\r\nHost: %s:%d\r\nContent-Type: application/json\r\nContent-Length:%ld\r\n\r\n%s",
         method,path,ip, port, strlen(body),body
     );
-    printf("[%s-%d] req_msg\n%s\n",filename(__FILE__), __LINE__, req);
+    printf("[%s][%s-%d]req msg\n%s\n", gettime(),filename(__FILE__), __LINE__, req);
     char raw_resp[4096] = {0};
     writemsg(ip, port, req, raw_resp);
     char raw_body[4096] = {0};
     getbody(raw_resp, raw_body, sizeof(raw_body));
-    getln(raw_body, resp, n, 2);
+    getln(raw_body, resp, n, bodyline);
     return resp;
 }
