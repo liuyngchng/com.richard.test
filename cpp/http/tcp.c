@@ -31,12 +31,14 @@ int startsrv() {
 
     res = bind(sfd, (struct sockaddr *)&srvaddr, sizeof(srvaddr));
     if(res < 0) {
-        printf("[%s][%s-%d]bind error, port %d, cause %d,%s\n",gettime(), filename(__FILE__),__LINE__, SRV_PORT, errno, strerror(errno));
+        printf(
+            "[%s][%s-%d]bind error, port %d, cause %d,%s\n",gettime(), 
+            filename(__FILE__),__LINE__, SRV_PORT, errno, strerror(errno)
+        );
         close(sfd);
         return -1;
     }
     printf("[%s][%s-%d]bind ready, port %d\n", gettime(), filename(__FILE__),__LINE__,SRV_PORT);
-    /*listen, 监听端口*/
     listen(sfd, 10);
     printf("[%s][%s-%d]listening\n",gettime(), filename(__FILE__),__LINE__);
     while (1) {
@@ -77,7 +79,10 @@ int writemsg(char *ip, int port, char *req, char *resp) {
     struct sockaddr_in server_sock;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
-        printf("socket error, errno is %d, errstring is %s\n", errno, strerror(errno));
+        printf(
+            "[%s][%s-%d]socket error, cause %d,%s\n",
+            gettime(),filename(__FILE__), __LINE__, errno, strerror(errno)
+        );
     }
     bzero(&server_sock, sizeof(server_sock));
     server_sock.sin_family = AF_INET;
@@ -85,7 +90,10 @@ int writemsg(char *ip, int port, char *req, char *resp) {
     server_sock.sin_port = htons(port);
     int ret = connect(sock, (struct sockaddr*)& server_sock, sizeof(server_sock));
     if (ret < 0) {
-        printf("[%s][%s-%d]connect error, errno is %d, errstring is %s\n", gettime(),filename(__FILE__), __LINE__, errno, strerror(errno));
+        printf(
+            "[%s][%s-%d]connect error, cause %d,%s\n", 
+            gettime(),filename(__FILE__), __LINE__, errno, strerror(errno)
+        );
         return 1;
     }
     printf("[%s][%s-%d]connected to %s:%d\n", gettime(),filename(__FILE__), __LINE__, ip, port);
