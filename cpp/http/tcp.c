@@ -7,8 +7,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "http.h"
-#include "tcp.h"
+#include "util.h"
 
 #define SRV_PORT 8083
 #define MSG "HTTP/1.1 200 OK\r\nContent-Length: 14\r\n\r\n{\"status\":200}"
@@ -39,7 +38,7 @@ int startsrv() {
     printf("bind ready, port %d\n", SRV_PORT);
     /*listen, 监听端口*/
     listen(sfd, 10);
-    printf("wait for connect\n");
+    printf("listening\n");
     while (1) {
         struct sockaddr_in cliaddr;
         socklen_t len = sizeof(cliaddr);
@@ -65,7 +64,7 @@ int startsrv() {
         char uri[50]={0};
         getmethod(l0, method, sizeof(method));
         geturi(l0, uri, sizeof(uri));
-        printf("method %s, uri %s\n", method, uri);
+        printf("[%s-%d]method %s, uri %s\n", filename(__FILE__), __LINE__, method, uri);
         write(cfd, MSG, strlen(MSG));
         printf("return msg\n%s\n", MSG);
         close(cfd);
@@ -90,7 +89,7 @@ int writemsg(char *ip, int port, char *req, char *resp) {
         printf("connect error, errno is %d, errstring is %s\n", errno, strerror(errno));
         return 1;
     }
-    printf("[%s-%d]connected to %s:%d\n", filename(__FILE__), __LINE__, ip, port);
+    printf("connected to %s:%d\n", ip, port);
     write(sock, req, strlen(req));
     // printf("write msg, %s", req);
     int n=0;
@@ -102,7 +101,7 @@ int writemsg(char *ip, int port, char *req, char *resp) {
         int m=recv(sock, buf, sizeof(buf), 0);
         n+=m; 
         // printf("\n%d, =====buf====\n%s\n", count++, buf);
-        // fflush;
+        fflush;
         strncat(resp, buf, m);
         int a = (m!=sizeof(buf));
         if (a) {

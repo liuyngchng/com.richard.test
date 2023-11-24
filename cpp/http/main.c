@@ -1,6 +1,8 @@
+
+#include<stdio.h>
 #include "tcp.h"
 #include "http.h"
-#include<stdio.h>
+#include "util.h"
 
 // http request test
 char *myhttpreq(char *response);
@@ -8,8 +10,8 @@ char *myhttpreq(char *response);
 void httpreq();
 
 int main(int argc, char* argv[]) {
-    char *t ="hello"
-             "world";
+    char t[64]={0};
+    gettime(t);
     printf("%s\n", t);
     // char *s = "GET / HTTP/1.1";
     // char *s = "key1=value1&key2=value2&key3=value3";
@@ -18,11 +20,11 @@ int main(int argc, char* argv[]) {
     // getmethod(s, t, 10);
     // geturi(s, t, 10);
     // printf("t, %s\n", t);
-    // startsrv();
+    //  startsrv();
     // char resp[8096]={0};
     // myhttpreq(resp);
     
-    httpreq();
+   httpreq();
     
     return 0;
 }
@@ -38,7 +40,7 @@ void httpreq(){
     // char reqeust[1024]={0};
     // req(resp);
     req(ip, port, method, path, bd, resp, sizeof(resp));
-    printf("[%s-%d]get body\n%s\n", filename(__FILE__), __LINE__, resp);
+    printf("[%s-%d]read bodytxt\n%s\n", filename(__FILE__), __LINE__, resp);
 }
 
 char *myhttpreq(char *response) {

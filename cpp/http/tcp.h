@@ -1,8 +1,5 @@
 #include<string.h>
-//windows:
-// #define filename(x) strrchr(x,'\\')?strrchr(x,'\\')+1:x
-//linux :
-#define filename(x) strrchr(x,'/')?strrchr(x,'/')+1:x
+
 
 /**
  * 启动 TCP server
