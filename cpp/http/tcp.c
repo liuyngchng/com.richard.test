@@ -85,10 +85,10 @@ int writemsg(char *ip, int port, char *req, char *resp) {
     server_sock.sin_port = htons(port);
     int ret = connect(sock, (struct sockaddr*)& server_sock, sizeof(server_sock));
     if (ret < 0) {
-        printf("connect error, errno is %d, errstring is %s\n", errno, strerror(errno));
+        printf("[%s][%s-%d]connect error, errno is %d, errstring is %s\n", gettime(),filename(__FILE__), __LINE__, errno, strerror(errno));
         return 1;
     }
-    printf("connected to %s:%d\n", ip, port);
+    printf("[%s][%s-%d]connected to %s:%d\n", gettime(),filename(__FILE__), __LINE__, ip, port);
     write(sock, req, strlen(req));
     // printf("write msg, %s", req);
     int n=0;
