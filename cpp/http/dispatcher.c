@@ -10,7 +10,6 @@ int dispatch(char *req, char *resp) {
     char uri[50]={0};
     char body[1024] = {0};
     getln(req, l0, sizeof(l0), 0);
-    
     getbody(req, body, sizeof(body));
     getmethod(l0, method, sizeof(method));
     geturi(l0, uri, sizeof(uri));
@@ -20,7 +19,6 @@ int dispatch(char *req, char *resp) {
         gettime(), filename(__FILE__), __LINE__, method, _SRV_IP_, _SRV_PORT_, uri, body
     );
     char *respbd;            // response body
-    
     if (strncmp(method, "GET", 3)==0){
         char tmp[512]={0}; 
         sprintf(tmp, 
@@ -30,10 +28,17 @@ int dispatch(char *req, char *resp) {
         respbd=tmp;
     } else {
         char *prsdt="/prs/dt";
+        char *updt="/up/dt";
+        char *dndt="/dn/dt";
         if(strncmp(uri, prsdt, strlen(prsdt))==0) {
             printf("[%s][%s-%d]%s matched\n", gettime(), filename(__FILE__), __LINE__, prsdt);
-            respbd= prs_dt(body);
-        } else {
+            respbd= parsedt(body);
+        } else if(strncmp(uri, updt, strlen(updt))==0) {
+            /* code */
+        } else if(strncmp(uri, dndt, strlen(updt))==0) {
+            /* code */
+        }
+         else {
             respbd= "{\"status\":200}";
         }
     }

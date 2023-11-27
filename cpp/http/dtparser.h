@@ -1,4 +1,4 @@
-char* prs_dt(char* s);
+char* parsedt(char* s);
 char* prs_up_rpt_dt(char* s);
 char* prs_dt_u(char* s);
 char* prs_up_rpt_dt_obj(char* id, char* s);

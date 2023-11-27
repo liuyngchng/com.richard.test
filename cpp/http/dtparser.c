@@ -2,7 +2,7 @@
 #include <string.h>
 #include "dtparser.h"
 
-char* prs_dt(char* s) {
+char* parsedt(char* s) {
 //    printf("%s\n",prs_up_rpt_dt(s));
     return prs_up_rpt_dt(s);
 }

@@ -35,6 +35,11 @@ username=admin&password=admin
 char *req(char *ip, int port, char *method, char *path, char *body, char *resp, int n, int bodyline) {
     char req[1024] = {0};
     char header[512]={0};
+    char debug[1024]={0};
+    sprintf(debug, 
+        "curl -X%s --noproxy '*' 'http://%s:%d%s' -H 'Content-Type: application/json;charset=UTF-8' -d'%s'",
+        method, ip, port, path, body    
+    );
     sprintf(header, 
         "%s %s HTTP/1.1\r\n"
         "Host: %s:%d\r\n"
@@ -55,7 +60,7 @@ char *req(char *ip, int port, char *method, char *path, char *body, char *resp, 
             header, strlen(body), body
         );
     }
-    printf("[%s][%s-%d]req msg\n%s\n", gettime(),filename(__FILE__), __LINE__, req);
+    printf("[%s][%s-%d]%s\n", gettime(),filename(__FILE__), __LINE__, debug);
     char raw_resp[4096] = {0};
     writemsg(ip, port, req, raw_resp);
     char raw_body[4096] = {0};

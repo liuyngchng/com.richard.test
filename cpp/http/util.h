@@ -6,6 +6,8 @@
 #define _SRV_PORT_      8083
 #define _SRV_IP_        "127.0.0.1"
 #define _BACKLOG_       10
+#define _CODEC_IP_      "11.10.36.1"
+#define _CODEC_PORT_    19061
 
 /**
  * 获取 http request method
