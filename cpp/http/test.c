@@ -40,7 +40,6 @@ int test() {
     char jsonv[256] = {0};
     getjsonv(s, jsonv, jsonk, sizeof(jsonv));
     printf("jsonv:%s\n", jsonv);
-    
 }
 
 
