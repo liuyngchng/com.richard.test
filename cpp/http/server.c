@@ -8,18 +8,13 @@
 #include <errno.h>
 #include <pthread.h>
 #include "util.h"
-
 #include "dispatcher.h"
 
-#define _SRV_PORT_ 8083
-#define _BACKLOG_ 10
 
 /**
  * 从文件句柄中间接收数据
  **/
 void* rcvdata(void *);
-
-
 
 int startsrv() {
     struct sockaddr_in srvaddr;
@@ -92,7 +87,6 @@ void *rcvdata(void* sockfd) {
     printf("[%s][%s-%d]connection closed\n", gettime(), filename(__FILE__), __LINE__);
     return NULL;
 }
-
 
 int main(int argc, char* argv[]) {
     printf("[%s][%s-%d]server starting\n", gettime(), filename(__FILE__), __LINE__);

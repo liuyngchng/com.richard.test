@@ -15,8 +15,9 @@ int dispatch(char *req, char *resp) {
     getmethod(l0, method, sizeof(method));
     geturi(l0, uri, sizeof(uri));
     printf(
-        "[%s][%s-%d]method [%s], uri [%s], body\n%s\n", 
-        gettime(), filename(__FILE__), __LINE__, method, uri, body
+        "[%s][%s-%d]curl -X%s -s --noproxy '*' 'http://%s:%d%s' "
+        "-H 'Content-Type:application/json;charset=UTF-8' -d'%s'\n", 
+        gettime(), filename(__FILE__), __LINE__, method, _SRV_IP_, _SRV_PORT_, uri, body
     );
     char *respbd;            // response body
     
