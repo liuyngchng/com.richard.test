@@ -32,8 +32,6 @@ Host: passport.baidu.com
 
 username=admin&password=admin 
 */
-
-
 char *req(char *ip, int port, char *method, char *path, char *body, char *resp, int n, int bodyline) {
     char req[1024] = {0};
     char header[512]={0};
