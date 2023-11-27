@@ -93,10 +93,14 @@ int getresponse(char *buf, char *resp) {
     char uri[50]={0};
     char body[1024] = {0};
     getln(buf, l0, sizeof(l0), 0);
-    getln(buf, body, sizeof(body), 2);
+    
+    getbody(buf, body, sizeof(body));
     getmethod(l0, method, sizeof(method));
     geturi(l0, uri, sizeof(uri));
-    printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
+    printf(
+        "[%s][%s-%d]method [%s], uri [%s], body\n%s\n", 
+        gettime(), filename(__FILE__), __LINE__, method, uri, body
+    );
     char *rbd;
     char *prsdt="/prs/dt";
     if(strncmp(uri, prsdt, strlen(prsdt))==0) {

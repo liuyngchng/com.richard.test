@@ -20,6 +20,14 @@ void geturi(char *s, char *t, int n);
 void getln(char *s, char *t, int n, int l);
 
 /**
+ * 获取 http response body
+ * s, source str,
+ * t, target str,
+ * n, 返回的字符串最大长度
+ **/
+void getbody(char *s, char *t, int n);
+
+/**
  * 获取当前时间
  **/
 char *gettime();

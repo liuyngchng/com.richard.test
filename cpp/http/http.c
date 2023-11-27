@@ -12,28 +12,7 @@
 // 206
 // {"code":200,"message":"test"}
 
-void getbody(char *s, char *t, int n) {
-    int i = 0;
-    int j = 0;
-    int k = 0;      // start flag
-    for (; i < strlen(s); i++){
-        if(i<3){
-            continue;
-        }
-        if(j>=n){
-            break;
-        }
-        if (k){
-            t[j++] = s[i];
-            continue;
-        }
-        if (s[i-3] == '\r' && s[i-2] == '\n' && s[i-1] == '\r' && s[i] == '\n') {
-            k=1;
-        }
-        continue;
-    }
-    t[j]='\0';
-}
+
 
 
 /* 
