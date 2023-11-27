@@ -11,7 +11,6 @@
 
 #define _SRV_PORT_ 8083
 #define _BACKLOG_ 10
-#define _MSG_ "HTTP/1.1 200 OK\r\nContent-Length: 14\r\n\r\n{\"status\":200}"
 
 void* rcvdata(void *);
 int getresponse(char *buf, char *resp);
@@ -98,13 +97,20 @@ int getresponse(char *buf, char *resp) {
     getmethod(l0, method, sizeof(method));
     geturi(l0, uri, sizeof(uri));
     printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
+    char *rbd;
     char *prsdt="/prs/dt";
     if(strncmp(uri, prsdt, strlen(prsdt))==0) {
         printf("[%s][%s-%d]%s matched\n", gettime(), filename(__FILE__), __LINE__, prsdt);
-        strcat(resp, "{\"msg\":\"prsdt\"}");
+        rbd= "{\"msg\":\"prsdt\"}";
     } else {
-        strcat(resp, _MSG_);
+        rbd= "{\"status\":200}";
     }
+    sprintf(resp,
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Length: %ld\r\n\r\n"
+        "%s",
+        strlen(rbd),rbd
+    );
     
 }
 
