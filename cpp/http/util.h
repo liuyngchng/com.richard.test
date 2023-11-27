@@ -32,9 +32,3 @@ void getbody(char *s, char *t, int n);
  **/
 char *gettime();
 
-/**
- * 根据url,返回不同的http报文
- * req, 请求报文
- * resp, 响应报文
- **/
-int dispatchurl(char *req, char *resp);

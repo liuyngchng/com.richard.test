@@ -94,7 +94,6 @@ void *rcvdata(void* sockfd) {
 }
 
 
-
 int main(int argc, char* argv[]) {
     printf("[%s][%s-%d]server starting\n", gettime(), filename(__FILE__), __LINE__);
     startsrv();

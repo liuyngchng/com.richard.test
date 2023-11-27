@@ -43,7 +43,7 @@ char *req(char *ip, int port, char *method, char *path, char *body, char *resp, 
         "Content-Type: application/json\r\n",
         method, path, ip, port
     );
-    if (method[0]=='G' && method[1]=='E'){
+    if (strncmp(method,"GET", 3) ==0){
         sprintf(req, 
             "%s"
             "Content-Length:0\r\n\r\n",
