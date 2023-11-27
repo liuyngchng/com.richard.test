@@ -38,3 +38,12 @@ void getbody(char *s, char *t, int n);
  **/
 char *gettime();
 
+/**
+ * 获取 JSON 字符串某个 key 的值
+ * s, JSON 字符串;
+ * t, 返回的JSON key对应的value
+ * jsonk, JSON key
+ * n, 最多返回n个字节的内容
+ **/
+void getjsonv(char *s, char *t, char *jsonk, int n);
+

@@ -19,7 +19,7 @@ void getparam(char *s, char *param, int n);
  * http request, 最多返回n个字节的报文保存至 resp
  * ip, HTTP 请求头中的 IP 地址,
  * port, HTTP 请求头中的端口,
- * methed, HTTP 请求行中的 method
+ * method, HTTP 请求行中的 method
  * path, HTTP 请求行中的地址
  * body, HTTP 请求报文体
  * resp，HTTP 响应报文的报文体

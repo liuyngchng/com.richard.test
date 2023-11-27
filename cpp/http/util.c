@@ -96,3 +96,37 @@ char *gettime()
     return tmp;
 }
 
+void getjsonv(char *s, char *t, char *jsonk, int n) {
+    int i=0;    // source index
+    int j=0;    // target start index
+    int k=0;    // key index  
+    int f=0;    // target end flag
+    for (; i < strlen(s); i++){
+        if(k==0 && strncmp(&s[i], jsonk, strlen(jsonk)) !=0) {
+            continue;
+        }
+        if (k==0){
+            if (i<strlen(s)-strlen(jsonk)){
+                i+=strlen(jsonk);
+                k++;
+            } else{
+                printf("err_json_str, %s\n", &s[i]);
+                break;
+            }
+            
+        } else {
+            if (k<3 && (s[i]==':' || s[i] =='"')) {
+                k++;
+                continue;
+            }
+            if (j<n && s[i] != '"') {
+                t[j++] = s[i]; 
+                continue;
+            } else{
+                break;
+            }
+        }
+    }
+    t[i]='\0';
+}
+

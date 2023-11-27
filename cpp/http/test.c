@@ -19,10 +19,10 @@ void httpreq(){
 }
 
 int test() {
-    char *c1 = "hello";
-    char *c2="hilloworld";
-    int c=strncmp(c1, c2, 5);
-    printf("%d\n", c);
+    // char *c1 = "hello";
+    // char *c2="hilloworld";
+    // int c=strncmp(c1, c2, 5);
+    // printf("%d\n", c);
     // char t[64]={0};
     // printf("%s\n", gettime());
     // char *s = "GET / HTTP/1.1";
@@ -34,7 +34,13 @@ int test() {
     // printf("t, %s\n", t);
     //  startsrv();
     // char resp[8096]={0};
-    httpreq();
+    // httpreq();
+    char *s = "{\"key1\":\"value1\", \"key2\":\"value2\", \"key3\":\"value3\"}";
+    char *jsonk = "key3";
+    char jsonv[256] = {0};
+    getjsonv(s, jsonv, jsonk, sizeof(jsonv));
+    printf("jsonv:%s\n", jsonv);
+    
 }
 
 
