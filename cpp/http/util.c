@@ -61,7 +61,7 @@ void getln(char *s, char *t, int n, int l) {
     t[k]='\0';
 }
 
-char* gettime()
+char *gettime()
 {
     struct tm *ptr; 
     time_t lt;

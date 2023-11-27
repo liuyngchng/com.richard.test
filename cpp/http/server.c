@@ -14,6 +14,7 @@
 #define _MSG_ "HTTP/1.1 200 OK\r\nContent-Length: 14\r\n\r\n{\"status\":200}"
 
 void* rcvdata(void *);
+int getresponse(char *buf, char *resp);
 
 int startsrv() {
     struct sockaddr_in srvaddr;
@@ -98,8 +99,9 @@ int getresponse(char *buf, char *resp) {
     geturi(l0, uri, sizeof(uri));
     printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
     char *prsdt="/prs/dt";
-    if(strncmp(uri, prsdt, strlen(prsdt))) {
-        strcat(resp, "prsdt");
+    if(strncmp(uri, prsdt, strlen(prsdt))==0) {
+        printf("[%s][%s-%d]%s matched\n", gettime(), filename(__FILE__), __LINE__, prsdt);
+        strcat(resp, "{\"msg\":\"prsdt\"}");
     } else {
         strcat(resp, _MSG_);
     }
