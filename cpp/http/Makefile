@@ -1,8 +1,8 @@
 all:_server _client _test dtparser
 dtparser:dtparser.c
 	gcc -o ./libdtparser.so -fPIC -shared dtparser.c
-_server:server.c util.c
-	gcc -o _server server.c util.c -lpthread
+_server:server.c util.c dtparser.c dispatcher.c
+	gcc -o _server server.c dispatcher.c util.c dtparser.c -lpthread
 _client:client.c peer.c http.c util.c
 	gcc -o _client client.c peer.c http.c util.c
 _test:test.c peer.c http.c util.c

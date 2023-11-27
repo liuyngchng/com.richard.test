@@ -201,11 +201,11 @@ char* prs_at_ext(char *s) {
     strcat(dt, "\"}");
     return dt;
  }
-int test(int a){
+int dttest(int a){
     printf("hi, %d\n", a);
     return 0;
 }
-int test1(int argc, char* argv[]) {
+int dttest1(int argc, char* argv[]) {
 //int main(int argc, char* argv[]) {
     if(NULL == argv[1]) {
         printf("pls input dt\n");

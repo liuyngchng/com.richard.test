@@ -1,5 +1,7 @@
 #include <string.h>
+#include <stdio.h>
 #include <time.h>
+#include "util.h"
 
 void getmethod(char *s, char *t, int n) {
     int i = 0;
@@ -15,7 +17,6 @@ void getmethod(char *s, char *t, int n) {
     }
     t[i]='\0';
 }
-
 
 void geturi(char *s, char *t, int n) {
     int i=0;    // index for s
@@ -94,3 +95,4 @@ char *gettime()
     tmp[strlen(tmp)-1]=0;
     return tmp;
 }
+

@@ -9,11 +9,17 @@
 #include <pthread.h>
 #include "util.h"
 
+#include "dispatcher.h"
+
 #define _SRV_PORT_ 8083
 #define _BACKLOG_ 10
 
+/**
+ * 从文件句柄中间接收数据
+ **/
 void* rcvdata(void *);
-int getresponse(char *buf, char *resp);
+
+
 
 int startsrv() {
     struct sockaddr_in srvaddr;
@@ -79,7 +85,7 @@ void *rcvdata(void* sockfd) {
     int size = read(cfd, buf, sizeof(buf));
     printf("[%s][%s-%d] %d bytes recieved\n%s\n",gettime(), filename(__FILE__),__LINE__, size, buf);
     char resp[1024] = {0};
-    getresponse(buf,resp);
+    dispatch(buf,resp);
     write(cfd, resp, strlen(resp));
     printf("[%s][%s-%d]return msg\n%s\n", gettime(), filename(__FILE__), __LINE__, resp);
     close(cfd);
@@ -87,36 +93,7 @@ void *rcvdata(void* sockfd) {
     return NULL;
 }
 
-int getresponse(char *buf, char *resp) {
-    char l0[100]={0};
-    char method[5]={0};
-    char uri[50]={0};
-    char body[1024] = {0};
-    getln(buf, l0, sizeof(l0), 0);
-    
-    getbody(buf, body, sizeof(body));
-    getmethod(l0, method, sizeof(method));
-    geturi(l0, uri, sizeof(uri));
-    printf(
-        "[%s][%s-%d]method [%s], uri [%s], body\n%s\n", 
-        gettime(), filename(__FILE__), __LINE__, method, uri, body
-    );
-    char *rbd;
-    char *prsdt="/prs/dt";
-    if(strncmp(uri, prsdt, strlen(prsdt))==0) {
-        printf("[%s][%s-%d]%s matched\n", gettime(), filename(__FILE__), __LINE__, prsdt);
-        rbd= "{\"msg\":\"prsdt\"}";
-    } else {
-        rbd= "{\"status\":200}";
-    }
-    sprintf(resp,
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Length: %ld\r\n\r\n"
-        "%s",
-        strlen(rbd),rbd
-    );
-    
-}
+
 
 int main(int argc, char* argv[]) {
     printf("[%s][%s-%d]server starting\n", gettime(), filename(__FILE__), __LINE__);
