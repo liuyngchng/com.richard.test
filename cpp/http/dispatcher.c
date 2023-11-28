@@ -68,14 +68,14 @@ void decdt(char *reqbd, char *resp){
     int port = _CODEC_PORT_;
     char *method="POST";
     char *path="/industry/api/upMsgProcess";
-    char bd[1024] ={0};
-    char *mid
+    char bd[1024]={0};
+    char mid[23]={0};
     sprintf(bd, 
-        "{\"data\":\"%s\","
-            "\"transId\":\"T20211212091414-%s\","
+        "{\"data\":\"123\","
+            "\"transId\":\"T20211212091414-123\","
             "\"deviceId\":\"%s\","
             "\"timestamp\":1635756025000}",
-            getjsonv("payload"),
+            mid
         
     );
     // char reqeust[1024]={0};
