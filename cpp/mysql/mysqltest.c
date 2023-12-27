@@ -25,20 +25,17 @@ struct ConnectionPool {
 	MYSQL **freeConnections;
 	int index;
 
-} ;
+};
 
-
-int getdt(){
+int getdt() {
     //显示MySQL客户端库版本
     printf("mysql client version: %s\n",mysql_get_client_info());
     MYSQL *my = mysql_init(NULL); 
- 
     // 链接数据库
     if(0 == mysql_real_connect(my, host, user, passwd, db, port, NULL, 0)){
         printf("mysql 连接失败!\n");
         return 1;
     }
- 
     // 设置连接的编码也是utf8
     mysql_set_character_set(my, "utf8");
     printf("mysql 连接成功!\n");
@@ -50,16 +47,13 @@ int getdt(){
         return 2;
     }
     printf("execute success, %s\n", select_sql);
-    
     // 2. 获取查询结果数据
     MYSQL_RES *res = mysql_store_result(my);
- 
     // 3. 数据的行列信息
     // 获取结果行数
     int rows = mysql_num_rows(res);
     // 获取列数
     int cols = mysql_num_fields(res);
- 
     // 获取所有的列属性
     MYSQL_FIELD *fields = mysql_fetch_field(res);
     // for (int i = 0; i < cols; i++)
@@ -68,13 +62,13 @@ int getdt(){
         printf("%s\t", fields[i].name);
     }
     printf("\n");
-    for(int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         MYSQL_ROW row = mysql_fetch_row(res);
-        for(int j = 0; j < cols; j++) {
+        for (int j = 0; j < cols; j++) {
             printf("%s\t",row[j]);
         }
         printf("\n");
-        if (i>10){
+        if (i>10) {
             break;
         }
         
@@ -87,21 +81,19 @@ int getdt(){
     return 0;
 }
 
-int savedt(){
+int savedt() {
     //显示MySQL客户端库版本
     printf("mysql client version: %s\n",mysql_get_client_info());
     MYSQL *my = mysql_init(NULL);
 
     // 链接数据库
-    if(0 == mysql_real_connect(my, host, user, passwd, db, port, NULL, 0)){
+    if (0 == mysql_real_connect(my, host, user, passwd, db, port, NULL, 0)) {
         printf("mysql 连接失败!\n");
         return 1;
     }
-
     // 设置连接的编码也是utf8
     mysql_set_character_set(my, "utf8");
     printf("mysql 连接成功!\n");
-
     //增删改
     char *sql = "insert into test.a(a,b) values ('testa', 'testb')";
     int result = mysql_query(my, sql);
@@ -118,7 +110,7 @@ int savedt(){
     return 0;
 }
 
-int updatedt(){
+int updatedt() {
     //显示MySQL客户端库版本
     printf("mysql client version: %s\n",mysql_get_client_info());
     MYSQL *my = mysql_init(NULL);
@@ -130,7 +122,6 @@ int updatedt(){
     // 设置连接的编码也是utf8
     mysql_set_character_set(my, "utf8");
     printf("mysql 连接成功!\n");
-
     //增删改
     char *sql = "update test.a set a='testa1' where a='testa' limit 1;";
     int result = mysql_query(my, sql);
@@ -146,7 +137,7 @@ int updatedt(){
     return 0;
 }
 
-int deletedt(){
+int deletedt() {
     //显示MySQL客户端库版本
     printf("mysql client version: %s\n",mysql_get_client_info());
     MYSQL *my = mysql_init(NULL);
