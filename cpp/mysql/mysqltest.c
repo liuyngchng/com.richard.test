@@ -170,7 +170,7 @@ int deletedt() {
 /**
  * 创建连接池
  */
-struct ConnectionPool *connectionPoolCreate() {
+struct ConnectionPool *createConnectionPool() {
 	struct ConnectionPool *ppool = (struct ConnectionPool*)malloc(sizeof(struct ConnectionPool));
 	ppool->maxConnections = MAX_CONNECTIONS;
 	ppool->connecCount = 0;
@@ -194,7 +194,6 @@ MYSQL *getConnection(struct ConnectionPool *pool){
 	return pcon;
 }
 
-
 /**
  * 连接释放
  */
@@ -202,9 +201,10 @@ void releaseConnection(struct ConnectionPool *pool, MYSQL* pconn){
 	pool->freeConnections[pool->index++] = pconn;
 }
 
-//销毁连接池
-
-void connectionPoolDestroy(struct ConnectionPool *pool){
+/**
+ * 销毁连接池
+ */
+void destroyConnectionPool(struct ConnectionPool *pool){
 	if (pool) {
 		free((void*)pool->connections);
 		free((void*)pool->freeConnections);
