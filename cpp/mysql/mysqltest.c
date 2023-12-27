@@ -212,8 +212,6 @@ void destroyConnectionPool(struct ConnectionPool *pool){
 	}
 }
 
-
-
 int main() {
 	deletedt();
 }
