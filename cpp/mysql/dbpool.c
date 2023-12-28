@@ -17,7 +17,11 @@ struct ConPool {
 	MYSQL **cons;
 	// free connection which is not busy, all cons are free connection in initial state
 	MYSQL **freeCons;
-	// current index for freeCons which is ready and can be fetched next
+	/**
+	 * a index for fetching connection which is idle
+	 * current index for freeCons which is ready and can be fetched next
+	 */
+
 	int index;
 };
 
