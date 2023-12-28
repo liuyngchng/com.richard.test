@@ -21,7 +21,6 @@ struct ConPool {
 	 * a index for fetching connection which is idle
 	 * current index for freeCons which is ready and can be fetched next
 	 */
-
 	int index;
 };
 
@@ -80,7 +79,7 @@ MYSQL *getCon(struct ConPool *pool) {
 /**
  * 连接释放
  */
-void releaseCon(struct ConPool *pool, MYSQL* pconn) {
+void releaseCon(struct ConPool *pool, MYSQL *pconn) {
 	pool->freeCons[pool->index++] = pconn;
 }
 
