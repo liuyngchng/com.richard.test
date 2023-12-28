@@ -16,6 +16,7 @@ MYSQL *get_connection() {
 		printf("mysql conenct failed!\n");
 		exit(-1);
 	}
+	printf("mysql server version, %s\n", mysql_get_server_info(my));
 	return my;
 }
 
