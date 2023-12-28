@@ -94,4 +94,5 @@ void destroyConPool(struct ConPool *pool) {
 int main() {
 	struct ConPool *ppool = init_pool();
 	printf("ppool init ,size %d\n", ppool->maxCon);
+	getchar();
 }
