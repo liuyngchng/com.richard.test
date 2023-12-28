@@ -30,14 +30,14 @@ int getdt() {
     MYSQL *my = mysql_init(NULL); 
     if(0 == mysql_real_connect(my, host, user, pwd, db, port, NULL, 0)){
         printf("mysql conenct failed!\n");
-        return 1;
+        return -1;
     }
     mysql_set_character_set(my, "utf8");
     printf("mysql connected!\n");
     char *select_sql = "select id, a, b from a limit 5";
     if (0 != mysql_query(my, select_sql)){
         printf("execute failed, %s\n", select_sql);
-        return 2;
+        return -2;
     }
     printf("execute success, %s\n", select_sql);
     MYSQL_RES *res = mysql_store_result(my);
