@@ -10,18 +10,26 @@
 #include "const.h"
 
 struct ConPool {
-	int maxCon;
-	// active connection / busy connection
-	int conCount;
-	// a connection pool with busy and free connection
-	MYSQL **cons;
-	// free connection which is not busy, all cons are free connection in initial state
-	MYSQL **freeCons;
+
 	/**
-	 * a index for fetching connection which is idle
-	 * current index for freeCons which is ready and can be fetched next
+	 * size connection count in the pool
 	 */
-	int index;
+	int size;
+
+	/**
+	 * count of busy connection
+	 * buzy in range [0, size-1]
+	 */
+	int buzy;
+
+	/**
+	 * the state of connections, 0 for idle, 1 for busy
+	 */
+	int flag[MAX_CONNECTIONS];
+	/**
+	 * a connection pool with busy and idle connections
+	 */
+	MYSQL **cons;
 };
 
 MYSQL *init_con(MYSQL *my) {
@@ -40,11 +48,12 @@ MYSQL *init_con(MYSQL *my) {
 struct ConPool *createConPool() {
 	struct ConPool *ppool = (struct ConPool*)
 		malloc(sizeof(struct ConPool));
-	ppool->maxCon 	= MAX_CONNECTIONS;
-	ppool->conCount = 0;
-	ppool->cons 	= (MYSQL**)malloc(sizeof(MYSQL*) * ppool->maxCon);
-	ppool->freeCons = (MYSQL**)malloc(sizeof(MYSQL*) * ppool->maxCon);
-	ppool->index 	= 0;
+	ppool->size 	= MAX_CONNECTIONS;
+	ppool->buzy 	= 0;
+	ppool->cons 	= (MYSQL**)malloc(sizeof(MYSQL*) * ppool->size);
+	for (int i=0; i< sizeof(ppool->flag);i++) {
+		ppool->flag[i]=0;
+	}
 	return ppool;
 }
 
@@ -53,11 +62,10 @@ struct ConPool *createConPool() {
  */
 struct ConPool *init_pool() {
 	struct ConPool *ppool= createConPool();
-	for (int i=0; i < ppool->maxCon; i++) {
+	for (int i=0; i < ppool->size; i++) {
 		MYSQL *my;
 		init_con(my);
 		ppool->cons[i]= my;
-		ppool->freeCons[i]= my;
 		printf("init %d conn\n", i);
 	}
 	return ppool;
@@ -66,12 +74,14 @@ struct ConPool *init_pool() {
 /**
  * 获取一个可用连接
  */
-MYSQL *getCon(struct ConPool *pool) {
+MYSQL *getCon(struct ConPool *ppool) {
 	MYSQL *pcon = NULL;
-	if (pool->index == 0) {
-		pcon = pool->cons[pool->index++]; //首先获取第一个用户连接
-	} else {
-		pcon = pool->freeCons[pool->index];
+	for(int i = 0; i < ppool->size; i++) {
+		if (!ppool->flag[i]) {
+			pcon = ppool->cons[i];
+			ppool->flag[i]=1;
+			break;
+		}
 	}
 	return pcon;
 }
@@ -79,23 +89,27 @@ MYSQL *getCon(struct ConPool *pool) {
 /**
  * 连接释放
  */
-void releaseCon(struct ConPool *pool, MYSQL *pconn) {
-	pool->freeCons[pool->index++] = pconn;
+void releaseCon(struct ConPool *ppool, MYSQL *pconn) {
+	for(int i=0; i< ppool->size; i++) {
+		if(pconn == ppool->cons[i]) {
+			ppool->flag[i]=0;
+			break;
+		}
+	}
 }
 
 /**
  * 销毁连接池
  */
-void destroyConPool(struct ConPool *pool) {
-	if (pool) {
-		free((void*)pool->cons);
-		free((void*)pool->freeCons);
-		free(pool);
+void destroyConPool(struct ConPool *ppool) {
+	if (ppool) {
+		free(ppool->cons);
+		free(ppool);
 	}
 }
 
 int main() {
 	struct ConPool *ppool = init_pool();
-	printf("ppool init ,size %d\n", ppool->maxCon);
+	printf("ppool init ,size %d\n", ppool->size);
 	getchar();
 }
