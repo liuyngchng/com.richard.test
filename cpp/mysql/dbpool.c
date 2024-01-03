@@ -129,7 +129,8 @@ int main() {
 	con3 = get_con(ppool);
 	printf("get con con3 %p\n",con3);
 	release_con(ppool, con3);
-	printf("release con3 %p", con3);
+	printf("release con3 %p\n", con3);
 	destroy_pool(ppool);
+	printf("destroy pool\n");
 	getchar();
 }
