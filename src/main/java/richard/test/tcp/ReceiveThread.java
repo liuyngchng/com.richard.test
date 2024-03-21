@@ -55,7 +55,7 @@ public class ReceiveThread implements Runnable{
 
     public void run() {
         int byteCount = 0;
-        byte[] buffer = new byte[10];
+        byte[] buffer = new byte[1024];
         StringBuffer sb = new StringBuffer(512);
 
         do {
