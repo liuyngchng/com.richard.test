@@ -34,10 +34,18 @@ static GtkWidget *xpm_label_box( gchar     *xpm_filename,
 }
 
 /* Our usual callback function */
-static void callback( GtkWidget *widget,
+static void check_button_callback( GtkWidget *widget,
                       gpointer   data )
 {
-    g_print ("Hello again - %s was pressed\n", (char *) data);
+//    g_print ("Hello again - %s was pressed\n", (char *) data);
+	 if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+	{
+		 g_print ("%s was pressed, i am active\n", (char *) data);
+
+	} else {
+
+		g_print ("%s was pressed, i am deactive\n", (char *) data);
+	}
 }
 
 int main( int   argc,
@@ -46,14 +54,13 @@ int main( int   argc,
     /* GtkWidget is the storage type for widgets */
     GtkWidget *window;
     GtkWidget *button;
-    GtkWidget *box;
 
     gtk_init (&argc, &argv);
 
     /* Create a new window */
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-    gtk_window_set_title (GTK_WINDOW (window), "Pixmap'd Buttons!");
+    gtk_window_set_title (GTK_WINDOW (window), "Check Buttons!");
 
     /* It's a good idea to do this for all windows. */
     g_signal_connect (window, "destroy",
@@ -65,8 +72,10 @@ int main( int   argc,
     /* Sets the border width of the window. */
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
 
-    /* Create a new button */
-    button = gtk_button_new ();
+    /* Create a new toggle button */
+//    button = gtk_check_button_new ();
+    button = gtk_check_button_new_with_label ("Check it with label");
+//    button = gtk_check_button_new_with_mnemonic ("Check it with mnemonic");
 
     /* Connect the "clicked" signal of the button to our callback
      *
@@ -79,17 +88,8 @@ int main( int   argc,
      *
      * */
     g_signal_connect (button, "clicked",
-		      G_CALLBACK (callback), (gpointer) "cool button");
+		      G_CALLBACK (check_button_callback), (gpointer) "check button");
 
-    /* This calls our box creating function */
-//    box = xpm_label_box ("info.xpm", "cool button");
-
-    box = xpm_label_box ("pic1.png", "cool button");
-
-    /* Pack and show all our widgets */
-    gtk_widget_show (box);
-
-    gtk_container_add (GTK_CONTAINER (button), box);
 
     gtk_widget_show (button);
 
