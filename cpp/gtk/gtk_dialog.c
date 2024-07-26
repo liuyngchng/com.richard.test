@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 
 //无模式窗口
-//#define SCHEMALESS_WINDOW
+#define SCHEMALESS_WINDOW
 
 void button_click(GtkWidget *widget,GtkWindow *parent)
 {
