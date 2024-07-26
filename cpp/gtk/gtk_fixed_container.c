@@ -31,6 +31,7 @@ int main( int   argc,
   /* Create a new window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (window), "Fixed Container");
+  gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
 
   /* Here we connect the "destroy" event to a signal handler */
   g_signal_connect (window, "destroy",
