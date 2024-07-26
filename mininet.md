@@ -2,7 +2,7 @@
 ## 1.1 env
 OS: ubuntu 16.04 LTS
 Instruction : http://mininet.org/
-```
+```sh
 git clone git://github.com/mininet/mininet
 cd mininet
 git tag  # list available versions
@@ -13,34 +13,34 @@ mininet/util/install.sh -s /usr/local/lib/mininet -a
 ```
 # 2. network monitor and config
 ## 2.1 network traffic
-```
+```sh
 iftop -i interface
 ```
 ## 2.2 network traffic control  
 把网卡eth0的传输设置为：  
 延时100ms(上下误差10ms)、丢包6%、包重复0.8%、包损坏0.5%的网络环境
-```
+```sh
 tc qdisc add dev eth0 root netem delay 100ms 10ms loss 6% duplicate 0.8% corrupt 0.5%
 ```
 移除对网卡eth0的传输设置，恢复正常网络
-```
+```sh
 tc qdisc del dev eth0 root netem
 ```
 # 3. mininet topo
 ## 3.1 default topo
-```
+```sh
 sudo mn
 *** Adding links:
 (h1, s1) (h2, s1)
 ```
 1 switch ,2 host
-```
+```sh
 s1
 +- h1
 \- h2
 ```
 ## 3.2 single
-```
+```sh
 mn --topo=single,3
 (h1, s1) (h2, s1) (h3, s1) 
 ```

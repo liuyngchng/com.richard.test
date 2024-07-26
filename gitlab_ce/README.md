@@ -1,6 +1,6 @@
 # 1. deploy gitlab-ce
 ## 1.1 delploy in docker
-```
+```sh
 // 创建数据目录
 docker pull gitlab/gitlab-ce:latest
 mkdir -p /docker/gitlab/config
@@ -16,7 +16,7 @@ docker run -d -p 5443:443 -p 82:82 -p 2222:22 \
 gitlab/gitlab-ce:latest
 ```
 修改配置
-```
+```sh
 vim /docker/gitlab/config/gitlab.rb
 
 // 访问地址
@@ -36,12 +36,12 @@ docker restart gitlab
 然后使用 username=root, psword=psword 进行登录
 
 测试git ssh 是否可以正常登录，查看 gitlab ssh登录日志
-```
+```sh
 ssh -vT git@192.168.0.1 -p 2222
 gitlab-ctl tail | grep ssh
 ```
 ## 1.2 bare metal
 install gitlab
-```
+```sh
 https://about.gitlab.com/install/#ubuntu
 ```

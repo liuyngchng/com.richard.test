@@ -10,6 +10,7 @@ iSH是一个使用usermode x86模拟器将Linux shell引入IOS设备的工具，
 复制链接： https://testflight.apple.com/join/97i7KM8O ，在Safari浏览器打开，浏览器会自动跳转打开TestFlight，在弹出的对话框中点击“开始测试”（Start Testing），如上图所示，就可以收到加入iSH测试版的邀请了。
 
 # 3. cmd
+```sh
 apk update                    更新源
 apk info				    列出当前已安装的软件包
 apk search <query>            搜索可安装包
@@ -19,6 +20,11 @@ apk list [--installed]        列出所有的软件包信息
 apk del <package>             删除软件包
 chmod                         修改文件权限
 chown                         修改文件归属
+```
+
+
+
+
 
 # 4. config
 
@@ -39,5 +45,10 @@ vi /etc/apk/repositories
 https://mirrors.aliyun.com/alpine/v3.11/main/
 https://mirrors.aliyun.com/alpine/v3.11/community/
 ```
+```sh
 apk update
 apk upgrade
+```
+
+
+

@@ -8,11 +8,12 @@
 #include <errno.h>
 #include <pthread.h>
 #include "util.h"
+#include "dispatcher.h"
 
-#define _SRV_PORT_ 8083
-#define _BACKLOG_ 10
-#define _MSG_ "HTTP/1.1 200 OK\r\nContent-Length: 14\r\n\r\n{\"status\":200}"
 
+/**
+ * 从文件句柄中间接收数据
+ **/
 void* rcvdata(void *);
 
 int startsrv() {
@@ -79,13 +80,14 @@ void *rcvdata(void* sockfd) {
     int size = read(cfd, buf, sizeof(buf));
     printf("[%s][%s-%d] %d bytes recieved\n%s\n",gettime(), filename(__FILE__),__LINE__, size, buf);
     char resp[1024] = {0};
-    getresponse(buf,resp);
+    dispatch(buf,resp);
     write(cfd, resp, strlen(resp));
     printf("[%s][%s-%d]return msg\n%s\n", gettime(), filename(__FILE__), __LINE__, resp);
     close(cfd);
     printf("[%s][%s-%d]connection closed\n", gettime(), filename(__FILE__), __LINE__);
     return NULL;
 }
+
 
 int getresponse(char *buf, char *resp) {
     char l0[100]={0};

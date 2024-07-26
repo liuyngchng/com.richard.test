@@ -37,6 +37,7 @@ Thumbs.db
 *.a
 _*
 **/main
+**/*.so
 
 # java 
 *.class
