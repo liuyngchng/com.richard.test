@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>z-index 设置层上下位置</title>
+        <style>
+            div, th, td, p, input, button {
+                font: 18px Verdana;
+            }
+
+            .wrap1, .wrap2, .wrap3 {
+                width: 200px;
+                height: 200px;
+            }
+
+            .wrap1 {
+                background: #fcc;
+                position: absolute;
+                top: 80px;
+                left: 200px;
+                z-index: 300; /* 设置层上下位置 */
+            }
+
+            .wrap2 {
+                background: #cfc;
+                position: absolute;
+                top: 50px;
+                left: 150px;
+                z-index: 500; /* 设置层上下位置 */
+            }
+
+            .wrap3 {
+                background: #ccc;
+                position: absolute;
+                top: 20px;
+                left: 100px;
+                z-index: 100; /* 设置层上下位置 */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap1">
+            这里是wrap1
+        </div>
+        <div class="wrap2">
+            这里是wrap2
+        </div>
+        <div class="wrap3">
+            这里是wrap3
+        </div>
+    </body>
+</html>

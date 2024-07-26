@@ -93,7 +93,7 @@ int getresponse(char *buf, char *resp) {
     char uri[50]={0};
     char body[1024] = {0};
     getln(buf, l0, sizeof(l0), 0);
-    getln(buf, body, sizof(body), 2);
+    getln(buf, body, sizeof(body), 2);
     getmethod(l0, method, sizeof(method));
     geturi(l0, uri, sizeof(uri));
     printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
