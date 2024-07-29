@@ -88,6 +88,26 @@ void *rcvdata(void* sockfd) {
     return NULL;
 }
 
+
+int getresponse(char *buf, char *resp) {
+    char l0[100]={0};
+    char method[5]={0};
+    char uri[50]={0};
+    char body[1024] = {0};
+    getln(buf, l0, sizeof(l0), 0);
+    getln(buf, body, sizeof(body), 2);
+    getmethod(l0, method, sizeof(method));
+    geturi(l0, uri, sizeof(uri));
+    printf("[%s][%s-%d]method %s, uri %s\n", gettime(), filename(__FILE__), __LINE__, method, uri);
+    char *prsdt="/prs/dt";
+    if(strncmp(uri, prsdt, strlen(prsdt))) {
+        strcat(resp, "prsdt");
+    } else {
+        strcat(resp, _MSG_);
+    }
+    
+}
+
 int main(int argc, char* argv[]) {
     printf("[%s][%s-%d]server starting\n", gettime(), filename(__FILE__), __LINE__);
     startsrv();
