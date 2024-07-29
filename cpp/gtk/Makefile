@@ -1,6 +1,6 @@
 CC=gcc
 #CFLAGS += -D__SSL1_0__
-SOURCE_FILE= gtk_item_factory.c
+SOURCE_FILE= tom_vs_jerry.c
 all:_game
 _game: ${SOURCE_FILE}
 	${CC} -g ${CFLAGS} -o _gtk ${SOURCE_FILE} `pkg-config --cflags --libs gtk+-2.0`

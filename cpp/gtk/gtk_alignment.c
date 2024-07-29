@@ -48,7 +48,7 @@ int main(int argc, char*argv[]) {
 //                            gfloat        yalign,
 //                            gfloat        xscale,
 //                            gfloat        yscale );
-    GtkAlignment align = gtk_alignment_new(0.5, 0.5, 0.5, 0.5);
+    GtkAlignment* align = gtk_alignment_new(0.5, 0.5, 0.5, 0.5);
 
     // 构造按钮触发事件
     g_signal_connect (button, "clicked", G_CALLBACK(callback), (gpointer)"button 1");
