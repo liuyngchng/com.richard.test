@@ -32,13 +32,63 @@ static GtkWidget *pic_label_box( gchar     *xpm_filename,
 
 static GtkWidget *fixed;
 
+static GtkWidget *jerry;
+static GtkWidget *tom;
+
 void on_button_clicked(GtkButton *button, gpointer user_data) {
-    g_print("I am %s, can u see me?\n", (gchar *) user_data);
+    g_print("I'm %s, can u see me?\n", (gchar *) user_data);
 
     gint x = ((GtkWidget *)button)->allocation.x;
     gint y = ((GtkWidget *)button)->allocation.y;
     gtk_fixed_move (GTK_FIXED (fixed), button, x, y+5);
 
+}
+
+gboolean on_key_pressed(GtkWidget *widget,
+		GdkEventKey *event, gpointer user_data) {
+//	g_print("%s received key press %d\n", (gchar *) user_data, event->keyval);
+	switch(event->keyval) {
+	    case 'w':
+	    case 'W':
+	        g_print("Move Jerry Up\n");
+	        break;
+	    case 'a':
+	    case 'A':
+	        g_print("Move Jerry Left\n");
+	        break;
+	    case 'd':
+	    case 'D':
+	        g_print("Move Jerry Right\n");
+	        break;
+	    case 's':
+	    case 'S':
+	        g_print("Move Jerry Down\n");
+	        break;
+	    case 'i':
+	    case 'I':
+	    case 65362:
+			g_print("Move Tom Up\n");
+			break;
+		case 'j':
+		case 'J':
+		case 65361:
+			g_print("Move Tom Left\n");
+			break;
+		case 'l':
+		case 'L':
+		case 65363:
+			g_print("Move Tom Right\n");
+			break;
+		case 'k':
+		case 'K':
+		case 65364:
+			g_print("Move Tom Down\n");
+			break;
+	    default:
+	    	g_print("nothing done for key %d\n", event->keyval);
+	    	break;
+	    }
+	      return FALSE;
 }
 
 int main(int argc, char *argv[]) {
@@ -48,20 +98,21 @@ int main(int argc, char *argv[]) {
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
     gtk_window_set_title(GTK_WINDOW(window),"Tom and Jerry Game");
     fixed = gtk_fixed_new();
-    GtkWidget *button1 = gtk_button_new();
+    jerry = gtk_button_new();
 
-    GtkWidget *button2 = gtk_button_new();
+    tom = gtk_button_new();
 
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    g_signal_connect(button1, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Tom");
-    g_signal_connect(button2, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Jerry");
+    g_signal_connect(jerry, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Tom");
+    g_signal_connect(tom, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Jerry");
+    g_signal_connect(window, "key_press_event", G_CALLBACK(on_key_pressed), (gpointer)"test");
     GtkWidget *box1 = pic_label_box ("jerry.png", "Jerry");
-    gtk_container_add (GTK_CONTAINER (button1), box1);
+    gtk_container_add (GTK_CONTAINER (jerry), box1);
     GtkWidget *box2 = pic_label_box ("tom.png", "Tom");
-        gtk_container_add (GTK_CONTAINER (button2), box2);
+        gtk_container_add (GTK_CONTAINER (tom), box2);
     gtk_container_add(GTK_CONTAINER(window), fixed);
-    gtk_fixed_put(GTK_FIXED(fixed), button1, 0, 300);
-    gtk_fixed_put(GTK_FIXED(fixed), button2, 800, 300);
+    gtk_fixed_put(GTK_FIXED(fixed), jerry, 0, 300);
+    gtk_fixed_put(GTK_FIXED(fixed), tom, 800, 300);
     // test move
 //    gtk_fixed_move (GTK_FIXED (fixed), button1, 10, 20);
     gtk_widget_show_all(window);
