@@ -30,8 +30,15 @@ static GtkWidget *pic_label_box( gchar     *xpm_filename,
     return box;
 }
 
+static GtkWidget *fixed;
+
 void on_button_clicked(GtkButton *button, gpointer user_data) {
     g_print("I am %s, can u see me?\n", (gchar *) user_data);
+
+    gint x = ((GtkWidget *)button)->allocation.x;
+    gint y = ((GtkWidget *)button)->allocation.y;
+    gtk_fixed_move (GTK_FIXED (fixed), button, x, y+5);
+
 }
 
 int main(int argc, char *argv[]) {
@@ -40,7 +47,7 @@ int main(int argc, char *argv[]) {
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
     gtk_window_set_title(GTK_WINDOW(window),"Tom and Jerry Game");
-    GtkWidget *fixed = gtk_fixed_new();
+    fixed = gtk_fixed_new();
     GtkWidget *button1 = gtk_button_new();
 
     GtkWidget *button2 = gtk_button_new();
@@ -55,7 +62,8 @@ int main(int argc, char *argv[]) {
     gtk_container_add(GTK_CONTAINER(window), fixed);
     gtk_fixed_put(GTK_FIXED(fixed), button1, 0, 300);
     gtk_fixed_put(GTK_FIXED(fixed), button2, 800, 300);
-
+    // test move
+//    gtk_fixed_move (GTK_FIXED (fixed), button1, 10, 20);
     gtk_widget_show_all(window);
     gtk_main();
 
