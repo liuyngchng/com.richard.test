@@ -56,12 +56,12 @@ static pthread_t jerry_thread;
 /**
  * 多线程任务提交参数
  */
-struct widget_dt {
+typedef struct  {
 	int 		role;			// 0, jerry; 1, tom
 	int 		x_offset;
 	int 		y_offset;
 //	GtkWidget 	*widget;
-};
+} WidgetDt;
 
 
 /* *
@@ -103,7 +103,7 @@ void on_button_clicked(GtkButton *button, gpointer user_data) {
  * 移动角色
  */
 void* mv_widget(void* tdt) {
-	struct widget_dt *dt = (struct widget_dt*)tdt;
+	WidgetDt *dt = (WidgetDt*)tdt;
 	g_print("pthread_dt, role=%d, x_offset=%d, y_offset=%d\n",
 			dt->role, dt->x_offset, dt->y_offset);
 	if(dt->role < 0  || dt->role > 2) {
@@ -164,23 +164,29 @@ void* mv_widget(void* tdt) {
 
 
 int mv_widget_job(int role, GtkWidget *widget, int x_offset, int y_offset) {
-	struct widget_dt dt;
-	dt.x_offset = x_offset;
-	dt.y_offset = y_offset;
-	dt.role 	= role;
+//	WidgetDt dt = {role, x_offset, y_offset};
+
+//	dt.role 	= role;
+//	dt.x_offset = x_offset;
+//	dt.y_offset = y_offset;
+
 //	dt.widget 	= widget;
 
-	g_print("start mv job for %s, role=%d, x_offset=%d, y_offset=%d\n",
-		dt.role == 0? "jerry": "tom", dt.role, dt.x_offset, dt.y_offset
-	);
-	pthread_t t;
+//	g_print("start mv job for %s, role=%d, x_offset=%d, y_offset=%d\n",
+//		dt.role == 0? "jerry": "tom", dt.role, dt.x_offset, dt.y_offset
+//	);
+
 	if(role == 0) {
 //		mv_widget(&dt);
+		WidgetDt dt = {10, 20, 30};
+		pthread_t t;
 		pthread_create(&t, NULL, &mv_widget, (void *)&dt);
 		pthread_detach(t);
 		return 0;
 	} else {
 //		mv_widget(&dt);
+		WidgetDt dt = {10, 20, 30};
+		pthread_t t;
 		pthread_create(&t, NULL, &mv_widget, (void *)&dt);
 		pthread_detach(t);
 		return 1;
@@ -347,6 +353,12 @@ gboolean on_key_released(GtkWidget *widget,
 }
 
 int main(int argc, char *argv[]) {
+	WidgetDt dt = {10, 20, 30};
+	pthread_t t;
+	pthread_create(&t, NULL, &mv_widget, (void *)&dt);
+	pthread_detach(t);
+//	pthread_join(t, NULL);
+
     gtk_init(&argc, &argv);
 
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
