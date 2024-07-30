@@ -60,7 +60,7 @@ struct widget_dt {
 	int 		role;			// 0, jerry; 1, tom
 	int 		x_offset;
 	int 		y_offset;
-	GtkWidget 	*widget;
+//	GtkWidget 	*widget;
 };
 
 
@@ -104,8 +104,8 @@ void on_button_clicked(GtkButton *button, gpointer user_data) {
  */
 void* mv_widget(void* tdt) {
 	struct widget_dt *dt = (struct widget_dt*)tdt;
-	g_print("pthread_dt, role=%d, x_offset=%d, y_offset=%d, widget=%p\n",
-			dt->role, dt->x_offset, dt->y_offset, dt->widget);
+	g_print("pthread_dt, role=%d, x_offset=%d, y_offset=%d\n",
+			dt->role, dt->x_offset, dt->y_offset);
 	if(dt->role < 0  || dt->role > 2) {
 		g_print("role_dt_err\n");
 		return NULL;
@@ -168,9 +168,11 @@ int mv_widget_job(int role, GtkWidget *widget, int x_offset, int y_offset) {
 	dt.x_offset = x_offset;
 	dt.y_offset = y_offset;
 	dt.role 	= role;
-	dt.widget 	= widget;
+//	dt.widget 	= widget;
 
-	g_print("start mv job for %s\n", dt.role == 0? "jerry": "tom");
+	g_print("start mv job for %s, role=%d, x_offset=%d, y_offset=%d\n",
+		dt.role == 0? "jerry": "tom", dt.role, dt.x_offset, dt.y_offset
+	);
 	pthread_t t;
 	if(role == 0) {
 //		mv_widget(&dt);
