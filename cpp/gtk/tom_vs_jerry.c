@@ -204,7 +204,7 @@ gboolean on_key_pressed(GtkWidget *widget,
 	    case 's':
 	    case 'S':
 	    	if (is_jerry_to_move == 0) {
-				g_print("Jerry start move\n");
+				g_print("jerry start move\n");
 				is_jerry_to_move = 1;
 	    	}
 	        mv_role_by_key("jerry", event->keyval);
@@ -222,7 +222,7 @@ gboolean on_key_pressed(GtkWidget *widget,
 		case 'K':
 		case 65364:
 			if (is_tom_to_move == 0) {
-				g_print("Tom start move\n");
+				g_print("tom start move\n");
 				is_tom_to_move = 1;
 			}
 			mv_role_by_key("tom", event->keyval);
@@ -248,7 +248,7 @@ gboolean on_key_released(GtkWidget *widget,
 	    case 'D':
 	    case 's':
 	    case 'S':
-	        g_print("Jerry stop move\n");
+	        g_print("jerry stop move\n");
 	        is_jerry_to_move = 0;
 	        break;
 	    case 'i':
@@ -263,7 +263,7 @@ gboolean on_key_released(GtkWidget *widget,
 		case 'k':
 		case 'K':
 		case 65364:
-			g_print("Tom stop move\n");
+			g_print("tom stop move\n");
 			is_tom_to_move = 0;
 			break;
 	    default:
