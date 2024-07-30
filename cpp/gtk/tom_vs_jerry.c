@@ -1,3 +1,6 @@
+/**
+ * gcc -g  -o _gtk tom_vs_jerry.c `pkg-config --cflags --libs gtk+-2.0`
+ */
 #include <gtk/gtk.h>
 
 /**
@@ -52,14 +55,33 @@ int mv_widget(GtkWidget * widget, int x_offset, int y_offset) {
 	gint x = widget->allocation.x;
 	gint y = widget->allocation.y;
 	if((x + x_offset) < 0 ||  (x + x_offset) > _WINDOW_WIDTH) {
-		g_print("widget collide to left or right wall\n");
+		g_print("%s collide to left or right wall\n", gtk_label_get_text((GtkLabel *)widget));
 		return -1;
 	}
-	if((y + y_offset) < 0 ||  (y + y_offset) > _WINDOW_HEIGHT-80) {
+	if((y + y_offset) < 0 ||  (y + y_offset) > _WINDOW_HEIGHT-120) {
 		g_print("widget collide to up or down wall\n");
 		return -1;
 	}
 	gtk_fixed_move (GTK_FIXED (fixed), widget, x + x_offset, y+ y_offset);
+	GList *list_child=gtk_container_get_children (GTK_CONTAINER (widget));
+	if(NULL == list_child) {
+		g_print("widget child is null\n");
+	} else {
+		GtkWidget *widget;
+		do {
+			widget =(GtkWidget *)list_child->data;
+			if(GTK_IS_LABEL(widget)) {
+				g_print("%s collide to left or right wall\n", gtk_label_get_text((GtkLabel *)widget));
+			}
+//			gtk_label_get_type(widget);
+			list_child = list_child ->next;
+			if(NULL == list_child) {
+				break;
+			}
+			widget =(GtkWidget *)list_child->data;
+		} while ( widget != NULL);
+	}
+	gtk_widget_destroy((GtkWidget*)list_child);
 	return 0;
 }
 
@@ -146,8 +168,8 @@ int main(int argc, char *argv[]) {
     tom = gtk_button_new();
 
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    g_signal_connect(jerry, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Tom");
-    g_signal_connect(tom, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Jerry");
+    g_signal_connect(jerry, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Jerry");
+    g_signal_connect(tom, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Tom");
     g_signal_connect(window, "key_press_event", G_CALLBACK(on_key_pressed), (gpointer)"test");
     GtkWidget *box1 = pic_label_box ("jerry.png", "Jerry");
     gtk_container_add (GTK_CONTAINER (jerry), box1);
