@@ -103,43 +103,42 @@ void on_button_clicked(GtkButton *button, gpointer user_data) {
  * 移动角色
  */
 void* mv_widget(void* tdt) {
-	struct widget_dt dt = *(struct widget_dt*)tdt;
+	struct widget_dt *dt = (struct widget_dt*)tdt;
 	g_print("pthread_dt, role=%d, x_offset=%d, y_offset=%d, widget=%p\n",
-			dt.role, dt.x_offset, dt.y_offset, dt.widget);
-	if(dt.role < 0  || dt.role > 2) {
+			dt->role, dt->x_offset, dt->y_offset, dt->widget);
+	if(dt->role < 0  || dt->role > 2) {
 		g_print("role_dt_err\n");
 		return NULL;
 	}
-	int* flag;
-	if(dt.role == 0) {
-		flag = &is_jerry_to_move;
-	} else {
-		flag = &is_tom_to_move;
-	}
-//	while(1) {
-	do {
-		gint x = dt.widget->allocation.x;
-		gint y = dt.widget->allocation.y;
-		if((x + dt.x_offset) < 0 ||  (x + dt.x_offset) > _WINDOW_WIDTH) {
-			g_print("%s collide to left or right wall, (%d, %d)\n",
-				dt.role == 0 ? "jerry": "tom", x, y);
-			*flag = 0;
-			return NULL;
-		}
-		if((y + dt.y_offset) < 0 ||  (y + dt.y_offset) > _WINDOW_HEIGHT-120) {
-			g_print("%s collide to up or down wall, (%d, %d)\n",
-				dt.role == 0 ? "jerry": "tom", x, y);
-			*flag = 0;
-			return NULL;
-		}
-		gtk_fixed_move (GTK_FIXED (fixed), dt.widget,
-			x + dt.x_offset, y + dt.y_offset
-		);
-		g_print("%s move to %d, %d\n", dt.role == 0 ? "jerry": "tom" ,
-			x + dt.x_offset, y + dt.y_offset);
-		break;
-		//		usleep(1000);
-	} while(*flag);
+//	int* flag;
+//	if(dt.role == 0) {
+//		flag = &is_jerry_to_move;
+//	} else {
+//		flag = &is_tom_to_move;
+//	}
+//	do {
+//		gint x = dt.widget->allocation.x;
+//		gint y = dt.widget->allocation.y;
+//		if((x + dt.x_offset) < 0 ||  (x + dt.x_offset) > _WINDOW_WIDTH) {
+//			g_print("%s collide to left or right wall, (%d, %d)\n",
+//				dt.role == 0 ? "jerry": "tom", x, y);
+//			*flag = 0;
+//			return NULL;
+//		}
+//		if((y + dt.y_offset) < 0 ||  (y + dt.y_offset) > _WINDOW_HEIGHT-120) {
+//			g_print("%s collide to up or down wall, (%d, %d)\n",
+//				dt.role == 0 ? "jerry": "tom", x, y);
+//			*flag = 0;
+//			return NULL;
+//		}
+//		gtk_fixed_move (GTK_FIXED (fixed), dt.widget,
+//			x + dt.x_offset, y + dt.y_offset
+//		);
+//		g_print("%s move to %d, %d\n", dt.role == 0 ? "jerry": "tom" ,
+//			x + dt.x_offset, y + dt.y_offset);
+//		break;
+//		//		usleep(1000);
+//	} while(*flag);
 //	GList *list_child=gtk_container_get_children (GTK_CONTAINER (widget));
 //	if(NULL == list_child) {
 //		g_print("widget child is null\n");
@@ -175,12 +174,12 @@ int mv_widget_job(int role, GtkWidget *widget, int x_offset, int y_offset) {
 	pthread_t t;
 	if(role == 0) {
 //		mv_widget(&dt);
-		pthread_create(&t, NULL, &mv_widget, &dt);
+		pthread_create(&t, NULL, &mv_widget, (void *)&dt);
 		pthread_detach(t);
 		return 0;
 	} else {
 //		mv_widget(&dt);
-		pthread_create(&t, NULL, &mv_widget, &dt);
+		pthread_create(&t, NULL, &mv_widget, (void *)&dt);
 		pthread_detach(t);
 		return 1;
 	}
