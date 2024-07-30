@@ -110,6 +110,7 @@ void* mv_widget(void* tdt) {
 	} else {
 		flag = &is_tom_to_move;
 	}
+//	while(1) {
 	while(*flag) {
 		gint x = dt.widget->allocation.x;
 		gint y = dt.widget->allocation.y;
@@ -126,8 +127,9 @@ void* mv_widget(void* tdt) {
 		gtk_fixed_move (GTK_FIXED (fixed), dt.widget,
 			x + dt.x_offset, y + dt.y_offset
 		);
-		g_print("%s move to %d, %d", dt.role, x + dt.x_offset, y + dt.y_offset);
-		usleep(10);
+		g_print("%s move to %d, %d\n", dt.role, x + dt.x_offset, y + dt.y_offset);
+		break;
+		//		usleep(1000);
 	}
 //	GList *list_child=gtk_container_get_children (GTK_CONTAINER (widget));
 //	if(NULL == list_child) {
@@ -154,17 +156,22 @@ void* mv_widget(void* tdt) {
 
 
 int mv_widget_job(const char *role, GtkWidget * widget, int x_offset, int y_offset) {
-	struct widget_dt my_widget_dt;
-	my_widget_dt.role 		= role;
-	my_widget_dt.widget 	= widget;
-	my_widget_dt.x_offset 	= x_offset;
-	my_widget_dt.y_offset 	= y_offset;
+	struct widget_dt dt;
+	dt.role 	= role;
+	dt.widget 	= widget;
+	dt.x_offset = x_offset;
+	dt.y_offset = y_offset;
+	g_print("start mv job for %s\n", dt.role);
 	if(role[0] == 'j') {
-		pthread_create(&jerry_thread, NULL, &mv_widget, &my_widget_dt);
-		pthread_detach(jerry_thread);
+		mv_widget(&dt);
+//		pthread_create(&jerry_thread, NULL, &mv_widget, &dt);
+//		pthread_detach(jerry_thread);
+		return 0;
 	} else {
-		pthread_create(&tom_thread, NULL, &mv_widget, &my_widget_dt);
-		pthread_detach(tom_thread);
+		mv_widget(&dt);
+//		pthread_create(&tom_thread, NULL, &mv_widget, &dt);
+//		pthread_detach(tom_thread);
+		return 1;
 	}
 }
 
@@ -259,8 +266,9 @@ gboolean on_key_pressed(GtkWidget *widget,
 	    	if (is_jerry_to_move == 0) {
 				g_print("jerry start move\n");
 				is_jerry_to_move = 1;
+				mv_role_by_key("jerry", event->keyval);
 	    	}
-	        mv_role_by_key("jerry", event->keyval);
+
 	        break;
 	    case 'i':
 	    case 'I':
@@ -277,8 +285,8 @@ gboolean on_key_pressed(GtkWidget *widget,
 			if (is_tom_to_move == 0) {
 				g_print("tom start move\n");
 				is_tom_to_move = 1;
+				mv_role_by_key("tom", event->keyval);
 			}
-			mv_role_by_key("tom", event->keyval);
 			break;
 	    default:
 	    	g_print("nothing done for key_pressed %d\n", event->keyval);
