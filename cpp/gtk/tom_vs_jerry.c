@@ -43,6 +43,26 @@ static int is_jerry_to_move = 0;
  */
 static int is_tom_to_move = 0;
 
+/**
+ * tom 移动任务执行线程
+ */
+static pthread_t tom_thread;
+
+/**
+ * jerry 移动任务执行线程
+ */
+static pthread_t jerry_thread;
+
+/**
+ * 多线程任务提交参数
+ */
+struct widget_dt {
+	const char 		*role;
+	GtkWidget 	* widget;
+	int 		x_offset;
+	int 		y_offset;
+};
+
 
 /* *
  * Create a new hbox with an image and a label packed into it
@@ -77,23 +97,39 @@ void on_button_clicked(GtkButton *button, gpointer user_data) {
     g_print("I'm %s, can u see me?\n", (gchar *) user_data);
 }
 
+
+
 /**
  * 移动角色
  */
-int mv_widget(GtkWidget * widget, int x_offset, int y_offset) {
-	gint x = widget->allocation.x;
-	gint y = widget->allocation.y;
-	if((x + x_offset) < 0 ||  (x + x_offset) > _WINDOW_WIDTH) {
-//		g_print("%s collide to left or right wall\n", gtk_label_get_text((GtkLabel *)widget));
-		g_print("collide to left or right wall\n");
-		return -1;
+void* mv_widget(void* tdt) {
+	struct widget_dt dt = *(struct widget_dt*)tdt;
+	int* flag;
+	if(dt.role[0] == 'j') {
+		flag = &is_jerry_to_move;
+	} else {
+		flag = &is_tom_to_move;
 	}
-	if((y + y_offset) < 0 ||  (y + y_offset) > _WINDOW_HEIGHT-120) {
-		g_print("widget collide to up or down wall\n");
-		return -1;
+	while(*flag) {
+		gint x = dt.widget->allocation.x;
+		gint y = dt.widget->allocation.y;
+		if((x + dt.x_offset) < 0 ||  (x + dt.x_offset) > _WINDOW_WIDTH) {
+			g_print("%s collide to left or right wall\n", dt.role);
+			*flag = 0;
+			return NULL;
+		}
+		if((y + dt.y_offset) < 0 ||  (y + dt.y_offset) > _WINDOW_HEIGHT-120) {
+			g_print("%s collide to up or down wall\n", dt.role);
+			*flag = 0;
+			return NULL;
+		}
+		gtk_fixed_move (GTK_FIXED (fixed), dt.widget,
+			x + dt.x_offset, y + dt.y_offset
+		);
+		g_print("%s move to %d, %d", dt.role, x + dt.x_offset, y + dt.y_offset);
+		usleep(10);
 	}
-	gtk_fixed_move (GTK_FIXED (fixed), widget, x + x_offset, y + y_offset);
-	GList *list_child=gtk_container_get_children (GTK_CONTAINER (widget));
+//	GList *list_child=gtk_container_get_children (GTK_CONTAINER (widget));
 //	if(NULL == list_child) {
 //		g_print("widget child is null\n");
 //	} else {
@@ -112,27 +148,44 @@ int mv_widget(GtkWidget * widget, int x_offset, int y_offset) {
 //		} while ( widget != NULL);
 //	}
 //	gtk_widget_destroy((GtkWidget*)list_child);
-	return 0;
+	return NULL;
+}
+
+
+
+int mv_widget_job(const char *role, GtkWidget * widget, int x_offset, int y_offset) {
+	struct widget_dt my_widget_dt;
+	my_widget_dt.role 		= role;
+	my_widget_dt.widget 	= widget;
+	my_widget_dt.x_offset 	= x_offset;
+	my_widget_dt.y_offset 	= y_offset;
+	if(role[0] == 'j') {
+		pthread_create(&jerry_thread, NULL, &mv_widget, &my_widget_dt);
+		pthread_detach(jerry_thread);
+	} else {
+		pthread_create(&tom_thread, NULL, &mv_widget, &my_widget_dt);
+		pthread_detach(tom_thread);
+	}
 }
 
 // 上移
-void mv_up(GtkWidget * widget) {
-	mv_widget(widget, 0, -_MV_OFFSET);
+void mv_up(const char *role, GtkWidget * widget) {
+	mv_widget_job(role, widget, 0, -_MV_OFFSET);
 }
 
 // 下移
-void mv_dn(GtkWidget * widget) {
-	mv_widget(widget, 0, _MV_OFFSET);
+void mv_dn(const char *role, GtkWidget * widget) {
+	mv_widget_job(role, widget, 0, _MV_OFFSET);
 }
 
 // 左移
-void mv_lft(GtkWidget * widget) {
-	mv_widget(widget, -_MV_OFFSET, 0);
+void mv_lft(const char *role, GtkWidget * widget) {
+	mv_widget_job(role, widget, -_MV_OFFSET, 0);
 }
 
 // 右移
-void mv_rgt(GtkWidget * widget) {
-	mv_widget(widget, _MV_OFFSET, 0);
+void mv_rgt(const char *role, GtkWidget * widget) {
+	mv_widget_job(role, widget, _MV_OFFSET, 0);
 }
 
 gboolean mv_role_by_key(const char* role, guint key) {
@@ -140,46 +193,46 @@ gboolean mv_role_by_key(const char* role, guint key) {
 	    case 'w':
 	    case 'W':
 	        g_print("%s move up\n", role);
-	        mv_up(jerry);
+	        mv_up(role, jerry);
 	        break;
 	    case 'a':
 	    case 'A':
 	    	g_print("%s move left\n", role);
-	        mv_lft(jerry);
+	        mv_lft(role, jerry);
 	        break;
 	    case 'd':
 	    case 'D':
 	    	g_print("%s move right\n", role);
-	        mv_rgt(jerry);
+	        mv_rgt(role, jerry);
 	        break;
 	    case 's':
 	    case 'S':
 	    	g_print("%s move down\n", role);
-	        mv_dn(jerry);
+	        mv_dn(role, jerry);
 	        break;
 	    case 'i':
 	    case 'I':
 	    case 65362:
 	    	g_print("%s move up\n", role);
-			mv_up(tom);
+			mv_up(role, tom);
 			break;
 		case 'j':
 		case 'J':
 		case 65361:
 			g_print("%s move left\n", role);
-			mv_lft(tom);
+			mv_lft(role, tom);
 			break;
 		case 'l':
 		case 'L':
 		case 65363:
 			g_print("%s move right\n", role);
-			mv_rgt(tom);
+			mv_rgt(role, tom);
 			break;
 		case 'k':
 		case 'K':
 		case 65364:
 			g_print("%s move down\n", role);
-			mv_dn(tom);
+			mv_dn(role, tom);
 			break;
 	    default:
 	    	g_print("nothing done for key %d\n", key);
