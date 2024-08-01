@@ -35,13 +35,13 @@ static GtkWidget *jerry;
  */
 static GtkWidget *tom;
 
-static char jerry_key[1] = {0};
+static int jerry_key;
 
-static char tom_key[1] = {0};
+static int tom_key;
 
 struct Action {
 	int role;
-	char *key;
+	int key;
 };
 
 /* *
@@ -119,7 +119,7 @@ void mv_rgt(int role, GtkWidget * widget) {
 	mv_widget(role, widget, _MV_OFFSET, 0);
 }
 
-gboolean mv_role_by_key_press(int role, guint key) {
+gboolean mv_role_by_key_press(int role, int key) {
 	switch(key) {
 	    case 'w':
 	    case 'W':
@@ -128,11 +128,13 @@ gboolean mv_role_by_key_press(int role, guint key) {
 	        break;
 	    case 'a':
 	    case 'A':
-//	    	g_print("%s move left\n", role == 0? "jerry": "tom");
+	    	g_print("%s move left\n", role == 0? "jerry": "tom");
 	        mv_lft(role, jerry);
 	        break;
 	    case 'd':
 	    case 'D':
+//	    case 68:
+//		case 100:
 //	    	g_print("%s move right\n", role == 0? "jerry": "tom");
 	        mv_rgt(role, jerry);
 	        break;
@@ -179,10 +181,8 @@ void* mv_role(void* tdt) {
 	g_print("%s action started\n", action->role==0 ? "jerry":"tom");
 	while(1) {
 
-		if(action->key[0]) {
-
-		} else {
-		mv_role_by_key_press(action->role, action->key[0]);
+		if(action->key) {
+			mv_role_by_key_press(action->role, action->key);
 		}
 		usleep(_MV_INTERVAL_MS);
 	}
@@ -192,10 +192,8 @@ void* mv_role(void* tdt) {
 void* mv_tom(void* tdt) {
 	g_print("tom_action_started\n");
 	while(1) {
-		if(tom_key[0]) {
-			mv_role_by_key_press(1, tom_key[0]);
-		} else {
-
+		if(tom_key) {
+			mv_role_by_key_press(1, tom_key);
 		}
 		usleep(_MV_INTERVAL_MS);
 	}
@@ -205,8 +203,8 @@ void* mv_tom(void* tdt) {
 void* mv_jerry(void* tdt) {
 	g_print("jerry_action_started\n");
 	while(1) {
-		if(jerry_key[0]) {
-			mv_role_by_key_press(0, jerry_key[0]);
+		if(jerry_key) {
+			mv_role_by_key_press(0, jerry_key);
 		} else {
 			g_print("do_nothing_for_jerry_action\n");
 		}
@@ -230,8 +228,8 @@ gboolean on_key_pressed(GtkWidget *widget,
 	    case 'D':
 	    case 's':
 	    case 'S':
-	    	jerry_key[0] = event->keyval;
-	    	g_print("set_jerry_key %s\n", jerry_key);
+	    	jerry_key = event->keyval;
+	    	g_print("set_jerry_key %c\n", jerry_key);
 	        break;
 	    case 'i':
 	    case 'I':
@@ -245,8 +243,8 @@ gboolean on_key_pressed(GtkWidget *widget,
 		case 'k':
 		case 'K':
 		case 65364:
-			tom_key[0] = event->keyval;
-			g_print("set_tom_key %s\n", tom_key);
+			tom_key = event->keyval;
+			g_print("set_tom_key %c\n", tom_key);
 			break;
 	    default:
 	    	g_print("nothing_done_for_key_pressed %c\n", event->keyval);
@@ -267,7 +265,7 @@ gboolean on_key_released(GtkWidget *widget,
 	    case 's':
 	    case 'S':
 	        g_print("jerry_stop_move_for_key_released_event\n");
-	        jerry_key[0] = 0;
+	        jerry_key = 0;
 	        break;
 	    case 'i':
 	    case 'I':
@@ -282,7 +280,7 @@ gboolean on_key_released(GtkWidget *widget,
 		case 'K':
 		case 65364:
 			g_print("tom_stop_move_for_key_released_event\n");
-			tom_key[0] = 0;
+			tom_key = 0;
 			break;
 	    default:
 	    	g_print("nothing_done_for_key_released %d\n", event->keyval);
@@ -292,8 +290,8 @@ gboolean on_key_released(GtkWidget *widget,
 }
 
 int main(int argc, char *argv[]) {
-	char dt[32] = {0};
-	sprintf(dt, "%d_%d_%d", 10, 20, 30);
+	jerry_key = 0;
+	tom_key = 0;
 	pthread_t t1;
 	pthread_create(&t1, NULL, &mv_jerry, NULL);
 	pthread_detach(t1);
