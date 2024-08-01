@@ -229,7 +229,7 @@ gboolean on_key_pressed(GtkWidget *widget,
 	    case 's':
 	    case 'S':
 	    	jerry_key = event->keyval;
-	    	g_print("set_jerry_key %c\n", jerry_key);
+//	    	g_print("set_jerry_key %c\n", jerry_key);
 	        break;
 	    case 'i':
 	    case 'I':
@@ -244,10 +244,10 @@ gboolean on_key_pressed(GtkWidget *widget,
 		case 'K':
 		case 65364:
 			tom_key = event->keyval;
-			g_print("set_tom_key %c\n", tom_key);
+//			g_print("set_tom_key %c\n", tom_key);
 			break;
 	    default:
-	    	g_print("nothing_done_for_key_pressed %c\n", event->keyval);
+//	    	g_print("nothing_done_for_key_pressed %c\n", event->keyval);
 	    	break;
 	}
 	return FALSE;
