@@ -18,6 +18,8 @@
  */
 #define _WINDOW_HEIGHT 	600
 
+#define _MV_INTERVAL_MS 50*1000
+
 /**
  * 顶层容器，放置两个可固定位置的图标
  */
@@ -33,36 +35,14 @@ static GtkWidget *jerry;
  */
 static GtkWidget *tom;
 
-/**
- * 全局标志， jerry 是否需要被移动， 0:不移动, 1:移动
- */
-static int is_jerry_to_move = 0;
+static char jerry_key[1] = {0};
 
-/**
- * 全局标志， tom 是否需要被移动， 0:不移动, 1:移动
- */
-static int is_tom_to_move = 0;
+static char tom_key[1] = {0};
 
-/**
- * tom 移动任务执行线程
- */
-static pthread_t tom_thread;
-
-/**
- * jerry 移动任务执行线程
- */
-static pthread_t jerry_thread;
-
-/**
- * 多线程任务提交参数
- */
-typedef struct  {
-	int 		role;			// 0, jerry; 1, tom
-	int 		x_offset;
-	int 		y_offset;
-//	GtkWidget 	*widget;
-} WidgetDt;
-
+struct Action {
+	int role;
+	char *key;
+};
 
 /* *
  * Create a new hbox with an image and a label packed into it
@@ -98,149 +78,67 @@ void on_button_clicked(GtkButton *button, gpointer user_data) {
 }
 
 
-
-/**
- * 移动角色
- */
-void* mv_widget(void* tdt) {
-	char *mydat = (char *)tdt;
-	g_print("pthread_dt, %s\n", mydat);
-//	WidgetDt *dt = (WidgetDt*)tdt;
-//	g_print("pthread_dt, role=%d, x_offset=%d, y_offset=%d\n",
-//			dt->role, dt->x_offset, dt->y_offset);
-//	sleep(10);
-//	if(dt->role < 0  || dt->role > 2) {
-//		g_print("role_dt_err\n");
-//		return NULL;
-//	}
-//	int* flag;
-//	if(dt.role == 0) {
-//		flag = &is_jerry_to_move;
-//	} else {
-//		flag = &is_tom_to_move;
-//	}
-//	do {
-//		gint x = dt.widget->allocation.x;
-//		gint y = dt.widget->allocation.y;
-//		if((x + dt.x_offset) < 0 ||  (x + dt.x_offset) > _WINDOW_WIDTH) {
-//			g_print("%s collide to left or right wall, (%d, %d)\n",
-//				dt.role == 0 ? "jerry": "tom", x, y);
-//			*flag = 0;
-//			return NULL;
-//		}
-//		if((y + dt.y_offset) < 0 ||  (y + dt.y_offset) > _WINDOW_HEIGHT-120) {
-//			g_print("%s collide to up or down wall, (%d, %d)\n",
-//				dt.role == 0 ? "jerry": "tom", x, y);
-//			*flag = 0;
-//			return NULL;
-//		}
-//		gtk_fixed_move (GTK_FIXED (fixed), dt.widget,
-//			x + dt.x_offset, y + dt.y_offset
-//		);
-//		g_print("%s move to %d, %d\n", dt.role == 0 ? "jerry": "tom" ,
-//			x + dt.x_offset, y + dt.y_offset);
-//		break;
-//		//		usleep(1000);
-//	} while(*flag);
-//	GList *list_child=gtk_container_get_children (GTK_CONTAINER (widget));
-//	if(NULL == list_child) {
-//		g_print("widget child is null\n");
-//	} else {
-//		GtkWidget *widget;
-//		do {
-//			widget =(GtkWidget *)list_child->data;
-//			if(GTK_IS_LABEL(widget)) {
-//				g_print("%s collide to left or right wall\n", gtk_label_get_text((GtkLabel *)widget));
-//			}
-////			gtk_label_get_type(widget);
-//			list_child = list_child ->next;
-//			if(NULL == list_child) {
-//				break;
-//			}
-//			widget =(GtkWidget *)list_child->data;
-//		} while ( widget != NULL);
-//	}
-//	gtk_widget_destroy((GtkWidget*)list_child);
-	return NULL;
-}
-
-
-
-int mv_widget_job(int role, GtkWidget *widget, int x_offset, int y_offset) {
-//	WidgetDt dt = {role, x_offset, y_offset};
-
-//	dt.role 	= role;
-//	dt.x_offset = x_offset;
-//	dt.y_offset = y_offset;
-
-//	dt.widget 	= widget;
-
-//	g_print("start mv job for %s, role=%d, x_offset=%d, y_offset=%d\n",
-//		dt.role == 0? "jerry": "tom", dt.role, dt.x_offset, dt.y_offset
-//	);
-
-	if(role == 0) {
-//		mv_widget(&dt);
-		char dt[32] = {0};
-		sprintf(dt, "%d_%d_%d", 10, 20, 30);
-		//	WidgetDt dt = {10, 20, 30};
-		pthread_t t;
-		pthread_create(&t, NULL, &mv_widget, (void *)dt);
-		pthread_detach(t);
-//		pthread_detach(t);
-		return 0;
-	} else {
-//		mv_widget(&dt);
-		char dt[32] = {0};
-		sprintf(dt, "%d_%d_%d", 10, 20, 30);
-		//	WidgetDt dt = {10, 20, 30};
-		pthread_t t;
-		pthread_create(&t, NULL, &mv_widget, (void *)dt);
-		pthread_detach(t);
-		return 1;
+int mv_widget(int role, GtkWidget *widget, int x_offset, int y_offset) {
+	gint x = widget->allocation.x;
+	gint y = widget->allocation.y;
+	if((x + x_offset) < 0 ||  (x + x_offset) > _WINDOW_WIDTH) {
+		g_print("%s collide to left or right wall, (%d, %d)\n",
+			role == 0 ? "jerry": "tom", x, y);
+		return -1;
 	}
+	if((y + y_offset) < 0 ||  (y + y_offset) > _WINDOW_HEIGHT-120) {
+		g_print("%s collide to up or down wall, (%d, %d)\n",
+			role == 0 ? "jerry": "tom", x, y);
+		return -2;
+	}
+	gtk_fixed_move (GTK_FIXED (fixed), widget,
+		x + x_offset, y + y_offset
+	);
+//	g_print("%s move to %d, %d\n", role == 0 ? "jerry": "tom" ,
+//		x + x_offset, y + y_offset);
+	return 0;
 }
 
 // 上移
 void mv_up(int role, GtkWidget * widget) {
-	mv_widget_job(role, widget, 0, -_MV_OFFSET);
+	mv_widget(role, widget, 0, -_MV_OFFSET);
 }
 
 // 下移
 void mv_dn(int role, GtkWidget * widget) {
-	mv_widget_job(role, widget, 0, _MV_OFFSET);
+	mv_widget(role, widget, 0, _MV_OFFSET);
 }
 
 // 左移
 void mv_lft(int role, GtkWidget * widget) {
-	mv_widget_job(role, widget, -_MV_OFFSET, 0);
+	mv_widget(role, widget, -_MV_OFFSET, 0);
 }
 
 // 右移
 void mv_rgt(int role, GtkWidget * widget) {
-	mv_widget_job(role, widget, _MV_OFFSET, 0);
+	mv_widget(role, widget, _MV_OFFSET, 0);
 }
 
 gboolean mv_role_by_key_press(int role, guint key) {
 	switch(key) {
 	    case 'w':
 	    case 'W':
-	        g_print("%s move up\n", role == 0? "jerry": "tom");
+//	        g_print("%s move up\n", role == 0? "jerry": "tom");
 	        mv_up(role, jerry);
 	        break;
 	    case 'a':
 	    case 'A':
-	    	g_print("%s move left\n", role == 0? "jerry": "tom");
+//	    	g_print("%s move left\n", role == 0? "jerry": "tom");
 	        mv_lft(role, jerry);
 	        break;
 	    case 'd':
 	    case 'D':
-	    	g_print("%s move right\n", role == 0? "jerry": "tom");
+//	    	g_print("%s move right\n", role == 0? "jerry": "tom");
 	        mv_rgt(role, jerry);
 	        break;
 	    case 's':
 	    case 'S':
-	    	g_print("%s move down\n", role == 0? "jerry": "tom");
+//	    	g_print("%s move down\n", role == 0? "jerry": "tom");
 	        mv_dn(role, jerry);
 	        break;
 	    case 'i':
@@ -268,10 +166,50 @@ gboolean mv_role_by_key_press(int role, guint key) {
 			mv_dn(role, tom);
 			break;
 	    default:
-	    	g_print("nothing done for key %d\n", key);
+	    	g_print("nothing done for key %c\n", key);
 	    	break;
 	}
 	return FALSE;
+}
+
+
+
+void* mv_role(void* tdt) {
+	struct Action *action = (struct Action *)tdt;
+	g_print("%s action started\n", action->role==0 ? "jerry":"tom");
+	while(1) {
+		usleep(_MV_INTERVAL_MS);
+		if(action->key[0] == 0) {
+			continue;
+		}
+		mv_role_by_key_press(action->role, action->key[0]);
+	}
+	return NULL;
+}
+
+void* mv_tom(void* tdt) {
+	g_print("tom_action_started\n");
+	while(1) {
+		usleep(_MV_INTERVAL_MS);
+		if(tom_key[0] == 0) {
+			continue;
+		}
+		mv_role_by_key_press(1, tom_key[0]);
+	}
+	return NULL;
+}
+
+void* mv_jerry(void* tdt) {
+	g_print("jerry_action_started\n");
+	while(1) {
+		usleep(_MV_INTERVAL_MS);
+		if(jerry_key[0] == 0) {
+			g_print("do_nothing_for_jerry_action\n");
+			continue;
+		}
+		mv_role_by_key_press(0, jerry_key[0]);
+	}
+	return NULL;
 }
 
 /**
@@ -279,60 +217,7 @@ gboolean mv_role_by_key_press(int role, guint key) {
  */
 gboolean on_key_pressed(GtkWidget *widget,
 		GdkEventKey *event, gpointer user_data) {
-	char dt[32] = {0};
-	sprintf(dt, "%d_%d_%d", 10, 20, 30);
-	//	WidgetDt dt = {10, 20, 30};
-//	pthread_t t;
-//	pthread_create(&t, NULL, &mv_widget, (void *)dt);
-//	pthread_detach(t);
-	g_thread_new("key_press_t", &mv_widget, dt);
-//	g_print("%s received key press %d\n", (gchar *) user_data, event->keyval);
-//	switch(event->keyval) {
-//	    case 'w':
-//	    case 'W':
-//	    case 'a':
-//	    case 'A':
-//	    case 'd':
-//	    case 'D':
-//	    case 's':
-//	    case 'S':
-//	    	if (is_jerry_to_move == 0) {
-//				g_print("jerry start move\n");
-//				is_jerry_to_move = 1;
-//				mv_role_by_key_press(0, event->keyval);
-//	    	}
-//
-//	        break;
-//	    case 'i':
-//	    case 'I':
-//	    case 65362:
-//		case 'j':
-//		case 'J':
-//		case 65361:
-//		case 'l':
-//		case 'L':
-//		case 65363:
-//		case 'k':
-//		case 'K':
-//		case 65364:
-//			if (is_tom_to_move == 0) {
-//				g_print("tom start move\n");
-//				is_tom_to_move = 1;
-//				mv_role_by_key_press(1, event->keyval);
-//			}
-//			break;
-//	    default:
-//	    	g_print("nothing done for key_pressed %d\n", event->keyval);
-//	    	break;
-//	}
-	return FALSE;
-}
-
-
-
-gboolean on_key_released(GtkWidget *widget,
-		GdkEventKey *event, gpointer user_data) {
-
+	g_print("_on_key_pressed %c\n", event->keyval);
 	switch(event->keyval) {
 	    case 'w':
 	    case 'W':
@@ -342,8 +227,8 @@ gboolean on_key_released(GtkWidget *widget,
 	    case 'D':
 	    case 's':
 	    case 'S':
-	        g_print("jerry stop move for key_released event\n");
-	        is_jerry_to_move = 0;
+	    	jerry_key[0] = event->keyval;
+	    	g_print("set_jerry_key %s\n", jerry_key);
 	        break;
 	    case 'i':
 	    case 'I':
@@ -357,11 +242,47 @@ gboolean on_key_released(GtkWidget *widget,
 		case 'k':
 		case 'K':
 		case 65364:
-			g_print("tom stop move for key_released event\n");
-			is_tom_to_move = 0;
+			tom_key[0] = event->keyval;
+			g_print("set_tom_key %s\n", tom_key);
 			break;
 	    default:
-	    	g_print("nothing done for key_released %d\n", event->keyval);
+	    	g_print("nothing_done_for_key_pressed %c\n", event->keyval);
+	    	break;
+	}
+	return FALSE;
+}
+
+gboolean on_key_released(GtkWidget *widget,
+		GdkEventKey *event, gpointer user_data) {
+	switch(event->keyval) {
+	    case 'w':
+	    case 'W':
+	    case 'a':
+	    case 'A':
+	    case 'd':
+	    case 'D':
+	    case 's':
+	    case 'S':
+	        g_print("jerry_stop_move_for_key_released_event\n");
+	        jerry_key[0] = 0;
+	        break;
+	    case 'i':
+	    case 'I':
+	    case 65362:
+		case 'j':
+		case 'J':
+		case 65361:
+		case 'l':
+		case 'L':
+		case 65363:
+		case 'k':
+		case 'K':
+		case 65364:
+			g_print("tom_stop_move_for_key_released_event\n");
+			tom_key[0] = 0;
+			break;
+	    default:
+	    	g_print("nothing_done_for_key_released %d\n", event->keyval);
 	    	break;
 	    }
 	      return FALSE;
@@ -370,17 +291,21 @@ gboolean on_key_released(GtkWidget *widget,
 int main(int argc, char *argv[]) {
 	char dt[32] = {0};
 	sprintf(dt, "%d_%d_%d", 10, 20, 30);
-//	WidgetDt dt = {10, 20, 30};
-	pthread_t t;
-	pthread_create(&t, NULL, &mv_widget, (void *)dt);
-	pthread_detach(t);
-//	pthread_join(t, NULL);
+	pthread_t t1;
+	struct Action action1;
+	action1.role = 0;
+	action1.key = jerry_key;
+	pthread_create(&t1, NULL, &mv_jerry, &action1);
+	pthread_detach(t1);
+
+	pthread_t t2;
+	struct Action action2;
+	action2.role = 1;
+	action2.key = tom_key;
+	pthread_create(&t2, NULL, &mv_tom, &action2);
+	pthread_detach(t2);
 
     gtk_init(&argc, &argv);
-    if (!g_thread_supported()){
-    	g_thread_init(NULL);
-    }
-    gdk_threads_init();
 
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), _WINDOW_WIDTH, _WINDOW_HEIGHT);
