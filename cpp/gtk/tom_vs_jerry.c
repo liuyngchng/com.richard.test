@@ -18,7 +18,7 @@
  */
 #define _WINDOW_HEIGHT 	600
 
-#define _MV_INTERVAL_MS 50*1000
+#define _MV_INTERVAL_MS 0*1000
 
 /**
  * 顶层容器，放置两个可固定位置的图标
@@ -178,11 +178,13 @@ void* mv_role(void* tdt) {
 	struct Action *action = (struct Action *)tdt;
 	g_print("%s action started\n", action->role==0 ? "jerry":"tom");
 	while(1) {
-		usleep(_MV_INTERVAL_MS);
-		if(action->key[0] == 0) {
-			continue;
-		}
+
+		if(action->key[0]) {
+
+		} else {
 		mv_role_by_key_press(action->role, action->key[0]);
+		}
+		usleep(_MV_INTERVAL_MS);
 	}
 	return NULL;
 }
@@ -190,11 +192,12 @@ void* mv_role(void* tdt) {
 void* mv_tom(void* tdt) {
 	g_print("tom_action_started\n");
 	while(1) {
-		usleep(_MV_INTERVAL_MS);
-		if(tom_key[0] == 0) {
-			continue;
+		if(tom_key[0]) {
+			mv_role_by_key_press(1, tom_key[0]);
+		} else {
+
 		}
-		mv_role_by_key_press(1, tom_key[0]);
+		usleep(_MV_INTERVAL_MS);
 	}
 	return NULL;
 }
@@ -202,12 +205,12 @@ void* mv_tom(void* tdt) {
 void* mv_jerry(void* tdt) {
 	g_print("jerry_action_started\n");
 	while(1) {
-		usleep(_MV_INTERVAL_MS);
 		if(jerry_key[0]) {
 			mv_role_by_key_press(0, jerry_key[0]);
 		} else {
 			g_print("do_nothing_for_jerry_action\n");
 		}
+		usleep(_MV_INTERVAL_MS);
 	}
 	return NULL;
 }
