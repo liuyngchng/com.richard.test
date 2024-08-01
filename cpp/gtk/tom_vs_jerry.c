@@ -203,11 +203,11 @@ void* mv_jerry(void* tdt) {
 	g_print("jerry_action_started\n");
 	while(1) {
 		usleep(_MV_INTERVAL_MS);
-		if(jerry_key[0] == 0) {
+		if(jerry_key[0]) {
+			mv_role_by_key_press(0, jerry_key[0]);
+		} else {
 			g_print("do_nothing_for_jerry_action\n");
-			continue;
 		}
-		mv_role_by_key_press(0, jerry_key[0]);
 	}
 	return NULL;
 }
@@ -292,17 +292,11 @@ int main(int argc, char *argv[]) {
 	char dt[32] = {0};
 	sprintf(dt, "%d_%d_%d", 10, 20, 30);
 	pthread_t t1;
-	struct Action action1;
-	action1.role = 0;
-	action1.key = jerry_key;
-	pthread_create(&t1, NULL, &mv_jerry, &action1);
+	pthread_create(&t1, NULL, &mv_jerry, NULL);
 	pthread_detach(t1);
 
 	pthread_t t2;
-	struct Action action2;
-	action2.role = 1;
-	action2.key = tom_key;
-	pthread_create(&t2, NULL, &mv_tom, &action2);
+	pthread_create(&t2, NULL, &mv_tom, NULL);
 	pthread_detach(t2);
 
     gtk_init(&argc, &argv);
@@ -315,11 +309,11 @@ int main(int argc, char *argv[]) {
 
     tom = gtk_button_new();
 
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    g_signal_connect(jerry, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Jerry");
-    g_signal_connect(tom, "clicked", G_CALLBACK(on_button_clicked), (gpointer)"Tom");
-    g_signal_connect(window, "key_press_event", G_CALLBACK(on_key_pressed), (gpointer)"test");
-	g_signal_connect(window, "key_release_event", G_CALLBACK(on_key_released), (gpointer)"test");
+    g_signal_connect(window, 	"destroy", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(jerry, 	"clicked", G_CALLBACK(on_button_clicked), (gpointer)"Jerry");
+    g_signal_connect(tom, 		"clicked", G_CALLBACK(on_button_clicked), (gpointer)"Tom");
+    g_signal_connect(window, 	"key_press_event", G_CALLBACK(on_key_pressed), (gpointer)"test");
+	g_signal_connect(window, 	"key_release_event", G_CALLBACK(on_key_released), (gpointer)"test");
 
     GtkWidget *box1 = pic_label_box ("jerry.png", "Jerry");
     gtk_container_add (GTK_CONTAINER (jerry), box1);
