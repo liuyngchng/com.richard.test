@@ -206,7 +206,7 @@ void* mv_jerry(void* tdt) {
 		if(jerry_key) {
 			mv_role_by_key_press(0, jerry_key);
 		} else {
-			g_print("do_nothing_for_jerry_action\n");
+//			g_print("do_nothing_for_jerry_action\n");
 		}
 		usleep(_MV_INTERVAL_MS);
 	}
