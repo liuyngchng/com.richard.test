@@ -18,7 +18,7 @@
  */
 #define _WINDOW_HEIGHT 	600
 
-#define _MV_INTERVAL_MS 0*1000
+#define _MV_INTERVAL_MS 20*1000
 
 /**
  * 顶层容器，放置两个可固定位置的图标
