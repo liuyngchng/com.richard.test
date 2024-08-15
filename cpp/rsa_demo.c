@@ -33,7 +33,7 @@ int is_coprime_number(int p,int q) {
 int is_prime(int s){
 	for (int i=2;i<s;i++) {
 		if (s%i==0) {
-			printf("%d is not a prime\n", s);
+			printf("%d 不是一个素数(%d is not a prime)\n", s, s);
 			return 0;
 		}
 	}
@@ -50,7 +50,7 @@ int get_private_key(int e, int t) {
 	       return d;
 	    }
 	}
-	printf("get_private_key_err\n");
+	printf("获取私钥发生错误(get_private_key_err)\n");
 	return -1;
 }
 /**
@@ -70,7 +70,7 @@ int get_random(int p,int q) {
 void encrypt_dt(int e, int n) {
 	//先将符号明文转换成字母所对应的ascii码。
 	char plain_txt[100];    //符号明文
-	printf("请输入明文：\n");
+	printf("请输入明文(please input plain text for encryption)：\n");
 	scanf("%s",plain_txt);
 	size=strlen(plain_txt);
 	int plain_num[strlen(plain_txt)];   //定义符号明文
@@ -86,7 +86,7 @@ void encrypt_dt(int e, int n) {
 	    cypher[i]=flag;
 	    flag=1;
 	}
-	printf("加密密文为：\n");
+	printf("加密明文 %s 后的密文为(plain text '%s' be encrypted as following)：\n", plain_txt, plain_txt);
 	for(int i=0;i<strlen(plain_txt);i++)
 	printf("%d",cypher[i]);
 }
@@ -100,7 +100,7 @@ void decrypt_dt(int d,int n) {
 	   dec_num[i]=flag;
 	   flag=1;
 	}
-	printf("解密后的明文为：\n");
+	printf("解密后的明文为(cypher be decrypted as following)：\n");
 	for (int i=0;i<size;i++) {
 		dec_str[i]=dec_num[i];
 		printf("%c",dec_str[i]);
@@ -110,19 +110,19 @@ int main()
 {
 	int p,q,e,d,n,t,tep;
 	while(1) {
-		printf("请输入p:");
+		printf("请输入p(please input a number for p):");
 		scanf("%d",&p);
 		tep=is_prime(p);
 		if(!tep) {
-			printf("p不是素数，请重新输入p！\n");
+			printf("p=%d 不是素数，请重新输入p！(p=%d is not a prime ,please input a number again for p)\n", p, p);
 		    continue;
 		}
-		printf("请输入q:");
+		printf("请输入q(please input a number for q):");
 		scanf("%d",&q);
 	    tep=is_prime(q);
 	    if (!tep) {
-			printf("q不是素数，请重新输入q！\n");
-			printf("请输入q:");
+			printf("q=%d 不是素数，请重新输入q！(q=%d is not a prime ,please input a number again for q)\n", q, q);
+			printf("请输入q(please input a number for q):");
 			scanf("%d",&q);
 			tep=is_prime(q);
 		}
@@ -130,21 +130,21 @@ int main()
 		int t=(p-1)*(q-1);
 		tep=is_coprime_number(p,q);
 		if (!tep) {
-			printf("%d 和 %d 互为质数不成立\n", p, q);
+			printf("%d 和 %d 互为质数不成立(%d and %d is not with a co-prime relation)\n", p, q, p, q);
 			continue;
 		}
 		printf("t=(q-1)*(p-1)=%d\n",t);
 		e=get_random(p,q);
-		printf("公钥(e=%d n=%d)\n",e,n);
+		printf("公钥(public_key)(e=%d n=%d)\n",e,n);
 		tep=(e,t);
 		d=get_private_key(e,t);
-		printf("私钥d=%d",d);
+		printf("私钥(private_key)d=%d",d);
 		int a=0;
 		while (a!=3) {
 			printf("\n-------------------------\n");
-			printf("1、加密\n");
-	        printf("2、解密\n");
-	        printf("3、退出");
+			printf("[1] 输入1进行加密(input 1 for encrypt data)\n");
+	        printf("[2] 输入2进行解密(input 2 for decrypt data)\n");
+	        printf("[3] 其他输入则退出(any other input for program exit)");
 	        printf("\n-------------------------\n");
 	        scanf("%d",&a);
 	        getchar();
@@ -153,7 +153,7 @@ int main()
 					encrypt_dt(e,n);
 					break;
 				case 2:
-					printf("请输入密钥：");
+					printf("请输入密钥(please input decrypt key)：");
 					scanf("%d",&d);
 					decrypt_dt(d,n);
 					break;
