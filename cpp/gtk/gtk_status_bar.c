@@ -21,9 +21,7 @@ static void pop_item( GtkWidget *widget,
   gtk_statusbar_pop (GTK_STATUSBAR (status_bar), GPOINTER_TO_INT (data));
 }
 
-int main( int   argc,
-          char *argv[] )
-{
+int main( int   argc, char *argv[] ) {
 
     GtkWidget *window;
     GtkWidget *vbox;
