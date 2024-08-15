@@ -37,9 +37,37 @@
 //    return 0;
 //}
 
-int main() {
-    OpenSSL_add_all_algorithms();
+int decrypt(const unsigned char *in, size_t inlen) {
+    EVP_PKEY_CTX *ctx = NULL;
+    EVP_PKEY **pkey = NULL;
+    size_t len;
+    unsigned char *out = NULL;
+    FILE *fp;
 
+    // 1. 加载私钥
+    fp = fopen("private.pem", "r");
+    PEM_read(fp, pkey, NULL, NULL, NULL);
+    fclose(fp);
+    // 2. 创建解密上下文
+    EVP_PKEY_CTX_new(*pkey, NULL);
+    // 3. 初始化解密上下文
+    EVP_PKEY_decrypt_init(ctx);
+    // 4. 解密数据（这里需要根据实际情况进行处理）
+    EVP_PKEY_decrypt(ctx, &out, &len, in, inlen);
+    // 输出解密后的数据
+    printf("dec_data: %s\n", out);
+
+    // 5. 清理解密上下文
+    EVP_PKEY_CTX_free(ctx);
+    EVP_PKEY_free(*pkey);
+    OPENSSL_free(out);
+
+    return 0;
+}
+
+int main() {
+	int a = 2e4;
+    OpenSSL_add_all_algorithms();
     FILE *pub_fp = fopen("public.pem", "r");
     FILE *priv_fp = fopen("private.pem", "r");
     EVP_PKEY *pub_key = NULL;
@@ -66,26 +94,28 @@ int main() {
     // RSA加密
     pkey_ctx = EVP_PKEY_CTX_new(pub_key, NULL);
     EVP_PKEY_encrypt_init(pkey_ctx);
-    EVP_PKEY_encrypt(pkey_ctx, NULL, &len, "Hello World", sizeof("Hello World"));
+    char *dt = "Hello World";
+    size_t dt_len = strlen(dt);
+    printf("pln_txt, %s\n", dt);
+    EVP_PKEY_encrypt(pkey_ctx, NULL, &len, dt, dt_len);
     buffer = malloc(len);
-    EVP_PKEY_encrypt(pkey_ctx, buffer, &len, "Hello World", sizeof("Hello World"));
-    printf("加密后的数据 (hex): ");
+    bzero(buffer, len);
+    EVP_PKEY_encrypt(pkey_ctx, buffer, &len, dt, dt_len);
+    printf("encrypt_hex: ");
     for (int i = 0; i < len; i++) {
         printf("%02x", buffer[i]);
     }
     printf("\n");
- 
+    decrypt(buffer, len);
     // RSA解密
-    EVP_PKEY_decrypt_init(pkey_ctx);
-    EVP_PKEY_decrypt(pkey_ctx, NULL, &len, buffer, len);
-    free(buffer);
-    buffer = malloc(len);
-    EVP_PKEY_decrypt(pkey_ctx, buffer, &len, buffer, len);
-    printf("解密后的数据:\n");
-    for (int i = 0; i < len; i++) {
-		printf("%02x", buffer[i]);
-	}
-	printf("\n");
+//    pkey_ctx = EVP_PKEY_CTX_new(priv_key, NULL);
+//    EVP_PKEY_decrypt_init(pkey_ctx);
+//    EVP_PKEY_decrypt(pkey_ctx, NULL, &len, buffer, len);
+//    free(buffer);
+//    buffer = malloc(len + 1);
+//    bzero(buffer, len+1);
+//    EVP_PKEY_decrypt(pkey_ctx, buffer, &len, buffer, len);
+//    printf("decrypt:%s\n", buffer);
  
 end:
     free(buffer);
