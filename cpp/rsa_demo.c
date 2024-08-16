@@ -11,23 +11,21 @@ static int Q = 17;
 
 /**
  * 公约数只有1的两个数叫做互质数
- * 判断两个数是否互为素数  eg:p和q e和 t
+ * 判断两个数是否互为素数  eg:p和q e 和 t
  */
-int is_coprime_number(int p,int q) {
-	int m,n;
-	if (q<p) {
-		m=p;  p=q;  q=m;  	//将p换成p和q之间那个小的数
-		m=q%p;  n=q/p;  	//辗转相除法求两个数的最大公因数
-	}
-	while (m!=0) {
-		q=p; p=m;  			//将p换成p和q之间那个小的数
-		m=q%p;  n=q/p;
-	}
-	if (m==0&&n==q) {
-		return 1;
+int get_common_divisor(int p, int q) {
+	// 计算两个数的最大公约数
+	int a, b;
+	if(p > q) {
+		a = p, b=q;
 	} else {
-		printf("%d and %d is not coprime！\n", p, q);
-	    return 0;
+		a = q, b=p;
+	}
+
+	if (b == 0) {
+		return a;
+	} else {
+		return get_common_divisor(b, a % b);
 	}
 }
 /**
@@ -63,7 +61,7 @@ int get_random(int p,int q) {
 	int t=(p-1)*(q-1);
 	while(1) {
 		int e=rand() % t;
-		if(is_coprime_number(e,t)==1) {
+		if(get_common_divisor(e,t)==1) {
 			return e;
 		}
 	//	if(e<=2)
@@ -87,18 +85,14 @@ void encrypt_dt(int e, int n, const char* plain_txt, int size) {
 	    cypher[i]=flag;
 	    flag=1;
 	}
-	printf("加密明文 %s 后的密文为(plain text '%s' be encrypted as following)：\n", plain_txt, plain_txt);
-	for(int i=0;i<strlen(plain_txt);i++) {
-		printf("%d",cypher[i]);
-	}
-	printf("\n");
+
 }
 void decrypt_dt(int d,int n) {
 	int dec_num[size],flag=1;
 	char dec_str[size];
 	for (int i=0;i<size;i++) {
 	   for (int j=0;j<d;j++) {
-	   	  flag=flag*cypher[i]%n;
+	   	  flag=flag * cypher[i]%n;
 	   }
 	   dec_num[i]=flag;
 	   flag=1;
@@ -124,8 +118,8 @@ int main(){
 	}
 	n = P * Q;
 	t = (P-1)*(Q-1);
-	tep = is_coprime_number(P, Q);
-	if (!tep) {
+	tep = get_common_divisor(P, Q);
+	if (tep != 1) {
 		printf("%d 和 %d 互为质数不成立(%d and %d is not with a co-prime relation)\n", P, Q, P, Q);
 		return -1;
 	}
@@ -138,7 +132,13 @@ int main(){
 	d=get_private_key(e,t);
 	printf("私钥(private_key)d=%d\n",d);
 	char *txt = "hellorsa";
+	printf("明文为: %s\n", txt);
 	encrypt_dt(e,n, txt, strlen(txt));
+	printf("加密后的密文为(plain text be encrypted as following):\n");
+	for(int i=0;i<strlen(txt);i++) {
+		printf("%d", cypher[i]);
+	}
+	printf("\n");
 	decrypt_dt(d,n);
     return 0;
 }
