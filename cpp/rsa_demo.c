@@ -105,32 +105,35 @@ void decrypt_dt(int d,int n) {
 	printf("\n");
 }
 int main(){
-	int e,d,n,t,tep;
-	tep = is_prime(P);
-	if (!tep) {
-		printf("p=%d 不是素数(p=%d is not a prime)\n", P, P);
-		return -1;
-	}
-	tep = is_prime(Q);
-	if (!tep) {
-		printf("q=%d 不是素数(q=%d is not a prime)\n", Q, Q);
-		return -1;
-	}
-	n = P * Q;
-	t = (P-1)*(Q-1);
-	tep = get_common_divisor(P, Q);
-	if (tep != 1) {
-		printf("%d 和 %d 互为质数不成立(%d and %d is not with a co-prime relation)\n", P, Q, P, Q);
-		return -1;
-	}
-	printf("p=%d, q=%d\n", P, Q);
-	printf("t=(q-1)*(p-1)=%d\n",t);
-	e=get_random(P, Q);
-	printf("公钥(public_key)(e=%d n=%d)\n", e, n);
-	tep=(e,t);
-
-	d=get_private_key(e,t);
-	printf("私钥(private_key)d=%d\n",d);
+	int e = 82208639;
+	int n = 112444807;
+	int d = 84608559;
+//	int e,d,n,t,tep;
+//	tep = is_prime(P);
+//	if (!tep) {
+//		printf("p=%d 不是素数(p=%d is not a prime)\n", P, P);
+//		return -1;
+//	}
+//	tep = is_prime(Q);
+//	if (!tep) {
+//		printf("q=%d 不是素数(q=%d is not a prime)\n", Q, Q);
+//		return -1;
+//	}
+//	n = P * Q;
+//	t = (P-1)*(Q-1);
+//	tep = get_common_divisor(P, Q);
+//	if (tep != 1) {
+//		printf("%d 和 %d 互为质数不成立(%d and %d is not with a co-prime relation)\n", P, Q, P, Q);
+//		return -1;
+//	}
+//	printf("p=%d, q=%d\n", P, Q);
+//	printf("t=(q-1)*(p-1)=%d\n",t);
+//	e=get_random(P, Q);
+//	printf("公钥(public_key)(e=%d n=%d)\n", e, n);
+//	tep=(e,t);
+//
+//	d=get_private_key(e,t);
+//	printf("私钥(private_key)d=%d\n",d);
 	char *txt = "hellorsa";
 	printf("明文为: %s\n", txt);
 	encrypt_dt(e,n, txt, strlen(txt));
