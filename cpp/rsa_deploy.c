@@ -47,14 +47,15 @@ int main(){
 	printf("assert_txt=%s\n", txt);
 
 	int int_cypher[SIZE] = {0};
-	char * cypher_str = "0050079200689182009307190050079200910105005007920068918200930719005007920043170700500792006891820093071900500792009138530050079200689182009307190050079200280786";
-	printf("cypher=%s\n", cypher_str);
+	// 此处为字节流hex
+	char * cypher_hex = "0007A438000A841E000E339F0007A438000DE3190007A438000A841E000E339F0007A4380006965B0007A438000A841E000E339F0007A438000DF1BD0007A438000A841E000E339F0007A438000448D2";
+	printf("cypher_hex=%s\n", cypher_hex);
 //	printf("cypher_int=");
 	for(int i = 0; i < SIZE; i++) {
 		int step = 8;
 		char int_str[8] = {0};
-		strncpy(int_str, cypher_str+i*step, step);
-		int_cypher[i] = atoi(int_str);
+		strncpy(int_str, cypher_hex+i*step, step);
+		int_cypher[i] = strtol(int_str, NULL, 16);
 //		printf("%d ", int_cypher[i]);
 	}
 //	printf("\n");
