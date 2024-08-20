@@ -29,11 +29,11 @@ public class RSA {
 //    private static int P = 10601;
 //    private static int Q = 10607;
 
-//    private static int P = 971;
-//    private static int Q = 997;
+    private static int P = 97;
+    private static int Q = 43;
 
-    private static int P = 11;
-    private static int Q = 17;
+//    private static int P = 11;
+//    private static int Q = 17;
 
     // modulus  modulus（模数）
     private static int N=P * Q;
@@ -188,17 +188,69 @@ public class RSA {
         System.out.println(String.format("公钥(public_key)(e=%d n=%d)", e, n));
         int d = RSA.get_private_key(e, (RSA.P-1)*(RSA.Q-1));
 //        int d = 537653;
-        System.out.println(String.format("私钥(private_key)d=%d",d));
+        System.out.println(String.format("私钥(private_key)(d=%d, n=%d)",d, n));
         String dt = "test1test2test3test4";
         System.out.println(String.format("plain_txt is %s", dt));
         char[] dt_char_array = dt.toCharArray();
         int[] cypher = RSA.encrypt_dt(e, n, dt_char_array, dt_char_array.length);
-        System.out.println("加密后的密文为(plain text be encrypted as following)：");
+        System.out.println("cypher_int：");
         for(int i = 0; i< dt_char_array.length; i++) {
             System.out.print(String.format("%08d ", cypher[i]));
         }
         System.out.println(" ");
+        byte[] cypher1 = new byte[cypher.length*4];
+        for(int i = 0; i < cypher.length; i++) {
+            byte[] t = RSA.getBytes(cypher[i]);
+            for(int j = 0; j < 4; j++) {
+                cypher1[i * 4 + j] = t[j];
+            }
+        }
+        System.out.println("cypher_hex=" + RSA.getHex(cypher1));
         char []dec_str = RSA.decrypt_dt(d, n, cypher, cypher.length);
         System.out.println(String.format("解密后的明文为(cypher be decrypted as following)： %s", new String(dec_str)));
+    }
+
+    private static String getHex(byte[] b) {
+        if (null == b) {
+            return "";
+        }
+        final StringBuffer sb = new StringBuffer(b.length * 2);
+        for (int i = 0; i < b.length; i ++) {
+            sb.append(RSA.getHex(b[i]));
+        }
+        return sb.toString();
+    }
+
+    public static byte[] getBytes(int a) {
+        return new byte[]{
+                (byte) ((a >> 24) & 0xFF),
+                (byte) ((a >> 16) & 0xFF),
+                (byte) ((a >> 8) & 0xFF),
+                (byte) (a & 0xFF)
+        };
+    }
+
+    public static String getHex(byte b) {
+        if (b == 0)
+            return "00";
+        final int a = b & 0xFF;       // remove the sign of byte
+        final StringBuffer sb = new StringBuffer(2);
+        final int highBit = a / 16;
+        int lowBit = a % 16;
+        sb.append(RSA.int2char(highBit));
+        sb.append(RSA.int2char(lowBit));
+        return sb.toString();
+    }
+
+    private static char int2char(int i) {
+        return (char)(i + RSA.getCharOffset(i));
+    }
+
+    private static int getCharOffset(int i) {
+        if (i < 10) {
+            return 0x30;
+        } else {
+            return 0x37;
+        }
     }
 }
