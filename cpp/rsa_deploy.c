@@ -38,14 +38,16 @@ static char *decrypt_dt(int d, int n, const int *cypher) {
 
 /**
  *  for test purpose only
+ *  实际的数据是一个byte[] 的字节流,
+ *  每4个字节读取为一个无符号整数，形成int[]数组，作为输入参数
  */
 int main(){
 	printf("config(d=%d, n=%d, s=%d)\n",D, N, SIZE);
-	char *txt = "testtesttesttesttest";
+	char *txt = "test1test2test3test4";
 	printf("assert_txt=%s\n", txt);
-	//实际中接收到的是一个int[] 的字节流
+
 	int int_cypher[SIZE] = {0};
-	char * cypher_str = "0036637500689182003608260024722500124810009451900046284800529840000380160006313900097566002930700043170700649944002930700010673400088447000406310027196800473967";
+	char * cypher_str = "0050079200689182009307190050079200910105005007920068918200930719005007920043170700500792006891820093071900500792009138530050079200689182009307190050079200280786";
 	printf("cypher=%s\n", cypher_str);
 //	printf("cypher_int=");
 	for(int i = 0; i < SIZE; i++) {
