@@ -7,15 +7,15 @@
 
 #define SIZE 20
 
-unsigned long* encrypt_dt(int e, int n, const char* plain_txt) {
+unsigned int* encrypt_dt(int e, int n, const char* plain_txt) {
     printf("encrypt_dt(%d, %d, %s)\n", e, n, plain_txt);
-	static unsigned long cypher[SIZE] = {0};
+	static int cypher[SIZE] = {0};
 	int plain_num[SIZE];
 	for (int i=0;i<SIZE;i++) {
 	   plain_num[i]=plain_txt[i];
 	}
 	for (int i=0;i<SIZE;i++) {
-		unsigned long flag=1;
+		int flag=1;
 	    for(int j=0;j<e;j++) {
 		    flag=(flag*plain_num[i])%n;
 	    }
@@ -24,22 +24,18 @@ unsigned long* encrypt_dt(int e, int n, const char* plain_txt) {
 	return cypher;
 }
 
-char *decrypt_hex(const char* hex) {
-	return NULL;
-}
 
-
-char *decrypt_dt(int d,int n, const unsigned long *cypher) {
-	int dec_num[SIZE],flag=1;
+char *decrypt_dt(int d,int n, const int *cypher) {
+	unsigned long dec_num[SIZE];
 	static char dec_str[SIZE];
-	for (int i=0;i<SIZE;i++) {
+	for (int i=0; i<SIZE; i++) {
+		unsigned long flag=1;
 	   for (int j=0;j<d;j++) {
-	   	  flag=flag * cypher[i]%n;
+	   	  flag=flag * cypher[i] % n;
 	   }
 	   dec_num[i]=flag;
-	   flag=1;
 	}
-	for (int i=0;i<SIZE;i++) {
+	for (int i=0; i < SIZE; i++) {
 		dec_str[i]=dec_num[i];
 	}
 	return dec_str;
@@ -54,17 +50,23 @@ char *decrypt_dt(int d,int n, const unsigned long *cypher) {
 	解密后的明文为(cypher be decrypted as following)： hellorsa
  */
 int main(){
+	char * test1= "00366375";
+	int a = atoi(test1);
 	int e = 480317;
 	int n = 968087;
 	int d = 537653;
-	printf("(e=%d n=%d)\n", e, n);
-	printf("d=%d\n",d);
+	printf("(e=%d, n=%d)\n", e, n);
+	printf("(d=%d, n=%d)\n",d, n);
 	char *txt = "ZeYJd8HFkI9l2$lGifRT";
 	printf("txt=%s\n", txt);
-	unsigned long *cypher = encrypt_dt(e, n, txt);
-	printf("cypher:\n");
+	int *cypher = encrypt_dt(e, n, txt);
+	printf("cypher=");
 	for(int i=0;i<strlen(txt);i++) {
-		printf("%lu ", cypher[i]);
+		printf("%d ", cypher[i]);
+	}
+	printf("cypher_hex=");
+	for(int i=0;i<strlen(txt);i++) {
+		printf("%02X", cypher[i]);
 	}
 	printf("\n");
 	char *dec_dt = decrypt_dt(d,n, cypher);
