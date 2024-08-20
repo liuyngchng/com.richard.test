@@ -50,7 +50,6 @@ int main(){
 	// 此处为字节流hex
 	char * cypher_hex = "00000E930000021B0000005900000E930000012600000E930000021B0000005900000E930000015200000E930000021B0000005900000E9300000EE300000E930000021B0000005900000E9300000751";
 	printf("cypher_hex=%s\n", cypher_hex);
-//	printf("cypher_int=");
 	for(int i = 0; i < SIZE; i++) {
 		int step = 8;
 		char int_str[8] = {0};
