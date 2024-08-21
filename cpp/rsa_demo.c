@@ -64,7 +64,8 @@ int get_random(const int p, const int q) {
 	//	e=3;
 	}
 }
-void encrypt_dt(const int e, const int n, const char* plain, int size, int *const cypher) {
+void encrypt_dt(const int e, const int n, const char* plain,
+	int size, int *const cypher) {
 	int plain_num[size];
 	for (int i=0;i<size;i++) {
 		plain_num[i]=plain[i];
@@ -78,7 +79,8 @@ void encrypt_dt(const int e, const int n, const char* plain, int size, int *cons
 	}
 
 }
-void decrypt_dt(const int d, const int n, const int *cypher, char *const plain, const int size) {
+void decrypt_dt(const int d, const int n, const int *cypher,
+	char *const plain, const int size) {
 	int dec_num[size];
 	for (int i=0;i<size;i++) {
 		int flag = 1;
@@ -115,25 +117,26 @@ int main(){
 	n = P * Q;
 	t = (P-1)*(Q-1);
 	printf("p=%d, q=%d\n", P, Q);
-	printf("t=(q-1)*(p-1)=%d\n",t);
+	printf("t=(q-1)*(p-1)=%d\n", t);
 	e=get_random(P, Q);
 	printf("pub_key(e=%d n=%d)\n", e, n);
 	tep=(e,t);
 
 	d=get_private_key(e,t);
 	printf("pri_key(d=%d, n=%d)\n",d, n);
-	char *txt = "hellorsa";
+	char *txt = "hellorsa1hellorsa2hellorsa3";
 	int size = strlen(txt);
 	printf("plain_text:%s\n", txt);
-	int cypher[2000] = {0};
+	int cypher[size];
 	encrypt_dt(e, n, txt, size, cypher);
 	printf("cypher:");
-	for(int i=0;i<size;i++) {
-		printf("%d", cypher[i]);
+	for(int i=0; i<size; i++) {
+		printf("%04x", cypher[i]);
 	}
 	printf("\n");
-	char dec_result[20] = {0};
-	decrypt_dt(d,n, cypher, dec_result, size);
+	char dec_result[size+1];
+	bzero(dec_result, size+1);
+	decrypt_dt(d, n, cypher, dec_result, size);
 	printf("dec_dt：%s\n", dec_result);
     return 0;
 }
