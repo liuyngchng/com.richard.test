@@ -8,29 +8,36 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-/*------------------------
-     定义枚举型全局变量
-------------------------*/
+/**
+ * 定义枚举型全局变量
+ */
 typedef enum {
     false = 0,
     true = 1
 } bool;
 
-// 十六轮子密钥
+/**
+ * 十六轮子密钥
+ */
 static bool sub_key[16][48] = {0};
 
 /*---------------------*/
 /*-------------------------------------------------------------
      各种置换表
 -------------------------------------------------------------*/
-// IP置换表
+/**
+ * IP置换表
+ */
 const char ip_tbl[64] = {
 	58,50,42,34,26,18,10, 2,60,52,44,36,28,20,12, 4,
 	62,54,46,38,30,22,14, 6,64,56,48,40,32,24,16, 8,
 	57,49,41,33,25,17, 9, 1,59,51,43,35,27,19,11, 3,
 	61,53,45,37,29,21,13, 5,63,55,47,39,31,23,15, 7
 };
-// IP-1置换表
+
+/**
+ * IP-1置换表
+ */
 const char ipr_tbl[64] = {
 	40, 8,48,16,56,24,64,32,39, 7,47,15,55,23,63,31,
 	38, 6,46,14,54,22,62,30,37, 5,45,13,53,21,61,29,
@@ -38,14 +45,19 @@ const char ipr_tbl[64] = {
 	34, 2,42,10,50,18,58,26,33, 1,41, 9,49,17,57,25
 };
 
-// E扩展表
+/**
+ * E扩展表
+ */
 static char e_tbl[48] = {
 	32, 1, 2, 3, 4, 5, 4, 5, 6, 7, 8, 9,
 	8, 9,10,11,12,13,12,13,14,15,16,17,
     16,17,18,19,20,21,20,21,22,23,24,25,
     24,25,26,27,28,29,28,29,30,31,32, 1
 };
-// PC1置换表
+
+/**
+ * PC1置换表
+ */
 static char pc1_tbl[56] = {
 	57,49,41,33,25,17, 9, 1,58,50,42,34,26,18,
 	10, 2,59,51,43,35,27,19,11, 3,60,52,44,36,
@@ -53,18 +65,26 @@ static char pc1_tbl[56] = {
 	14, 6,61,53,45,37,29,21,13, 5,28,20,12, 4
 };
 
-// pc2表
+/**
+ * pc2表
+ */
 static char pc2_tbl[48] = {
 	14,17,11,24, 1, 5, 3,28,15, 6,21,10,
 	23,19,12, 4,26, 8,16, 7,27,20,13, 2,
 	41,52,31,37,47,55,30,40,51,34,33,48,
 	44,49,39,56,34,53,46,42,50,36,29,32
 };
-//  移位表
+
+/**
+ * 移位表
+ */
 static char mv_tbl[16] = {
 	1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1
 };
-// S盒
+
+/**
+ * S盒
+ */
 static char s_box[8][4][16] = {
     //S1
     14, 4,13, 1, 2,15,11, 8, 3,10, 6,12, 5, 9, 0, 7,
@@ -107,31 +127,81 @@ static char s_box[8][4][16] = {
      7,11, 4, 1, 9,12,14, 2, 0, 6,10,13,15, 3, 5, 8,
      2, 1,14, 7, 4,10, 8,13,15,12, 9, 0, 3, 5, 6,11
 };
-//P置换表
+
+/**
+ * P置换表
+ */
 static char p_tbl[32] = {
 	16, 7,20,21,29,12,28,17, 1,15,23,26, 5,18,31,10,
 	2, 8,24,14,32,27, 3, 9,19,13,30, 6,22,11, 4,25
 };
-/*-------------------------------------------------------------------*/
 
-/*-----------------------------自定义函数-----------------------------*/
-void set_key(char my_key[8]); //生成16轮的子密钥；
-void byte_to_bit(bool* data_out, char* data_in, int num); //字节转换成位；
-void change_bit(bool* data_out, int num);//二进制的位置进行转换；
-void bit_to_byte(char my_msg[8], bool* msg_in, int num); //位转换成字节；
-void tbl_replace(bool* data_out, bool* data_in, const char* table, int num);  //各种表的置换算法；
-void bit_cpy(bool* data_out, bool* data_in, int num);  //二进制数组的拷贝
-void loop_bit(bool* data_out, int mov_step, int len);  //左移位；
-void run_des(char my_msg[8], char hex_msg[16]);//des的轮加密算法
-void xor(bool* msg_out, bool* msg_in, int num); //执行异或
-void s_change(bool* data_out, bool* data_in);  // S盒变换；
-void hex_to_bit(bool* data_out, char* data_in, int num); // 十六进制转二进制
-void bit_to_hex(char* data_out, bool* data_in, int num); //二进制转换成十六进制；
-void run_des_des(char my_msg[8], char hex_msg[16]);// DES轮解密算法；
+/**
+ * 生成16轮的子密钥
+ */
+void set_key(char my_key[8]);
 
-/*--------------------------*/
+/**
+ * 字节转换成位
+ */
+void byte_to_bit(bool* data_out, char* data_in, int num);
 
-/*--------------------------主函数----------------------------------*/
+/**
+ * bit 转换
+ */
+void change_bit(bool* data_out, int num);
+
+/**
+ * 位转换成字节
+ */
+void bit_to_byte(char my_msg[8], bool* msg_in, int num);
+
+/**
+ * 各种表的置换算法
+ */
+void tbl_replace(bool* data_out, bool* data_in, const char* table, int num);
+
+/**
+ * 二进制数组的拷贝
+ */
+void bit_cpy(bool* data_out, bool* data_in, int num);
+
+/**
+ * 左移位
+ */
+void loop_bit(bool* data_out, int mov_step, int len);
+
+/**
+ * DES 加密
+ */
+void encrypt(char my_msg[8], char hex_msg[16]);
+
+/**
+ * 异或操作
+ */
+void xor(bool* msg_out, bool* msg_in, int num);
+
+/**
+ * S盒变换
+ */
+void s_change(bool* data_out, bool* data_in);
+
+/**
+ * 十六进制转二进制
+ */
+void hex_to_bit(bool* data_out, char* data_in, int num);
+
+/**
+ * 二进制转换成十六进制
+ */
+void bit_to_hex(char* data_out, bool* data_in, int num);
+
+/**
+ * DES轮解密算法
+ */
+void decrypt(char my_msg[8], char hex_msg[16]);
+
+
 int main()
 {
     int i = 0, j;
@@ -155,7 +225,7 @@ int main()
         i = strlen(my_key);
     }
     set_key(my_key);  //生成16轮的加密子密钥；
-    run_des(my_msg, msg_hex); //des的轮加密过程
+    encrypt(my_msg, msg_hex); //des的轮加密过程
     printf("经过加密的密文为:\n");
     for(i = 0; i < 16; i++)
     {
@@ -175,7 +245,7 @@ int main()
         i = strlen(you_key);
     }
     set_key(you_key);  //生成16轮的解密子密钥；
-    run_des_des(my_msg, msg_hex);//解密;
+    decrypt(my_msg, msg_hex);//解密;
     printf("解密结果为:\n");
     for(i = 0; i < 8; i++)
     {
@@ -295,11 +365,11 @@ void xor(bool* msg_out, bool* msg_in, int num)//执行异或
 void set_key(char my_key[8])
 {
     int i, j;
-    static bool Key_bit[64] = {0}; //Key的二进制缓存；
-    static bool* Key_bit_L, * Key_bit_R;
-    Key_bit_L = &Key_bit[0]; //key的左边28位；
-    Key_bit_R = &Key_bit[28]; //key的右边28位；
-    byte_to_bit(Key_bit, my_key, 64);
+    static bool key_bit[64] = {0}; //Key的二进制缓存；
+    static bool* key_bit_l, * key_bit_r;
+    key_bit_l = &key_bit[0]; //key的左边28位；
+    key_bit_r = &key_bit[28]; //key的右边28位；
+    byte_to_bit(key_bit, my_key, 64);
     /* Change_bit(Key_bit,64) ;//二进制的位置进行转换；
      for(i=0;i<64;i++)
      {
@@ -307,35 +377,37 @@ void set_key(char my_key[8])
      }
      printf("\n");
      printf("\n");*/
-    tbl_replace(Key_bit, Key_bit, pc1_tbl, 56);//pc-1 置换
+    tbl_replace(key_bit, key_bit, pc1_tbl, 56);//pc-1 置换
     for(i = 0; i < 16; i++)
     {
-        loop_bit(Key_bit_L, mv_tbl[i], 28);
-        loop_bit(Key_bit_R, mv_tbl[i], 28);
-        tbl_replace(sub_key[i], Key_bit, pc2_tbl, 48);//pc-2置换
+        loop_bit(key_bit_l, mv_tbl[i], 28);
+        loop_bit(key_bit_r, mv_tbl[i], 28);
+        tbl_replace(sub_key[i], key_bit, pc2_tbl, 48);//pc-2置换
     }
 }
-void s_change(bool* Data_out, bool* Data_in) //S盒变换
+void s_change(bool* data_out, bool* data_in) //S盒变换
 {
     int i;
     int r = 0, c = 0;//S盒的行和列；
-    for(i = 0; i < 8; i++, Data_in = Data_in + 6, Data_out = Data_out + 4)
+    for(i = 0; i < 8; i++, data_in = data_in + 6, data_out = data_out + 4)
     {
-        r = Data_in[0] * 2 + Data_in[5] * 1;
-        c = Data_in[1] * 8 + Data_in[2] * 4 + Data_in[3] * 2 + Data_in[4] * 1;
-        byte_to_bit(Data_out, &s_box[i][r][c], 4);
+        r = data_in[0] * 2 + data_in[5] * 1;
+        c = data_in[1] * 8 + data_in[2] * 4 + data_in[3] * 2 + data_in[4] * 1;
+        byte_to_bit(data_out, &s_box[i][r][c], 4);
     }
 }
-void f_change(bool Data_out[32], bool Data_in[48])   // f函数；
+void f_change(bool data_out[32], bool data_in[48])   // f函数；
 {
     int i;
-    static bool Message_E[48] = {0};  //存放E置换的结果；
-    tbl_replace(Message_E, Data_out, e_tbl, 48);//E表置换
-    xor(Message_E, Data_in, 48);
-    s_change(Data_out, Message_E);                 // S盒变换
-    tbl_replace(Data_out, Data_out, p_tbl, 32);  //P置换
+    static bool msg_e[48] = {0};  //存放E置换的结果；
+    tbl_replace(msg_e, data_out, e_tbl, 48);//E表置换
+    xor(msg_e, data_in, 48);
+    s_change(data_out, msg_e);                 // S盒变换
+    tbl_replace(data_out, data_out, p_tbl, 32);  //P置换
 }
-void run_des(char my_msg[8], char hex_msg[16])//des轮加密算法；
+
+
+void encrypt(char my_msg[8], char hex_msg[16])
 {
     int i;
     static bool msg_bit[64] = {0};
@@ -360,20 +432,20 @@ void run_des(char my_msg[8], char hex_msg[16])//des轮加密算法；
     tbl_replace(msg_bit, msg_bit, ipr_tbl, 64);
     bit_to_hex(hex_msg, msg_bit, 64);//二进制转换成十六进制；
 }
-void run_des_des(char my_msg[8], char hex_msg[16])// DES轮解密算法；
+void decrypt(char my_msg[8], char hex_msg[16])// DES轮解密算法；
 {
     int i = 0;
     static bool msg_bit[64] = {0};
     static bool* msg_bit_l = &msg_bit[0], * msg_bit_r = &msg_bit[32];
-    static bool Temp[32] = {0};
+    static bool tmp[32] = {0};
     hex_to_bit(msg_bit, hex_msg, 64);
     tbl_replace(msg_bit, msg_bit, ip_tbl, 64);
     for(i = 15; i >= 0; i--)
     {
-        bit_cpy(Temp, msg_bit_l, 32);
+        bit_cpy(tmp, msg_bit_l, 32);
         f_change(msg_bit_l, sub_key[i]);
         xor(msg_bit_l, msg_bit_r, 32);
-        bit_cpy(msg_bit_r, Temp, 32);
+        bit_cpy(msg_bit_r, tmp, 32);
     }
     tbl_replace(msg_bit, msg_bit, ipr_tbl, 64);
     bit_to_byte(my_msg, msg_bit, 64);
