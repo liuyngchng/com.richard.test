@@ -144,110 +144,105 @@ void set_key(char my_key[8]);
 /**
  * 字节转换成位
  */
-void byte_to_bit(bool* data_out, char* data_in, int num);
+void byte_to_bit(bool *const data_out, const char* data_in, const int num);
 
 
 /**
  * 位转换成字节
  */
-void bit_to_byte(char my_msg[8], bool* msg_in, int num);
+void bit_to_byte(char my_msg[8], const bool *msg_in, const int num);
 
 /**
  * 各种表的置换算法
  */
-void tbl_replace(bool* data_out, bool* data_in, const char* table, int num);
+void tbl_replace(bool *const data_out, const bool *data_in,
+	const char* table, const int num);
 
 /**
  * 二进制数组的拷贝
  */
-void bit_cpy(bool* data_out, bool* data_in, int num);
+void bit_cpy(bool *const data_out, const bool *data_in, const int num);
 
 /**
  * 左移位
  */
-void loop_bit(bool* data_out, int mov_step, int len);
+void loop_bit(bool *const data_out, const int mv_step, const int len);
 
 /**
  * DES 加密
  */
-void encrypt(char my_msg[8], char hex_msg[16]);
+void encrypt(const char plain[8], char cypher[16]);
 
 /**
  * 异或操作
  */
-void xor(bool* msg_out, bool* msg_in, int num);
+void xor(bool *const msg_out, const bool* msg_in, const int num);
 
 /**
  * S盒变换
  */
-void s_change(bool* data_out, bool* data_in);
+void s_change(bool *data_out, const bool *data_in);
 
 /**
  * 十六进制转二进制
  */
-void hex_to_bit(bool* data_out, char* data_in, int num);
+void hex_to_bit(bool *const data_out, const char* data_in, const int num);
 
 /**
  * 二进制转换成十六进制
  */
-void bit_to_hex(char* data_out, bool* data_in, int num);
+void bit_to_hex(char *const data_out, const bool *data_in, const int num);
 
 /**
  * DES轮解密算法
  */
-void decrypt(char my_msg[8], char hex_msg[16]);
-
+void decrypt(char plain[8], const char cypher[16]);
 
 int main() {
     int i = 0, j;
-    char my_key[8] = {0};  //记录加密密钥；
-    char you_key[8] = {0}; //解密密钥
-    char my_msg[8] = {0}; //明文
-    char msg_hex[16] = {0};//16进制的密文
+    char enc_key[8] = {0};  	//	记录加密密钥；
+    char dec_key[8] = {0}; 		//	解密密钥
+    char plain[8] 	= {0}; 		//	明文
+    char cypher[16] = {0};		// 	16进制的密文
     printf("请输入加密内容(8 bytes):\n");
-    scanf("%s", my_msg);
-//    gets(My_message);
+    scanf("%s", plain);
     printf("请输入加密密钥(8 bytes):\n");
-    scanf("%s", my_key);
-//    gets(My_key);
-    i = strlen(my_key);
+    scanf("%s", enc_key);
+    i = strlen(enc_key);
     while(i != 8) {
         printf("请输入加密密钥(8 Byte)\n");
-//        gets(My_key);
-        scanf("%s", my_key);
+        scanf("%s", enc_key);
         i = 0;
-        i = strlen(my_key);
+        i = strlen(enc_key);
     }
-    set_key(my_key);  //生成16轮的加密子密钥；
-    encrypt(my_msg, msg_hex); //des的轮加密过程
+    set_key(enc_key);  				//	生成16轮的加密子密钥；
+    encrypt(plain, cypher); 		//	des的轮加密过程
     printf("经过加密的密文为:\n");
     for(i = 0; i < 16; i++) {
-        printf("%c ", msg_hex[i]);
+        printf("%c ", cypher[i]);
     }
     printf("\n");
     printf("请输入你的解密密钥(8 Byte):\n");
-//    gets(You_key);
-    scanf("%s", you_key);
-    i = strlen(you_key);
-    while(i != 8) {
+    scanf("%s", dec_key);
+    i = strlen(dec_key);
+    while (i != 8) {
         printf("请输入解密密钥(8 Byte)\n");
-//        gets(You_key);
-        scanf("%s", you_key);
+        scanf("%s", dec_key);
         i = 0;
-        i = strlen(you_key);
+        i = strlen(dec_key);
     }
-    set_key(you_key);  //生成16轮的解密子密钥；
-    decrypt(my_msg, msg_hex);//解密;
+    set_key(dec_key);  				//	生成16轮的解密子密钥；
+    decrypt(plain, cypher);			//	解密;
     printf("解密结果为:\n");
     for(i = 0; i < 8; i++) {
-        printf("%c ", my_msg[i]);
+        printf("%c ", plain[i]);
     }
     printf("\n");
     return 0;
 }
 
 
-void bit_cpy(bool* data_out, bool* data_in, int num) {
+void bit_cpy(bool *const data_out, const bool* data_in, const int num) {
     int i = 0;
     for (i = 0; i < num; i++) {
         data_out[i] = data_in[i];
@@ -255,19 +250,21 @@ void bit_cpy(bool* data_out, bool* data_in, int num) {
 
 }
 
-void byte_to_bit(bool* data_out, char* data_in, int num) {
+void byte_to_bit(bool *const data_out, const char* data_in, const int num) {
     int i, j;
     for(i = 0; i < num; i++) {
         data_out[i] = (data_in[i / 8] >> (i % 8)) & 0x01;
     }
 }
-void bit_to_hex(char* data_out, bool* data_in, int num) {
+
+void bit_to_hex(char *const data_out, const bool *data_in, const int num) {
     int i;
-    for(i = 0; i < num / 4; i++) {
+    for (i = 0; i < num / 4; i++) {
         data_out[i] = 0;
     }
-    for(i = 0; i < num / 4; i++) {
-        data_out[i] = data_in[4 * i] + data_in[4 * i + 1] * 2 + data_in[4 * i + 2] * 4 + data_in[4 * i + 3] * 8;
+    for (i = 0; i < num / 4; i++) {
+        data_out[i] = data_in[4 * i] + data_in[4 * i + 1] * 2
+			+ data_in[4 * i + 2] * 4 + data_in[4 * i + 3] * 8;
         if (data_out[i] % 16 > 9) {
             data_out[i] = data_out[i] % 16 + '7';
         } else {
@@ -275,7 +272,9 @@ void bit_to_hex(char* data_out, bool* data_in, int num) {
         }
     }
 }
-void hex_to_bit(bool* data_out, char* data_in, int num) {
+
+
+void hex_to_bit(bool *const data_out, const char* data_in, const int num) {
     int i;
     for (i = 0; i < num; i++) {
         if (data_in[i / 4] <= '9') {
@@ -285,7 +284,9 @@ void hex_to_bit(bool* data_out, char* data_in, int num) {
         }
     }
 }
-void bit_to_byte(char my_msg[8], bool* msg_in, int num) {
+
+
+void bit_to_byte(char my_msg[8], const bool* msg_in, const int num) {
     int i = 0;
     for (i = 0; i < (num / 8); i++) {
         my_msg[i] = 0;
@@ -294,7 +295,10 @@ void bit_to_byte(char my_msg[8], bool* msg_in, int num) {
         my_msg[i / 8] |= msg_in[i] << (i % 8);
     }
 }
-void tbl_replace(bool* data_out, bool* data_in, const char* table, int num) {
+
+
+void tbl_replace(bool *const data_out, const bool* data_in,
+	const char* table, const int num) {
     int i = 0;
     static bool tmp[256] = {0};
     for(i = 0; i < num; i++){
@@ -302,18 +306,24 @@ void tbl_replace(bool* data_out, bool* data_in, const char* table, int num) {
     }
     bit_cpy(data_out, tmp, num);
 }
-void loop_bit(bool* data_out, int mv_step, int len) {
+
+
+void loop_bit(bool *const data_out, const int mv_step, const int len) {
     static bool tmp[256] = {0};
     bit_cpy(tmp, data_out, mv_step);
     bit_cpy(data_out, data_out + mv_step, len - mv_step);
     bit_cpy(data_out + len - mv_step, tmp, mv_step);
 }
-void xor(bool* msg_out, bool* msg_in, int num) {
+
+
+void xor(bool *const msg_out, const bool *msg_in, const int num) {
     int i;
     for (i = 0; i < num; i++) {
         msg_out[i] = msg_out[i] ^ msg_in[i];
     }
 }
+
+
 void set_key(char my_key[8]) {
     int i, j;
     static bool key_bit[64] = {0}; //Key的二进制缓存；
@@ -328,16 +338,22 @@ void set_key(char my_key[8]) {
         tbl_replace(sub_key[i], key_bit, pc2_tbl, 48);//pc-2置换
     }
 }
-void s_change(bool* data_out, bool* data_in) {
+
+
+void s_change(bool *data_out, const bool *data_in) {
     int i;
-    int r = 0, c = 0;//S盒的行和列；
-    for (i = 0; i < 8; i++, data_in = data_in + 6, data_out = data_out + 4) {
+    int r = 0, c = 0;			//S盒的行和列；
+    for (i = 0; i < 8; i++,
+    data_in = data_in + 6, data_out = data_out + 4) {
         r = data_in[0] * 2 + data_in[5] * 1;
-        c = data_in[1] * 8 + data_in[2] * 4 + data_in[3] * 2 + data_in[4] * 1;
+        c = data_in[1] * 8 + data_in[2] * 4
+			+ data_in[3] * 2 + data_in[4] * 1;
         byte_to_bit(data_out, &s_box[i][r][c], 4);
     }
 }
-void f_change(bool data_out[32], bool data_in[48]) {
+
+
+void f_change(bool data_out[32], const bool data_in[48]) {
     int i;
     static bool msg_e[48] = {0};
     tbl_replace(msg_e, data_out, e_tbl, 48);
@@ -347,12 +363,12 @@ void f_change(bool data_out[32], bool data_in[48]) {
 }
 
 
-void encrypt(char my_msg[8], char hex_msg[16]) {
+void encrypt(const char plain[8], char cypher[16]) {
     int i;
     static bool msg_bit[64] = {0};
     static bool* msg_bit_l = &msg_bit[0], * msg_bit_r = &msg_bit[32];
     static bool tmp[32] = {0};
-    byte_to_bit(msg_bit, my_msg, 64);
+    byte_to_bit(msg_bit, plain, 64);
     tbl_replace(msg_bit, msg_bit, ip_tbl, 64);
     for (i = 0; i < 16; i++) {
         bit_cpy(tmp, msg_bit_r, 32);
@@ -361,14 +377,16 @@ void encrypt(char my_msg[8], char hex_msg[16]) {
         bit_cpy(msg_bit_l, tmp, 32);
     }
     tbl_replace(msg_bit, msg_bit, ipr_tbl, 64);
-    bit_to_hex(hex_msg, msg_bit, 64);
+    bit_to_hex(cypher, msg_bit, 64);
 }
-void decrypt(char my_msg[8], char hex_msg[16]) {
+
+
+void decrypt(char plain[8], const char cypher[16]) {
     int i = 0;
     static bool msg_bit[64] = {0};
     static bool* msg_bit_l = &msg_bit[0], * msg_bit_r = &msg_bit[32];
     static bool tmp[32] = {0};
-    hex_to_bit(msg_bit, hex_msg, 64);
+    hex_to_bit(msg_bit, cypher, 64);
     tbl_replace(msg_bit, msg_bit, ip_tbl, 64);
     for(i = 15; i >= 0; i--) {
         bit_cpy(tmp, msg_bit_l, 32);
@@ -377,5 +395,5 @@ void decrypt(char my_msg[8], char hex_msg[16]) {
         bit_cpy(msg_bit_r, tmp, 32);
     }
     tbl_replace(msg_bit, msg_bit, ipr_tbl, 64);
-    bit_to_byte(my_msg, msg_bit, 64);
+    bit_to_byte(plain, msg_bit, 64);
 }
