@@ -198,30 +198,30 @@ void bit_to_hex(char *const data_out, const bool *data_in, const int num);
  */
 void decrypt(char plain[8], const char cypher[16]);
 
+/**
+ * for test purpose only
+ */
 int main() {
     int i = 0, j;
     char enc_key[8] = {0};  	//	记录加密密钥；
     char dec_key[8] = {0}; 		//	解密密钥
-    char plain[8] 	= {0}; 		//	明文
-    char cypher[16] = {0};		// 	16进制的密文
+    char plain[9] 	= {0}; 		//	明文， 8 字节
+    char cypher[17] = {0};		// 	16进制的密文, 16 字节
+    char dec_plain[9] = {0};	//	解密后的明文, 8 字节
     printf("请输入加密内容(8 bytes):\n");
     scanf("%s", plain);
-    printf("请输入加密密钥(8 bytes):\n");
+    printf("请输入密钥(8 bytes):\n");
     scanf("%s", enc_key);
     i = strlen(enc_key);
     while(i != 8) {
-        printf("请输入加密密钥(8 Byte)\n");
+        printf("请输入密钥(8 Byte)\n");
         scanf("%s", enc_key);
         i = 0;
         i = strlen(enc_key);
     }
     set_key(enc_key);  				//	生成16轮的加密子密钥；
     encrypt(plain, cypher); 		//	des的轮加密过程
-    printf("经过加密的密文为:\n");
-    for(i = 0; i < 16; i++) {
-        printf("%c ", cypher[i]);
-    }
-    printf("\n");
+    printf("经过加密的密文为 %s:\n", cypher);
     printf("请输入你的解密密钥(8 Byte):\n");
     scanf("%s", dec_key);
     i = strlen(dec_key);
@@ -232,12 +232,8 @@ int main() {
         i = strlen(dec_key);
     }
     set_key(dec_key);  				//	生成16轮的解密子密钥；
-    decrypt(plain, cypher);			//	解密;
-    printf("解密结果为:\n");
-    for(i = 0; i < 8; i++) {
-        printf("%c ", plain[i]);
-    }
-    printf("\n");
+    decrypt(dec_plain, cypher);			//	解密;
+    printf("解密结果为: %s\n", dec_plain);
     return 0;
 }
 
