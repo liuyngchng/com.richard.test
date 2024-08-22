@@ -198,10 +198,12 @@ void bit_to_hex(char *const data_out, const bool *data_in, const int num);
  */
 void decrypt(char plain[8], const char cypher[16]);
 
+
+
 /**
  * for test purpose only
  */
-int main() {
+int test() {
     int i = 0, j;
     char enc_key[8] = {0};  	//	记录加密密钥；
     char dec_key[8] = {0}; 		//	解密密钥
@@ -235,6 +237,20 @@ int main() {
     decrypt(dec_plain, cypher);			//	解密;
     printf("解密结果为: %s\n", dec_plain);
     return 0;
+}
+
+int main() {
+	char *plain = "hellodec";
+	char *enc_key = "hellokey";
+	char *cypher_str = "8656C6C6F6465636";
+	char cypher[17] = {0};		// 	16进制的密文, 16 字节
+	char dec_plain[9] = {0};	//	解密后的明文, 8 字节
+	set_key(enc_key);  				//	生成16轮的加密子密钥；
+	encrypt(plain, cypher);
+	printf("加密 %s with key %s, get %s\n", plain, enc_key, cypher);
+	decrypt(dec_plain, cypher_str);
+	printf("解密 %s with key %s 结果为: %s\n", plain, enc_key, dec_plain);
+//	test();
 }
 
 
