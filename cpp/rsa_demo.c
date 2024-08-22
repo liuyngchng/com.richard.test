@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 #include <stdlib.h>
+#include <limits.h>
 
-#define P 11
+#define P 197
 #define Q 199
 
 
@@ -10,8 +11,8 @@
  * 公约数只有1的两个数叫做互质数
  * 判断两个数是否互为素数, p和q e 和 t
  */
-int get_com_div(const int p, const int q) {
-	int a, b;
+unsigned int get_com_div(const unsigned int p, const unsigned int q) {
+	unsigned int a, b;
 	if (p > q) {
 		a = p, b=q;
 	} else {
@@ -27,7 +28,7 @@ int get_com_div(const int p, const int q) {
 /**
  * 判断输入的p和q是不是素数
  */
-int is_prime(const int s) {
+unsigned int is_prime(const unsigned int s) {
 	for (int i=2; i<s; i++) {
 		if (s%i==0) {
 			printf("%d 不是一个素数(%d is not a prime)\n", s, s);
@@ -40,8 +41,8 @@ int is_prime(const int s) {
  * 求私钥d
  * //t:欧拉函数
  */
-int get_private_key(const int e, const int t) {
-	int d;
+unsigned int get_private_key(const unsigned int e, const unsigned int t) {
+	unsigned int d;
 	for(d=0;d<t;d++) {
 	    if (e * d % t==1) {
 	    	return d;
@@ -53,10 +54,10 @@ int get_private_key(const int e, const int t) {
 /**
  * 随机生成与 t互质的数e
  */
-int get_random(const int p, const int q) {
-	int t=(p-1)*(q-1);
+unsigned int get_random(const unsigned int p, const unsigned int q) {
+	unsigned int t=(p-1)*(q-1);
 	while(1) {
-		int e=rand() % t;
+		unsigned int e=rand() % t;
 		if(get_com_div(e,t)==1) {
 			return e;
 		}
@@ -64,14 +65,13 @@ int get_random(const int p, const int q) {
 	//	e=3;
 	}
 }
-void encrypt_dt(const int e, const int n, const char* plain,
-	int size, int *const cypher) {
-	int plain_num[size];
+void encrypt_dt(const unsigned int e, const unsigned int n, const char* plain, unsigned int size, unsigned int *const cypher) {
+	unsigned int plain_num[size];
 	for (int i=0;i<size;i++) {
 		plain_num[i]=plain[i];
 	}
 	for (int i=0;i<size;i++) {
-		int flag=1;
+		unsigned int flag=1;
 	    for(int j=0;j<e;j++) {
 		    flag=flag*plain_num[i]%n;
 	    }
@@ -79,11 +79,10 @@ void encrypt_dt(const int e, const int n, const char* plain,
 	}
 
 }
-void decrypt_dt(const int d, const int n, const int *cypher,
-	char *const plain, const int size) {
-	int dec_num[size];
+void decrypt_dt(const unsigned int d, const unsigned int n, const unsigned int *cypher, char *const plain, const unsigned int size) {
+	unsigned int dec_num[size];
 	for (int i=0;i<size;i++) {
-		int flag = 1;
+		unsigned int flag = 1;
 		for (int j=0;j<d;j++) {
 			flag=flag * cypher[i]%n;
 		}
@@ -94,10 +93,10 @@ void decrypt_dt(const int d, const int n, const int *cypher,
 	}
 }
 int main(){
-//	int e = 82208639;
-//	int n = 112444807;
-//	int d = 84608559;
-	int e, d, n, t, tep;
+//	unsigned int e = 82208639;
+//	unsigned int n = 112444807;
+//	unsigned int d = 84608559;
+	unsigned int e, d, n, t, tep;
 	tep = is_prime(P);
 	if (!tep) {
 		printf("p=%d is not a prime\n", P);
@@ -127,7 +126,7 @@ int main(){
 	char *txt = "hellorsa1hellorsa2hellorsa3";
 	int size = strlen(txt);
 	printf("plain_text:%s\n", txt);
-	int cypher[size];
+	unsigned int cypher[size];
 	encrypt_dt(e, n, txt, size, cypher);
 	printf("cypher:");
 	for(int i=0; i<size; i++) {

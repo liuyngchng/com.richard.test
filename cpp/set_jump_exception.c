@@ -3,12 +3,12 @@
 #include <limits.h>
 
 
-void check_overflow(int a, int b) {
+void check_overflow(unsigned int a, unsigned int b) {
     jmp_buf env;
     if (setjmp(env) == 0) {
-        int result = a + b;
-        if (result > INT_MAX || result < 0) {
-            printf("Overflow occurred!\n");
+        unsigned int result = a + b;
+        if (result > INT_MAX || result < INT_MIN) {
+            printf("Overflow occurred, result = %d\n", result);
             longjmp(env, 1);
         } else {
             printf("Result: %d\n", result);
@@ -18,8 +18,8 @@ void check_overflow(int a, int b) {
     }
 }
 int main() {
-	printf("INT_MAX=%d, INT_MIN=%d\n", INT_MAX, INT_MIN);
-    check_overflow(2147483647, 1); // 溢出情况
-    check_overflow(2147483647, 1); // 不溢出情况
+	printf("INT_MAX=%d, INT_MIN=%d, UINT_MAX=%u\n", INT_MAX, INT_MIN, UINT_MAX);
+    check_overflow(UINT_MAX, 1); // 溢出情况
+    check_overflow(UINT_MAX, 1); // 不溢出情况
     return 0;
 }
