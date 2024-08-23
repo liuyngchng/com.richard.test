@@ -246,10 +246,18 @@ int main() {
 	char cypher[17] = {0};		// 	16进制的密文, 16 字节
 	char dec_plain[9] = {0};	//	解密后的明文, 8 字节
 	set_key(enc_key);  				//	生成16轮的加密子密钥；
+	printf("sub_key=\n");
+	for(int i = 0; i< 16;i++) {
+		for(int j = 0; j< 48; j++) {
+			printf("%d", sub_key[i][j]);
+		}
+//		printf("\n");
+	}
+	printf("\n");
 	encrypt(plain, cypher);
 	printf("加密 %s with key %s, get %s\n", plain, enc_key, cypher);
 	decrypt(dec_plain, cypher_str);
-	printf("解密 %s with key %s 结果为: %s\n", plain, enc_key, dec_plain);
+	printf("解密 %s with key %s 结果为: %s\n", cypher_str, enc_key, dec_plain);
 //	test();
 }
 
@@ -366,7 +374,6 @@ void s_change(bool *data_out, const bool *data_in) {
 
 
 void f_change(bool data_out[32], const bool data_in[48]) {
-    int i;
     static bool msg_e[48] = {0};
     tbl_replace(msg_e, data_out, e_tbl, 48);
     xor(msg_e, data_in, 48);
