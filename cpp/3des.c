@@ -383,11 +383,21 @@ void f_change(bool data_out[32], const bool data_in[48]) {
 
 
 void encrypt(const char plain[8], char cypher[16]) {
+	printf("msg_i:");
+	for(int i = 0; i< strlen(plain); i++) {
+		printf("%d ", plain[i]);
+	}
+	printf("\n");
     int i;
     static bool msg_bit[64] = {0};
     static bool* msg_bit_l = &msg_bit[0], * msg_bit_r = &msg_bit[32];
     static bool tmp[32] = {0};
     byte_to_bit(msg_bit, plain, 64);
+    printf("msg_bit:");
+    for(int i = 0; i< 64; i++) {
+		printf("%d", msg_bit[i]);
+	}
+    printf("\n");
     tbl_replace(msg_bit, msg_bit, ip_tbl, 64);
     for (i = 0; i < 16; i++) {
         bit_cpy(tmp, msg_bit_r, 32);
