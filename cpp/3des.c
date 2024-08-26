@@ -393,18 +393,27 @@ void encrypt(const char plain[8], char cypher[16]) {
     static bool* msg_bit_l = &msg_bit[0], * msg_bit_r = &msg_bit[32];
     static bool tmp[32] = {0};
     byte_to_bit(msg_bit, plain, 64);
-    printf("msg_bit:");
+    printf("msg_bit: ");
+    for(int i = 0; i< 64; i++) {
+		printf("%d", msg_bit[i]);
+	}
+    printf("\nmsg_bit_table_replace: ");
+    tbl_replace(msg_bit, msg_bit, ip_tbl, 64);
     for(int i = 0; i< 64; i++) {
 		printf("%d", msg_bit[i]);
 	}
     printf("\n");
-    tbl_replace(msg_bit, msg_bit, ip_tbl, 64);
     for (i = 0; i < 16; i++) {
         bit_cpy(tmp, msg_bit_r, 32);
         f_change(msg_bit_r, sub_key[i]);
         xor(msg_bit_r, msg_bit_l, 32);
         bit_cpy(msg_bit_l, tmp, 32);
     }
+    printf("msg_bit_f_change_xor: ");
+    for(int i = 0; i< 64; i++) {
+		printf("%d", msg_bit[i]);
+	}
+    printf("\n");
     tbl_replace(msg_bit, msg_bit, ipr_tbl, 64);
     bit_to_hex(cypher, msg_bit, 64);
 }
