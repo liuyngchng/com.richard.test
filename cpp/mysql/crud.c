@@ -10,18 +10,18 @@
 #include "/home/rd/software/mysql-8.0.28-linux-glibc2.12-x86_64/include/mysql.h"
 
 MYSQL *get_connection() {
-	printf("mysql client version, %s\n",mysql_get_client_info());
-	MYSQL *my = mysql_init(NULL);
-	if (0 == mysql_real_connect(my, _HST, _USR, _PWD, _DB, _PRT, NULL, 0)) {
-		printf("mysql conenct failed!\n");
-		exit(-1);
-	}
-	printf("mysql server version, %s\n", mysql_get_server_info(my));
-	return my;
+    printf("mysql client version, %s\n",mysql_get_client_info());
+    MYSQL *my = mysql_init(NULL);
+    if (0 == mysql_real_connect(my, _HST, _USR, _PWD, _DB, _PRT, NULL, 0)) {
+        printf("mysql conenct failed!\n");
+        exit(-1);
+    }
+    printf("mysql server version, %s\n", mysql_get_server_info(my));
+    return my;
 }
 
 int select_dt() {
-	MYSQL *my = get_connection();
+    MYSQL *my = get_connection();
     mysql_set_character_set(my, "utf8");
     printf("mysql connected!\n");
     char *select_sql = "select id, a, b from a limit 5";
@@ -56,7 +56,7 @@ int select_dt() {
 }
 
 int insert_dt() {
-	MYSQL *my = get_connection();
+    MYSQL *my = get_connection();
     mysql_set_character_set(my, "utf8");
     printf("mysql connected!\n");
     char *sql = "insert into test.a(a,b) values ('testa', 'testb')";
@@ -73,7 +73,7 @@ int insert_dt() {
 }
 
 int update_dt() {
-	MYSQL *my = get_connection();
+    MYSQL *my = get_connection();
     mysql_set_character_set(my, "utf8");
     printf("mysql connected!\n");
     char *sql = "update test.a set a='testa1' where a='testa' limit 1;";
@@ -90,7 +90,7 @@ int update_dt() {
 }
 
 int delete_dt() {
-	MYSQL *my = get_connection();
+    MYSQL *my = get_connection();
     mysql_set_character_set(my, "utf8");
     printf("mysql connected!\n");
     char *sql = "delete from test.a where a='testa1' limit 1;";
@@ -107,5 +107,5 @@ int delete_dt() {
 }
 
 int main() {
-	select_dt();
+    select_dt();
 }

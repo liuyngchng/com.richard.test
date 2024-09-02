@@ -50,9 +50,9 @@ int main( int   argc,
             /* ...and add it to the menu. */
             gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_items);
 
-	    /* Do something interesting when the menuitem is selected */
-	    g_signal_connect_swapped (menu_items, "activate",
-		                      G_CALLBACK (menuitem_response),
+        /* Do something interesting when the menuitem is selected */
+        g_signal_connect_swapped (menu_items, "activate",
+                              G_CALLBACK (menuitem_response),
                                       (gpointer) g_strdup (buf));
 
             /* Show the widget */
@@ -83,7 +83,7 @@ int main( int   argc,
     /* Create a button to which to attach menu as a popup */
     button = gtk_button_new_with_label ("press me");
     g_signal_connect_swapped (button, "event",
-	                      G_CALLBACK (button_press),
+                          G_CALLBACK (button_press),
                               menu);
     gtk_box_pack_end (GTK_BOX (vbox), button, TRUE, TRUE, 2);
     gtk_widget_show (button);

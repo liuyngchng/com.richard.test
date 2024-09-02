@@ -5,9 +5,9 @@ int main( int   argc,
           char *argv[] )
 {
   /* GtkWidget is the storage type for widgets */
-  GtkWidget 	*window;
-  GtkTooltips 	*tooltips;
-  GtkWidget 	*button;
+  GtkWidget     *window;
+  GtkTooltips     *tooltips;
+  GtkWidget     *button;
 
   /* Initialize the toolkit */
   gtk_init (&argc, &argv);

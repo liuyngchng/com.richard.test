@@ -23,7 +23,7 @@ int main( int   argc,
      * packed into.  */
     window = gtk_dialog_new ();
     g_signal_connect (window, "destroy",
-		      G_CALLBACK (destroy), NULL);
+              G_CALLBACK (destroy), NULL);
     gtk_window_set_title (GTK_WINDOW (window), "GtkScrolledWindow example");
     gtk_container_set_border_width (GTK_CONTAINER (window), 0);
     gtk_widget_set_size_request (window, 300, 300);
@@ -42,7 +42,7 @@ int main( int   argc,
                                     GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
     /* The dialog window is created with a vbox packed into it. */
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG(window)->vbox), scrolled_window,
-			TRUE, TRUE, 0);
+            TRUE, TRUE, 0);
     gtk_widget_show (scrolled_window);
 
     /* create a table of 10 by 10 squares. */
@@ -62,17 +62,17 @@ int main( int   argc,
     for (i = 0; i < 10; i++)
        for (j = 0; j < 10; j++) {
           sprintf (buffer, "button (%d,%d)\n", i, j);
-	  button = gtk_toggle_button_new_with_label (buffer);
-	  gtk_table_attach_defaults (GTK_TABLE (table), button,
-	                             i, i+1, j, j+1);
+      button = gtk_toggle_button_new_with_label (buffer);
+      gtk_table_attach_defaults (GTK_TABLE (table), button,
+                                 i, i+1, j, j+1);
           gtk_widget_show (button);
        }
 
     /* Add a "close" button to the bottom of the dialog */
     button = gtk_button_new_with_label ("close");
     g_signal_connect_swapped (button, "clicked",
-			      G_CALLBACK (gtk_widget_destroy),
-			      window);
+                  G_CALLBACK (gtk_widget_destroy),
+                  window);
 
     /* this makes it so the button is the default. */
 

@@ -17,8 +17,8 @@ static GtkWidget *create_list( void )
     /* Create a new scrolled window, with scrollbars only if needed */
     scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				    GTK_POLICY_AUTOMATIC,
-				    GTK_POLICY_AUTOMATIC);
+                    GTK_POLICY_AUTOMATIC,
+                    GTK_POLICY_AUTOMATIC);
 
     model = gtk_list_store_new (1, G_TYPE_STRING);
     tree_view = gtk_tree_view_new ();
@@ -31,10 +31,10 @@ static GtkWidget *create_list( void )
         gchar *msg = g_strdup_printf ("Message #%d", i);
         gtk_list_store_append (GTK_LIST_STORE (model), &iter);
         gtk_list_store_set (GTK_LIST_STORE (model),
-	                    &iter,
+                        &iter,
                             0, msg,
-	                    -1);
-	g_free (msg);
+                        -1);
+    g_free (msg);
     }
 
     cell = gtk_cell_renderer_text_new ();
@@ -45,7 +45,7 @@ static GtkWidget *create_list( void )
                                                        NULL);
 
     gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view),
-	  		         GTK_TREE_VIEW_COLUMN (column));
+                       GTK_TREE_VIEW_COLUMN (column));
 
     return scrolled_window;
 }
@@ -84,8 +84,8 @@ static GtkWidget *create_text( void )
 
    scrolled_window = gtk_scrolled_window_new (NULL, NULL);
    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-		   	           GTK_POLICY_AUTOMATIC,
-				   GTK_POLICY_AUTOMATIC);
+                          GTK_POLICY_AUTOMATIC,
+                   GTK_POLICY_AUTOMATIC);
 
    gtk_container_add (GTK_CONTAINER (scrolled_window), view);
    insert_text (buffer);
@@ -108,7 +108,7 @@ int main( int   argc,
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title (GTK_WINDOW (window), "Paned Windows");
     g_signal_connect (window, "destroy",
-	              G_CALLBACK (gtk_main_quit), NULL);
+                  G_CALLBACK (gtk_main_quit), NULL);
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
     gtk_widget_set_size_request (GTK_WIDGET (window), 450, 400);
 

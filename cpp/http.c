@@ -76,7 +76,7 @@ int get_data()
     FD_ZERO(&t_set1);
     FD_SET(sockfd, &t_set1);
     while(1) {
-		sleep(1);
+        sleep(1);
         tv.tv_sec= 0;
         tv.tv_usec= 0;
         h = 0;

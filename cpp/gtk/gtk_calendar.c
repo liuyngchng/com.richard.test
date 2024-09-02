@@ -57,7 +57,7 @@ static void calendar_date_to_string( CalendarData *data,
   guint year, month, day;
 
   gtk_calendar_get_date (GTK_CALENDAR (data->window),
-			 &year, &month, &day);
+             &year, &month, &day);
   g_date_set_dmy (&date, day, month + 1, year);
   g_date_strftime (buffer, buff_len - 1, "%x", &date);
 
@@ -104,7 +104,7 @@ static void calendar_day_selected_double_click ( GtkWidget    *widget,
   calendar_set_signal_strings (buffer, data);
 
   gtk_calendar_get_date (GTK_CALENDAR (data->window),
-			 NULL, NULL, &day);
+             NULL, NULL, &day);
 
   if (GTK_CALENDAR (data->window)->marked_date[day-1] == 0) {
     gtk_calendar_mark_day (GTK_CALENDAR (data->window), day);
@@ -157,7 +157,7 @@ static void calendar_set_flags( CalendarData *calendar )
   for (i = 0;i < 5; i++)
     if (calendar->settings[i])
       {
-	options = options + (1 << i);
+    options = options + (1 << i);
       }
   if (calendar->window)
     gtk_calendar_display_options (GTK_CALENDAR (calendar->window), options);
@@ -188,13 +188,13 @@ static void calendar_font_selection_ok( GtkWidget    *button,
     {
       font_name = gtk_font_selection_dialog_get_font_name (GTK_FONT_SELECTION_DIALOG (calendar->font_dialog));
       if (font_name)
-	{
-	  style = gtk_rc_style_new ();
-	  pango_font_description_free (style->font_desc);
-	  style->font_desc = pango_font_description_from_string (font_name);
-	  gtk_widget_modify_style (calendar->window, style);
-	  g_free (font_name);
-	}
+    {
+      style = gtk_rc_style_new ();
+      pango_font_description_free (style->font_desc);
+      style->font_desc = pango_font_description_from_string (font_name);
+      gtk_widget_modify_style (calendar->window, style);
+      g_free (font_name);
+    }
     }
 
   gtk_widget_destroy (calendar->font_dialog);
@@ -213,15 +213,15 @@ static void calendar_select_font( GtkWidget    *button,
     gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
     g_signal_connect (window, "destroy",
-		      G_CALLBACK (gtk_widget_destroyed),
-		      &calendar->font_dialog);
+              G_CALLBACK (gtk_widget_destroyed),
+              &calendar->font_dialog);
 
     g_signal_connect (GTK_FONT_SELECTION_DIALOG (window)->ok_button,
-		      "clicked", G_CALLBACK (calendar_font_selection_ok),
-		      calendar);
+              "clicked", G_CALLBACK (calendar_font_selection_ok),
+              calendar);
     g_signal_connect_swapped (GTK_FONT_SELECTION_DIALOG (window)->cancel_button,
-			     "clicked", G_CALLBACK (gtk_widget_destroy),
-			     calendar->font_dialog);
+                 "clicked", G_CALLBACK (gtk_widget_destroy),
+                 calendar->font_dialog);
   }
   window = calendar->font_dialog;
   if (!GTK_WIDGET_VISIBLE (window))
@@ -270,11 +270,11 @@ static void create_calendar( void )
   gtk_window_set_title (GTK_WINDOW (window), "GtkCalendar Example");
   gtk_container_set_border_width (GTK_CONTAINER (window), 5);
   g_signal_connect (window, "destroy",
-		    G_CALLBACK (gtk_main_quit),
-		    NULL);
+            G_CALLBACK (gtk_main_quit),
+            NULL);
   g_signal_connect (window, "delete-event",
-		    G_CALLBACK (gtk_false),
-		    NULL);
+            G_CALLBACK (gtk_false),
+            NULL);
   gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
 
   vbox = gtk_vbox_new (FALSE, DEF_PAD);
@@ -300,26 +300,26 @@ static void create_calendar( void )
   gtk_calendar_mark_day (GTK_CALENDAR (calendar), 19);
   gtk_container_add (GTK_CONTAINER (frame), calendar);
   g_signal_connect (calendar, "month_changed",
-		    G_CALLBACK (calendar_month_changed),
-		    &calendar_data);
+            G_CALLBACK (calendar_month_changed),
+            &calendar_data);
   g_signal_connect (calendar, "day_selected",
-		    G_CALLBACK (calendar_day_selected),
-		    &calendar_data);
+            G_CALLBACK (calendar_day_selected),
+            &calendar_data);
   g_signal_connect (calendar, "day_selected_double_click",
-		    G_CALLBACK (calendar_day_selected_double_click),
-		    &calendar_data);
+            G_CALLBACK (calendar_day_selected_double_click),
+            &calendar_data);
   g_signal_connect (calendar, "prev_month",
-		    G_CALLBACK (calendar_prev_month),
-		    &calendar_data);
+            G_CALLBACK (calendar_prev_month),
+            &calendar_data);
   g_signal_connect (calendar, "next_month",
-		    G_CALLBACK (calendar_next_month),
-		    &calendar_data);
+            G_CALLBACK (calendar_next_month),
+            &calendar_data);
   g_signal_connect (calendar, "prev_year",
-		    G_CALLBACK (calendar_prev_year),
-		    &calendar_data);
+            G_CALLBACK (calendar_prev_year),
+            &calendar_data);
   g_signal_connect (calendar, "next_year",
-		    G_CALLBACK (calendar_next_year),
-		    &calendar_data);
+            G_CALLBACK (calendar_next_year),
+            &calendar_data);
 
 
   separator = gtk_vseparator_new ();
@@ -339,18 +339,18 @@ static void create_calendar( void )
     {
       toggle = gtk_check_button_new_with_label (flags[i].label);
       g_signal_connect (toggle,
-			"toggled",
-			G_CALLBACK (calendar_toggle_flag),
-			&calendar_data);
+            "toggled",
+            G_CALLBACK (calendar_toggle_flag),
+            &calendar_data);
       gtk_box_pack_start (GTK_BOX (vbox3), toggle, TRUE, TRUE, 0);
       calendar_data.flag_checkboxes[i] = toggle;
     }
   /* Build the right font-button */
   button = gtk_button_new_with_label ("Font...");
   g_signal_connect (button,
-		    "clicked",
-		    G_CALLBACK (calendar_select_font),
-		    &calendar_data);
+            "clicked",
+            G_CALLBACK (calendar_select_font),
+            &calendar_data);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
 
   /*
@@ -390,8 +390,8 @@ static void create_calendar( void )
 
   button = gtk_button_new_with_label ("Close");
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (gtk_main_quit),
-		    NULL);
+            G_CALLBACK (gtk_main_quit),
+            NULL);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_can_default (button, TRUE);
   gtk_widget_grab_default (button);

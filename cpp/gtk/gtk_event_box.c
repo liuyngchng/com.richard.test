@@ -17,35 +17,35 @@ int main( int argc,
     /**
      * g_signal_connect 第二个参数可以传递的参数  event 清单
      * event
-		button_press_event
-		button_release_event
-		scroll_event
-		motion_notify_event
-		delete_event
-		destroy_event
-		expose_event
-		key_press_event
-		key_release_event
-		enter_notify_event
-		leave_notify_event
-		configure_event
-		focus_in_event
-		focus_out_event
-		map_event
-		unmap_event
-		property_notify_event
-		selection_clear_event
-		selection_request_event
-		selection_notify_event
-		proximity_in_event
-		proximity_out_event
-		visibility_notify_event
-		client_event
-		no_expose_event
-		window_state_event
+        button_press_event
+        button_release_event
+        scroll_event
+        motion_notify_event
+        delete_event
+        destroy_event
+        expose_event
+        key_press_event
+        key_release_event
+        enter_notify_event
+        leave_notify_event
+        configure_event
+        focus_in_event
+        focus_out_event
+        map_event
+        unmap_event
+        property_notify_event
+        selection_clear_event
+        selection_request_event
+        selection_notify_event
+        proximity_in_event
+        proximity_out_event
+        visibility_notify_event
+        client_event
+        no_expose_event
+        window_state_event
      */
     g_signal_connect (window, "destroy",
-	              G_CALLBACK (exit), NULL);
+                  G_CALLBACK (exit), NULL);
 
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
 
@@ -67,7 +67,7 @@ int main( int argc,
     /* And bind an action to it */
     gtk_widget_set_events (event_box, GDK_BUTTON_PRESS_MASK);
     g_signal_connect (event_box, "button_press_event",
-	              G_CALLBACK (exit), NULL);
+                  G_CALLBACK (exit), NULL);
 
     /* Yet one more thing you need an X window for ... */
 

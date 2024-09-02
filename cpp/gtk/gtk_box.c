@@ -7,7 +7,7 @@
 #include <gtk/gtk.h>
 
 static void print_hello(GtkWidget *widget, gpointer data){
-	g_print("button clicked\n");
+    g_print("button clicked\n");
 }
 
 static void callback( GtkWidget *widget, gpointer data ){
@@ -45,7 +45,7 @@ int main( int   argc,
     /* Here we just set a handler for delete_event that immediately
      * exits GTK. */
     g_signal_connect (window, "delete-event",
-		      G_CALLBACK (delete_event), NULL);
+              G_CALLBACK (delete_event), NULL);
 
     /* Sets the border width of the window. */
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
@@ -64,7 +64,7 @@ int main( int   argc,
     /* Now when the button is clicked, we call the "callback" function
      * with a pointer to "button 1" as its argument */
     g_signal_connect (button, "clicked",
-		      G_CALLBACK (callback), (gpointer) "button 1");
+              G_CALLBACK (callback), (gpointer) "button 1");
 
     /* Instead of gtk_container_add, we pack this button into the invisible
      * box, which has been packed into the window. */
@@ -80,7 +80,7 @@ int main( int   argc,
     /* Call the same callback function with a different argument,
      * passing a pointer to "button 2" instead. */
     g_signal_connect (button, "clicked",
-		      G_CALLBACK (callback), (gpointer) "button 2");
+              G_CALLBACK (callback), (gpointer) "button 2");
 
     gtk_box_pack_start(GTK_BOX (box1), button, TRUE, TRUE, 0);
 

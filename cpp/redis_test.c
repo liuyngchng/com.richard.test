@@ -21,7 +21,7 @@
  */
 #include "hiredis.h"
 int main() {
-	char *ip = "127.0.0.1";
+    char *ip = "127.0.0.1";
     int port = 6379;
     redisContext *c = redisConnect(ip, port);
     if (c == NULL || c->err) {
@@ -35,7 +35,7 @@ int main() {
     const char *psword = "your_psword";
     redisReply *reply;
     // auth psword
-	reply = redisCommand(c, "AUTH %s", psword);
+    reply = redisCommand(c, "AUTH %s", psword);
     if (reply->type == REDIS_REPLY_ERROR) {
         printf("auth_failed, cause: %s\n", reply->str);
         freeReplyObject(reply);
@@ -44,7 +44,7 @@ int main() {
     }
     freeReplyObject(reply);
     printf("connected to %s:%d, auth %s\n", ip, port, psword);
-	// exec cmd
+    // exec cmd
     char *cmd = "keys *";
     reply = (redisReply *)redisCommand(c, cmd);
     printf("cmd result %s\n", reply->str);

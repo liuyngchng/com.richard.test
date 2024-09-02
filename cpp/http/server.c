@@ -53,18 +53,18 @@ again:  cfd = accept(sfd, (struct sockaddr *)&cliaddr, &len);
                 gettime(), filename(__FILE__),__LINE__, errno, strerror(errno)
             );
             if((errno == ECONNABORTED) || errno == EINTR) {
-				goto again;
-			} else {
-				close(sfd);
+                goto again;
+            } else {
+                close(sfd);
                 printf("[%s][%s-%d]server closed\n", gettime(), filename(__FILE__),__LINE__);
                 return -1;
-			}
+            }
         }
         char *ip = inet_ntoa(cliaddr.sin_addr);
         printf("[%s][%s-%d] %s connected\n", gettime(), filename(__FILE__),__LINE__,ip);
         pthread_t t;
-		pthread_create(&t, NULL, &rcvdata, &cfd);
-		pthread_detach(t);
+        pthread_create(&t, NULL, &rcvdata, &cfd);
+        pthread_detach(t);
     }
     close(sfd);
     printf("[%s][%s-%d]server closed\n", gettime(), filename(__FILE__),__LINE__);

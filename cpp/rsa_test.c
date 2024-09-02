@@ -66,7 +66,7 @@ int decrypt(const unsigned char *in, size_t inlen) {
 }
 
 int main() {
-	int a = 2e4;
+    int a = 2e4;
     OpenSSL_add_all_algorithms();
     FILE *pub_fp = fopen("public.pem", "r");
     FILE *priv_fp = fopen("private.pem", "r");

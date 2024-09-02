@@ -16,7 +16,7 @@ int main( int   argc,
 
   /* Here we connect the "destroy" event to a signal handler */
   g_signal_connect (window, "destroy",
-		    G_CALLBACK (gtk_main_quit), NULL);
+            G_CALLBACK (gtk_main_quit), NULL);
 
   gtk_widget_set_size_request (window, 300, 300);
   /* Sets the border width of the window. */

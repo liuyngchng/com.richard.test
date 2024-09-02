@@ -36,8 +36,8 @@ static void cb_page_size( GtkAdjustment *get,
     /* This sets the adjustment and makes it emit the "changed" signal to
        reconfigure all the widgets that are attached to this signal.  */
     gtk_adjustment_set_value (set, CLAMP (set->value,
-					  set->lower,
-					  (set->upper - set->page_size)));
+                      set->lower,
+                      (set->upper - set->page_size)));
     g_signal_emit_by_name(set, "changed");
 }
 
@@ -59,7 +59,7 @@ static GtkWidget *make_menu_item ( gchar     *name,
 
     item = gtk_menu_item_new_with_label (name);
     g_signal_connect (item, "activate",
-	              callback, (gpointer) data);
+                  callback, (gpointer) data);
     gtk_widget_show (item);
 
     return item;

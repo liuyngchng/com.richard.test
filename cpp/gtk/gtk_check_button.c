@@ -38,14 +38,14 @@ static void check_button_callback( GtkWidget *widget,
                       gpointer   data )
 {
 //    g_print ("Hello again - %s was pressed\n", (char *) data);
-	 if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-	{
-		 g_print ("%s was pressed, i am active\n", (char *) data);
+     if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+         g_print ("%s was pressed, i am active\n", (char *) data);
 
-	} else {
+    } else {
 
-		g_print ("%s was pressed, i am deactive\n", (char *) data);
-	}
+        g_print ("%s was pressed, i am deactive\n", (char *) data);
+    }
 }
 
 int main( int   argc,
@@ -64,10 +64,10 @@ int main( int   argc,
 
     /* It's a good idea to do this for all windows. */
     g_signal_connect (window, "destroy",
-	              G_CALLBACK (gtk_main_quit), NULL);
+                  G_CALLBACK (gtk_main_quit), NULL);
 
     g_signal_connect (window, "delete-event",
-	 	      G_CALLBACK (gtk_main_quit), NULL);
+               G_CALLBACK (gtk_main_quit), NULL);
 
     /* Sets the border width of the window. */
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
@@ -80,15 +80,15 @@ int main( int   argc,
     /* Connect the "clicked" signal of the button to our callback
      *
      * The Button widget has the following signals:
-	 * pressed - emitted when pointer button is pressed within Button widget
-	 * released - emitted when pointer button is released within Button widget
-	 * clicked - emitted when pointer button is pressed and then released within Button widget
-	 * enter - emitted when pointer enters Button widget
-	 * leave - emitted when pointer leaves Button widget
+     * pressed - emitted when pointer button is pressed within Button widget
+     * released - emitted when pointer button is released within Button widget
+     * clicked - emitted when pointer button is pressed and then released within Button widget
+     * enter - emitted when pointer enters Button widget
+     * leave - emitted when pointer leaves Button widget
      *
      * */
     g_signal_connect (button, "clicked",
-		      G_CALLBACK (check_button_callback), (gpointer) "check button");
+              G_CALLBACK (check_button_callback), (gpointer) "check button");
 
 
     gtk_widget_show (button);

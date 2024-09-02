@@ -22,8 +22,8 @@ int main ()
         count++;  
     }  
     printf("result is : %d/n",count);
-	char x[100],*p;
-	read(0,x,100);
-	printf("%s", *p);
+    char x[100],*p;
+    read(0,x,100);
+    printf("%s", *p);
     return 0;  
 }

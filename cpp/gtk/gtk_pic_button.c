@@ -57,10 +57,10 @@ int main( int   argc,
 
     /* It's a good idea to do this for all windows. */
     g_signal_connect (window, "destroy",
-	              G_CALLBACK (gtk_main_quit), NULL);
+                  G_CALLBACK (gtk_main_quit), NULL);
 
     g_signal_connect (window, "delete-event",
-	 	      G_CALLBACK (gtk_main_quit), NULL);
+               G_CALLBACK (gtk_main_quit), NULL);
 
     /* Sets the border width of the window. */
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
@@ -71,15 +71,15 @@ int main( int   argc,
     /* Connect the "clicked" signal of the button to our callback
      *
      * The Button widget has the following signals:
-	 * pressed - emitted when pointer button is pressed within Button widget
-	 * released - emitted when pointer button is released within Button widget
-	 * clicked - emitted when pointer button is pressed and then released within Button widget
-	 * enter - emitted when pointer enters Button widget
-	 * leave - emitted when pointer leaves Button widget
+     * pressed - emitted when pointer button is pressed within Button widget
+     * released - emitted when pointer button is released within Button widget
+     * clicked - emitted when pointer button is pressed and then released within Button widget
+     * enter - emitted when pointer enters Button widget
+     * leave - emitted when pointer leaves Button widget
      *
      * */
     g_signal_connect (button, "clicked",
-		      G_CALLBACK (callback), (gpointer) "cool button");
+              G_CALLBACK (callback), (gpointer) "cool button");
 
     /* This calls our box creating function */
 //    box = xpm_label_box ("info.xpm", "cool button");

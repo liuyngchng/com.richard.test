@@ -24,7 +24,7 @@ static gboolean progress_timeout( gpointer data )
       new_val = gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (pdata->pbar)) + 0.01;
 
       if (new_val > 1.0)
-	new_val = 0.0;
+    new_val = 0.0;
 
       /* Set the new value */
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (pdata->pbar), new_val);
@@ -67,11 +67,11 @@ static void toggle_orientation( GtkWidget    *widget,
   switch (gtk_progress_bar_get_orientation (GTK_PROGRESS_BAR (pdata->pbar))) {
   case GTK_PROGRESS_LEFT_TO_RIGHT:
     gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (pdata->pbar),
-				      GTK_PROGRESS_RIGHT_TO_LEFT);
+                      GTK_PROGRESS_RIGHT_TO_LEFT);
     break;
   case GTK_PROGRESS_RIGHT_TO_LEFT:
     gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (pdata->pbar),
-				      GTK_PROGRESS_LEFT_TO_RIGHT);
+                      GTK_PROGRESS_LEFT_TO_RIGHT);
     break;
   default:;
     /* do nothing */
@@ -110,7 +110,7 @@ int main( int   argc,
     gtk_window_set_resizable (GTK_WINDOW (pdata->window), TRUE);
 
     g_signal_connect (pdata->window, "destroy",
-	              G_CALLBACK (destroy_progress),
+                  G_CALLBACK (destroy_progress),
                       (gpointer) pdata);
     gtk_window_set_title (GTK_WINDOW (pdata->window), "GtkProgressBar");
     gtk_container_set_border_width (GTK_CONTAINER (pdata->window), 0);
@@ -148,7 +148,7 @@ int main( int   argc,
     check = gtk_check_button_new_with_label ("Show text");
     gtk_table_attach (GTK_TABLE (table), check, 0, 1, 0, 1,
                       GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL,
-		      5, 5);
+              5, 5);
     g_signal_connect (check, "clicked",
                       G_CALLBACK (toggle_show_text),
                       pdata);

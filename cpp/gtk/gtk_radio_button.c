@@ -23,7 +23,7 @@ int main( int   argc,          char *argv[] )
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
     g_signal_connect (window, "delete-event",
-		      G_CALLBACK (close_application),
+              G_CALLBACK (close_application),
                       NULL);
 
     gtk_window_set_title (GTK_WINDOW (window), "radio buttons");
@@ -49,7 +49,7 @@ int main( int   argc,          char *argv[] )
     gtk_widget_show (button);
 
     button = gtk_radio_button_new_with_label_from_widget (GTK_RADIO_BUTTON (button),
-	                                                  "button3");
+                                                      "button3");
     gtk_box_pack_start (GTK_BOX (box2), button, TRUE, TRUE, 0);
     gtk_widget_show (button);
 

@@ -40,7 +40,7 @@ unsigned long random_xid(void)
  */
 void printa(int* p, int l)
 {
-	for (int i = 0; i < l; i++) {
+    for (int i = 0; i < l; i++) {
         printf("%3d ", p[i]);
         if (((i+1) % 10) == 0) {
             printf("\n");
@@ -62,7 +62,7 @@ void popup()
         a[i] = random_xid()%_SIZE_;
     }
     printf("sort %d random number\n", l);
-	printa(a, l);
+    printa(a, l);
     for (int i = 0; i < l; i ++) {
         for (int j = i; j < l; j ++) {
             round++;
@@ -74,7 +74,7 @@ void popup()
         }
     }
     printf("\nrun %d round, after popup:\n", round);
-	printa(a, l);
+    printa(a, l);
 }
 
 /**
@@ -113,14 +113,14 @@ void q_sort(int *a, int left, int right)
 void myqsort()
 {
     printf("run %s\n", __func__);
-	int a[_SIZE_] ;
-	int l = sizeof(a)/sizeof(int);
+    int a[_SIZE_] ;
+    int l = sizeof(a)/sizeof(int);
     for (int i  = 0; i < l; i ++) {
         a[i] = random_xid()%_SIZE_;
     }
     printf("sort %d random number\n", l);
     printa(a, l);
-	q_sort(a, 0, l-1);
+    q_sort(a, 0, l-1);
     printf("after run %d round\n", round);
     printa(a, l);
 }

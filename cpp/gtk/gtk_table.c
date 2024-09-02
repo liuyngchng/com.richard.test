@@ -55,7 +55,7 @@ int main( int   argc,
     /* When the button is clicked, we call the "callback" function
      * with a pointer to "button 1" as its argument */
     g_signal_connect (button, "clicked",
-	              G_CALLBACK (callback), (gpointer) "button 1");
+                  G_CALLBACK (callback), (gpointer) "button 1");
 
 
     /* Insert button 1 into the upper left quadrant of the table */

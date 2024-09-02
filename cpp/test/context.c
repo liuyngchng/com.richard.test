@@ -30,7 +30,7 @@ cJSON *get_pce_info()
     int *array_int;
     get_int_array(mat2d, array_int, 4);
     cJSON *itemAdded = cJSON_Parse("{\"key\":\"value\"}");
-	cJSON_AddItemToObjectCS(pce_info, key3, itemAdded);
+    cJSON_AddItemToObjectCS(pce_info, key3, itemAdded);
     cJSON_Delete(mat2d);
     cJSON_Delete(j);
 
@@ -39,16 +39,16 @@ cJSON *get_pce_info()
 void get_int_array(char *str_a, int *a, int size)
 {
     cJSON *json = cJSON_Parse(str_a);
-	char *str1 = cJSON_Print(json);
-	printf("string_json=%s\n", str1);
-	int size1 = cJSON_GetArraySize(json);
-	printf("sizeof str=%d\n", size1);
+    char *str1 = cJSON_Print(json);
+    printf("string_json=%s\n", str1);
+    int size1 = cJSON_GetArraySize(json);
+    printf("sizeof str=%d\n", size1);
 
-	cJSON *a0 = cJSON_GetArrayItem(json, 0);
-	printf("a0_json=%s\n", cJSON_Print(a0));
-	int size2 = cJSON_GetArraySize(a0);
-	printf("sizeof a0=%d\n", size2);
-	for (int i = 0; i < cJSON_GetArraySize(json); i++) {
+    cJSON *a0 = cJSON_GetArrayItem(json, 0);
+    printf("a0_json=%s\n", cJSON_Print(a0));
+    int size2 = cJSON_GetArraySize(a0);
+    printf("sizeof a0=%d\n", size2);
+    for (int i = 0; i < cJSON_GetArraySize(json); i++) {
         int sum = 0;
 //        int size = cJSON_GetArraySize(cJSON_GetArrayItem(json, 0));
         for (int j = 0; j < size; j++) {
@@ -57,6 +57,6 @@ void get_int_array(char *str_a, int *a, int size)
             ) * pow(2, j);
         }
         a[i] = sum;
-	}
-	cJSON_Delete(json);
+    }
+    cJSON_Delete(json);
 }

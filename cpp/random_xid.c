@@ -21,7 +21,7 @@ unsigned long random_xid(void)
             seed = time(0);
         }
         if (fd >= 0) {
-			close(fd);
+            close(fd);
         }
         printf("seed=%ld\n",seed);
         //设置随机种子
@@ -34,6 +34,6 @@ unsigned long random_xid(void)
 
 int main()
 {
-	unsigned long l = random_xid();
-	printf("l=%ld\n",l);
+    unsigned long l = random_xid();
+    printf("l=%ld\n",l);
 }
