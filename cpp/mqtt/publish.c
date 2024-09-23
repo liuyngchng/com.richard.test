@@ -1,4 +1,8 @@
 /**
+ * https://github.com/eclipse/paho.mqtt.c
+ * cd paho.mqtt.c
+ * cmake ./
+ * make
  * gcc publish.c  /home/rd/workspace/paho.mqtt.c/src/libpaho-mqtt3c.so -I /home/rd/workspace/paho.mqtt.c/src/
  */
 #include <stdio.h>
