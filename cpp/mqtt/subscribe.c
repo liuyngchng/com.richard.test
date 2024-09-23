@@ -49,6 +49,8 @@ int main(int argc, char* argv[])
         MQTTCLIENT_PERSISTENCE_NONE, NULL);
     conn_opts.keepAliveInterval = 20;
     conn_opts.cleansession = 1;
+    conn_opts.username = "test";
+    conn_opts.password = "test";
     MQTTClient_setCallbacks(client, NULL, connlost, msgarrvd, delivered);
     if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS)
     {
