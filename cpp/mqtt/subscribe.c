@@ -14,14 +14,14 @@
 volatile MQTTClient_deliveryToken deliveredtoken;
 void delivered(void *context, MQTTClient_deliveryToken dt)
 {
-    printf("Message with token value %d delivery confirmed\n", dt);
+    printf("message with token value %d delivery confirmed\n", dt);
     deliveredtoken = dt;
 }
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
 {
     int i;
     char* payloadptr;
-    printf("Message arrived\n");
+    printf("message arrived\n");
     printf("     topic: %s\n", topicName);
     printf("   message: ");
     payloadptr = message->payload;
