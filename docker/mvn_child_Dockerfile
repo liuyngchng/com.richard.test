@@ -1,0 +1,33 @@
+FROM openjdk:17
+VOLUME /tmp
+ENV LANG C.UTF-8
+ENV all_proxy ''
+ENV http_proxy ''
+ENV https_proxy ''
+ENV no_proxy ''
+ENV ALL_PROXY ''
+ENV HTTP_PROXY ''
+ENV HTTPS_PROXY ''
+ENV NO_PROXY ''
+ENV LC_ALL "C.UTF-8"
+ENV LANG "C.UTF-8"
+WORKDIR /opt
+RUN bash -c 'rm /etc/localtime && \
+    ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /opt/app && \
+    mkdir -p /opt/config/ini && \
+    mkdir -p /opt/lib \
+    '
+ADD mvn-child/config/ini/cfg.ini        /opt/config/ini/cfg.ini
+ADD mvn-child/app/mvn-child-1.0.jar     /opt/app
+
+ADD mvn-child/lib/libcrypto.so.1.1      /opt/lib
+ADD mvn-child/lib/libssl.so.1.1         /opt/lib
+ADD mvn-child/start.sh                 ./start.sh
+ADD mvn-child/config/app.yml            /opt/config/app.yml
+
+EXPOSE 18088
+EXPOSE 18089
+ENTRYPOINT ["sh", "./start.sh"]
+
