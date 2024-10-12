@@ -1,10 +1,22 @@
+/**
+ * （1）基本概念
+ * 		1）素数：也叫质数，只能被1和它本身整除的大于1的整数，除了2之外其他的素数都是奇数；
+ * 		2）互质：如果2个或多个整数除了1之外没有其他的公约数，则称这些整数为互质；
+ * 		3）欧拉函数：在数论，对正整数n，欧拉函数是小于等于n的正整数中与n互质的数的数目，
+ * 			当n是质数的时候，显然有 f(n)=n-1；
+ * 给出2个大的素数（质数，）
+ * P, Q, 例如P=11, Q=7
+ */
 #include<stdio.h>
 #include<string.h>
 #include <stdlib.h>
 #include <limits.h>
 
-#define P 197
-#define Q 199
+//#define P 197
+//#define Q 199
+
+#define P 7
+#define Q 11
 
 
 /**
@@ -115,7 +127,7 @@ int main(){
     }
     n = P * Q;
     t = (P-1)*(Q-1);
-    printf("p=%d, q=%d\n", P, Q);
+    printf("大素数 p=%d, q=%d\n", P, Q);
     printf("t=(q-1)*(p-1)=%d\n", t);
     e=get_random(P, Q);
     printf("pub_key(e=%d n=%d)\n", e, n);
