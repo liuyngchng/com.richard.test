@@ -446,7 +446,9 @@ int main() {
     // }
 
     // 计算超大阶乘
-    BigNum result = factorial(6000);
+    int a = 6000;
+    printf("计算 %d 的阶乘:\n", a);
+    BigNum result = factorial(a);
     print_bit_num_ln(&result);
 }
 
