@@ -9,9 +9,9 @@
  * 99999........99999（中间9223372036854775807个9）
  */
 struct bigNum {
-    int 		*arr;  				// 位数数组
-    long long 	_arrLen;  			// 数组位数的当前最大长度
-    long long 	wei;  				// 有多少位（十进制的位数） 初始是1 表示现在这个数是个位数
+    int *arr;  // 位数数组
+    long long _arrLen;  // 数组位数的当前最大长度
+    long long wei;  // 有多少位 初始是1 表示现在这个数是个位数
 } typedef BigNum;
 
 /**
@@ -20,10 +20,10 @@ struct bigNum {
  */
 BigNum get_zero() {
     BigNum res;
-    res._arrLen 	= 2;  // 设定一开始的位数
-    res.arr 		= (int *) malloc(sizeof(int) * res._arrLen);
-    res.wei 		= 1;
-    res.arr[0] 		= 0;
+    res._arrLen = 2;  // 设定一开始的位数
+    res.arr = (int *) malloc(sizeof(int) * res._arrLen);
+    res.wei = 1;
+    res.arr[0] = 0;
     return res;
 }
 
@@ -42,13 +42,10 @@ void destroy_big_num(BigNum *bigNum) {
  */
 void extend_big_num(BigNum *bigNum) {
     bigNum->_arrLen *= 2;
-    bigNum->arr 	 = (int *) realloc(bigNum->arr, sizeof(int) * bigNum->_arrLen);
+    bigNum->arr = (int *) realloc(bigNum->arr, sizeof(int) * bigNum->_arrLen);
 }
 
-/**
- * 整数乘方计算
- * 计算 n^m， 可能会导致溢出
- */
+// 整形乘方计算
 int my_pow(int n, int m) {
     if (m == 0) {
         return 1;
@@ -61,9 +58,9 @@ int my_pow(int n, int m) {
 }
 
 /**
- * 判断 m 是多少位数（按照10进制计算）
+ * 判断m是多少位数
  * @param m
- * @return 例如，m=169 则返回 3
+ * @return 如果m是 169 则返回 3
  */
 int count_int_bit(int m) {
     int n = 0;
@@ -79,14 +76,14 @@ int count_int_bit(int m) {
  * @param int 输入的int类型数
  * @return bigNum 大数对象
  */
-BigNum int_to_big_num(int i) {
-    int n = count_int_bit(i);
+BigNum int_to_big_num(int m) {
+    int n = count_int_bit(m);
     BigNum res = get_zero();
     while (res._arrLen < n) {
         extend_big_num(&res);
     }
     for (int i = 1; i <= n; i++) {
-        int dig = (i % (my_pow(10, i))) / my_pow(10, (i - 1));
+        int dig = (m % (my_pow(10, i))) / my_pow(10, (i - 1));
         res.arr[i - 1] = dig;
     }
     res.wei = n;
@@ -99,15 +96,15 @@ BigNum int_to_big_num(int i) {
  * 字符串只能是纯数字，如果出现其他字符会导致程序bug
  * @return 大数对象
  */
-BigNum str_to_big_num(char *str) {
+BigNum str_to_big_num(char *string) {
     BigNum res = get_zero();
-    while (res._arrLen < strlen(str)) {
+    while (res._arrLen < strlen(string)) {
         extend_big_num(&res);
     }
-    for (long long i = 0; i < strlen(str); i++) {
-        res.arr[strlen(str) - i - 1] = (int) (str[i]) - 48;
+    for (long long i = 0; i < strlen(string); i++) {
+        res.arr[strlen(string) - i - 1] = (int) (string[i]) - 48;
     }
-    res.wei = (long long) strlen(str);
+    res.wei = (long long) strlen(string);
     return res;
 }
 
@@ -276,7 +273,7 @@ BigNum big_num_add(BigNum *b1, BigNum *b2) {
  */
 void big_num_add_0(BigNum *b1, BigNum *b2) {
     if (b1->wei == b1->_arrLen) {
-        extend_big_num(b1); 		// 最高位刚好达到数组了就直接扩容，不判断了
+        extend_big_num(b1); // 最高位刚好达到数组了就直接扩容，不判断了
     }
     int flag = big_num_cmp(b1, b2);
     if (flag == -1) {
@@ -289,7 +286,7 @@ void big_num_add_0(BigNum *b1, BigNum *b2) {
             b1->arr[i] = 0;
         }
     }
-    int next = 0;  					// 下一位进位现象 0 无进位，1有进位
+    int next = 0;  // 下一位进位现象 0 无进位，1有进位
     for (long long i = 0; i < b2->wei; i++) {
         int resNum = b1->arr[i] + b2->arr[i] + next;
         if (resNum < 10) {
@@ -446,7 +443,7 @@ int main() {
     // }
 
     // 计算超大阶乘
-    int a = 6000;
+    int a = 600;
     printf("计算 %d 的阶乘:\n", a);
     BigNum result = factorial(a);
     print_bit_num_ln(&result);
