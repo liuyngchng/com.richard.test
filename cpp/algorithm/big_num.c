@@ -125,15 +125,15 @@ void print_bit_num_ln(BigNum *bigNum) {
  * @param bigNum 大数对象地址
  */
 void print_bit_num_obj(BigNum *bigNum) {
+	printf("big_num=");
     for (long long i = bigNum->wei - 1; i >= 0; i--) {
         printf("%d", bigNum->arr[i]);
     }
-    printf(" [");
+    printf(", int_array=[");
     for (int i = 0; i < bigNum->wei; i++) {
         printf("%d ", bigNum->arr[i]);
     }
-    printf("]");
-    printf("arrLen:%lld;wei:%lld\n", bigNum->_arrLen, bigNum->wei);
+    printf("], array_size=%lld, decimal_bit=%lld\n", bigNum->_arrLen, bigNum->wei);
 }
 
 /**
@@ -409,16 +409,23 @@ BigNum factorial(int n) {
 
 int main() {
     // 大数相加
-    BigNum b1 = int_to_big_num(1);
+	int i = 1;
+    BigNum b1 = int_to_big_num(i);
+    printf("big_number b1=%d\n", i);
     print_bit_num_obj(&b1);
-    BigNum b2 = int_to_big_num(95599);
+    i=95599;
+    BigNum b2 = int_to_big_num(i);
+    printf("big_number b2=%d\n", i);
     print_bit_num_obj(&b2);
     BigNum b3 = big_num_add(&b1, &b2);
+    printf("b2 + b3 =\n");
     print_bit_num_obj(&b3);
 
     // 大数乘以个位数
-    BigNum bg1 = int_to_big_num(11665544);
+    i = 11665544;
+    BigNum bg1 = int_to_big_num(i);
     big_num_multi_dig(&bg1, 6);
+    printf("big_number %d * 6 =\n", i);
     print_bit_num_obj(&bg1);
 
     // 大数乘以大数
@@ -443,7 +450,7 @@ int main() {
     // }
 
     // 计算超大阶乘
-    int a = 600;
+    int a = 3;
     printf("计算 %d 的阶乘:\n", a);
     BigNum result = factorial(a);
     print_bit_num_ln(&result);
