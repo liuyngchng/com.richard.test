@@ -27,16 +27,16 @@ int main ( void )
 		printf ( "\n" );
 	}
 
-	for ( r=0; r>=-1; r-=0.1 )
+	for(r=0; r>=-1; r-=0.1)
 	{
-		cols = ( PI - asin(r) ) * 10;
-		for ( c=0; c<cols+2; c++ )
+		cols =(PI - asin(r)) * 10;
+		for(c=0; c<cols+2; c++)
 			printf ( " " );
-		printf ( "." );
-		for ( ; c<10*(2*PI+asin(r))+1; c++ )
+		printf( "." );
+		for( ; c<10*(2*PI+asin(r))+1; c++)
 			printf ( " " );
-		printf ( "." );
-		printf ( "\n" );
+		printf( "." );
+		printf( "\n" );
 	}
 
 	return 0;

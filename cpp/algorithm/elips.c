@@ -9,9 +9,9 @@
 #include <math.h>
 int main() {
 	int a =1;
-	int b =1;
+	int b =10;
 	double x;
-	double y=sqrt(x(x-a)(x-b));
+	double y=sqrt(x*(x-a)*(x-b));
 	for(double i = 0; i+=0.1; i<100) {
 
 	}
