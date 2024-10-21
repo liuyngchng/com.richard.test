@@ -48,7 +48,7 @@ int main( int   argc,
               G_CALLBACK (delete_event), NULL);
 
     /* Sets the border width of the window. */
-    gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+    gtk_container_set_border_width (GTK_CONTAINER (window), 20);
 
     /* We create a box to pack widgets into.  This is described in detail
      * in the "packing" section. The box is not really visible, it
@@ -68,7 +68,7 @@ int main( int   argc,
 
     /* Instead of gtk_container_add, we pack this button into the invisible
      * box, which has been packed into the window. */
-    gtk_box_pack_start (GTK_BOX(box1), button, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX(box1), button, FALSE, TRUE, 1);
 
     /* Always remember this step, this tells GTK that our preparation for
      * this button is complete, and it can now be displayed. */
@@ -82,7 +82,7 @@ int main( int   argc,
     g_signal_connect (button, "clicked",
               G_CALLBACK (callback), (gpointer) "button 2");
 
-    gtk_box_pack_start(GTK_BOX (box1), button, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX (box1), button, FALSE, TRUE, 1);
 
     /* The order in which we show the buttons is not really important, but I
      * recommend showing the window last, so it all pops up at once. */

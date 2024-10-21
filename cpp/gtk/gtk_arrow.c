@@ -31,9 +31,9 @@ int main( int   argc,
   gtk_init (&argc, &argv);
 
   /* Create a new window */
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-  gtk_window_set_title (GTK_WINDOW (window), "Arrow Buttons");
+  gtk_window_set_title(GTK_WINDOW (window), "Arrow Buttons");
 
   /* It's a good idea to do this for all windows. */
   g_signal_connect (window, "destroy",
@@ -51,16 +51,16 @@ int main( int   argc,
   gtk_widget_show (box);
 
   button = create_arrow_button (GTK_ARROW_UP, GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 10);
 
   button = create_arrow_button (GTK_ARROW_DOWN, GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 10);
 
   button = create_arrow_button (GTK_ARROW_LEFT, GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 10);
 
   button = create_arrow_button (GTK_ARROW_RIGHT, GTK_SHADOW_ETCHED_OUT);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 10);
 
   gtk_widget_show (window);
 

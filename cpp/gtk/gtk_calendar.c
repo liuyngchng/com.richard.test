@@ -356,7 +356,6 @@ static void create_calendar( void )
   /*
    *  Build the Signal-event part.
    */
-
   frame = gtk_frame_new ("Signal events");
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, DEF_PAD);
 

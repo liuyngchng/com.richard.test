@@ -18,7 +18,7 @@ int main( int argc,
 
     aspect_frame = gtk_aspect_frame_new ("2x1", /* label */
                                          0.5, /* center x */
-                                         0.5, /* center y */
+                                         1.5, /* center y */
                                          2, /* xsize/ysize = 2 */
                                          FALSE /* ignore child's aspect */);
 

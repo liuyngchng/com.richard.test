@@ -37,7 +37,7 @@ int main(int argc, char*argv[]) {
     gtk_container_add(GTK_CONTAINER (window), box1);
     button = gtk_button_new_with_label("button1");
     // 设置按钮的大小为200x50像素
-    gtk_widget_set_size_request(button, 200, 50);
+    gtk_widget_set_size_request(button, 200, 30);
 //    GtkWidget* gtk_alignment_new( gfloat xalign,
 //                                  gfloat yalign,
 //                                  gfloat xscale,
