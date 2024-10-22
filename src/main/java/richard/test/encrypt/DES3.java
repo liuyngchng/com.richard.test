@@ -403,7 +403,12 @@ public class DES3 {
         }
         System.out.print("\n");
         char[] result = DES3.encrypt(plain_txt_a, enc_sub_key);
-        System.out.println(String.format("enc %s with key %s, get result %s", plain_txt, enc_key, new String(result)));
+        System.out.println(
+            String.format(
+                "enc %s with key %s, get result %s",
+                plain_txt, enc_key, new String(result)
+            )
+        );
         DES3.test();
     }
 
