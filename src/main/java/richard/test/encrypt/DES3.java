@@ -257,11 +257,11 @@ public class DES3 {
      * 生成16轮的子密钥
      */
     private static byte[][] set_key(char[] my_key) {
-        byte[][]    sub_key = new byte[16][48];
+        byte[][] sub_key = new byte[16][48];
 //        byte[] key_bit_l, key_bit_r;
 //        key_bit_l = &key_bit[0];        //key的左边28位；
 //        key_bit_r = &key_bit[28];       //key的右边28位；
-        byte []tmp_i = new byte[my_key.length];
+        byte[] tmp_i = new byte[my_key.length];
         for (int i = 0;i< tmp_i.length; i++) {
             tmp_i[i] = (byte)my_key[i];
         }
@@ -269,7 +269,7 @@ public class DES3 {
 
         key_bit = DES3.tbl_replace(key_bit, DES3.pc1_tbl, 56);//pc-1 置换
 
-        for(int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             DES3.loop_bit(key_bit, DES3.mv_tbl[i], 28);
             byte []key_bit_r = new byte[key_bit.length-28];
             for (int j = 0; j < key_bit_r.length; j ++) {
@@ -279,7 +279,7 @@ public class DES3 {
             for (int j = 0; j < key_bit_r.length; j ++) {
                 key_bit[j+28] = key_bit_r[j];
             }
-            sub_key[i] = DES3.tbl_replace(key_bit, DES3.pc2_tbl, 48);//pc-2置换
+            sub_key[i] = DES3.tbl_replace(key_bit, DES3.pc2_tbl, 48);   //pc-2置换
         }
         return sub_key;
     }
@@ -385,7 +385,7 @@ public class DES3 {
 
 
     public static void main(String[] args) {
-        String plain_txt = "hellodec";
+        String plain_txt = "hellotxt";
         String enc_key = "hellokey";
         char[] enc_key_a = enc_key.toCharArray();
         char[] plain_txt_a=plain_txt.toCharArray();
