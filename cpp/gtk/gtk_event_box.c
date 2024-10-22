@@ -62,7 +62,7 @@ int main( int argc,
     gtk_widget_show (label);
 
     /* Clip it short. */
-    gtk_widget_set_size_request (label, 110, 20);
+    gtk_widget_set_size_request (label, 200, 50);
 
     /* And bind an action to it */
     gtk_widget_set_events (event_box, GDK_BUTTON_PRESS_MASK);

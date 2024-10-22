@@ -3,7 +3,7 @@
 //无模式窗口
 #define SCHEMALESS_WINDOW
 
-void button_click(GtkWidget *widget,GtkWindow *parent)
+void button_click(GtkWidget *widget, GtkWindow *parent)
 {
     GtkWidget *dialog;
     GtkWidget *label;

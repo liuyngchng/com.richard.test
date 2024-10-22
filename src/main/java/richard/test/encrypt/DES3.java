@@ -404,7 +404,7 @@ public class DES3 {
         System.out.print("\n");
         char[] result = DES3.encrypt(plain_txt_a, enc_sub_key);
         System.out.println(String.format("enc %s with key %s, get result %s", plain_txt, enc_key, new String(result)));
-//        DES3.test();
+        DES3.test();
     }
 
     public static void test(){
@@ -427,7 +427,12 @@ public class DES3 {
         }
         byte[][] enc_sub_key = DES3.set_key(enc_key);              // 生成16轮的加密子密钥；
         char[] cypher = DES3.encrypt(plain_txt, enc_sub_key);    // des的轮加密过程
-        System.out.println("加密后的密文为:" + new String(cypher));
+        System.out.println(
+            String.format(
+                "使用密钥 %s 加密明文 %s 获得密文 %s",
+                new String(enc_key), new String(plain_txt), new String(cypher)
+            )
+        );
 //        System.out.println("请输入解密密钥(8 byte):");
 //        char[] dec_key = scanner.next().toCharArray();
 //        i = dec_key.length;
@@ -439,9 +444,9 @@ public class DES3 {
 //        byte[][] dec_sub_key = DES3.set_key(dec_key);              // 生成16轮的解密子密钥；
         char[] dec_dt = DES3.decrypt(cypher, enc_sub_key);    // 解密;
         System.out.println(
-                String.format(
-                        "使用密钥 %s 解密密文 %s 获得: %s", new String(enc_key), new String(cypher), new String(dec_dt)
-                )
+            String.format(
+                "使用密钥 %s 解密密文 %s 获得明文 %s", new String(enc_key), new String(cypher), new String(dec_dt)
+            )
         );
     }
 }
