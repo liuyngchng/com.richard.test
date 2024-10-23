@@ -1,5 +1,6 @@
 /*
  * gtk_icon.c
+ * 设置可执行程序启动后，在操作系统中显示的图标
  *
  *  Created on: Oct 23, 2024
  *      Author: rd
@@ -15,7 +16,6 @@ GdkPixbuf *create_pixbuf (const gchar *filename) {
     	g_print("%s\n", error->message);
         g_error_free(error);
     }
-
     return pixbuf;
 }
 
