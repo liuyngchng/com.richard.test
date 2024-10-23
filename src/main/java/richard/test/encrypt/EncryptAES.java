@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -48,7 +47,7 @@ public class EncryptAES {
     public byte[] encrypt(String str) throws InvalidKeyException,
         IllegalBlockSizeException, BadPaddingException {
         // 根据密钥，对Cipher对象进行初始化，ENCRYPT_MODE表示加密模式
-        cipher.init(Cipher.ENCRYPT_MODE, key);
+        this.cipher.init(Cipher.ENCRYPT_MODE, key);
         byte[] src = str.getBytes();
         // 加密，结果保存进cipherByte
         cipherByte = cipher.doFinal(src);

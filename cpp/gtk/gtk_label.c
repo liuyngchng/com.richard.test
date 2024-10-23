@@ -1,21 +1,19 @@
 #include <gtk/gtk.h>
 
-int main( int   argc,
-          char *argv[] )
-{
+int main(int argc, char *argv[]) {
   static GtkWidget *window = NULL;
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *label;
 
-  /* Initialise GTK */
+  /* Initialize GTK */
   gtk_init (&argc, &argv);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  g_signal_connect (window, "destroy",
-            G_CALLBACK (gtk_main_quit),
-            NULL);
+  gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
+  gtk_window_set_gravity(GTK_WINDOW (window), GDK_GRAVITY_SOUTH);
+  g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
   gtk_window_set_title (GTK_WINDOW (window), "Label");
   vbox = gtk_vbox_new (FALSE, 5);
@@ -33,7 +31,7 @@ int main( int   argc,
   label = gtk_label_new ("This is a Multi-line label.\nSecond line\n" \
              "Third line");
   gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 10);
 
   frame = gtk_frame_new ("Left Justified Label");
   label = gtk_label_new ("This is a Left-Justified\n" \

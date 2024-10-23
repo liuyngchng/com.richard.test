@@ -130,8 +130,7 @@ GtkWidget *get_option_menu( void )
 }
 
 /* You have to start somewhere */
-int main( int argc,
-          char *argv[] )
+int main( int argc, char *argv[] )
 {
   GtkWidget *window;
   GtkWidget *main_vbox;

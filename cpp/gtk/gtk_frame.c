@@ -1,7 +1,6 @@
 #include <gtk/gtk.h>
 
-int main( int   argc,
-          char *argv[] )
+int main(int argc, char *argv[])
 {
   /* GtkWidget is the storage type for widgets */
   GtkWidget *window;
@@ -12,15 +11,15 @@ int main( int   argc,
 
   /* Create a new window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (window), "Frame Example");
+  gtk_window_set_title (GTK_WINDOW (window), "My Frame");
 
   /* Here we connect the "destroy" event to a signal handler */
   g_signal_connect (window, "destroy",
             G_CALLBACK (gtk_main_quit), NULL);
 
-  gtk_widget_set_size_request (window, 300, 300);
+  gtk_widget_set_size_request (window, 400, 300);
   /* Sets the border width of the window. */
-  gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
 
   /* Create a Frame */
   frame = gtk_frame_new (NULL);

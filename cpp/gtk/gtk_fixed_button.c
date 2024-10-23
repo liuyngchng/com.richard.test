@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     gtk_container_add(GTK_CONTAINER(window), fixed);
     gtk_fixed_put(GTK_FIXED(fixed), button1, 0, 300);
-    gtk_fixed_put(GTK_FIXED(fixed), button2, 800, 300);
+    gtk_fixed_put(GTK_FIXED(fixed), button2, 400, 300);
 
     gtk_widget_show_all(window);
     gtk_main();
