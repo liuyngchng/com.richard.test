@@ -28,6 +28,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>com.kaiwudb</groupId>
+            <artifactId>kaiwudb-jdbc</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
             <version>4.2.0</version>
