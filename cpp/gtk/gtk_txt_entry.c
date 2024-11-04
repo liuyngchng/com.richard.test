@@ -83,9 +83,7 @@ int main( int   argc,
     gtk_widget_show (check);
 
     button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    g_signal_connect_swapped (button, "clicked",
-                  G_CALLBACK (gtk_widget_destroy),
-                  window);
+    g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_widget_destroy), window);
     gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
     gtk_widget_set_can_default (button, TRUE);
     gtk_widget_grab_default (button);

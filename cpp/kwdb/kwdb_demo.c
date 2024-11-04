@@ -12,13 +12,13 @@
 #include <sqlext.h>
 
 int main() {
-	SQLHENV hEnv = NULL;
-    SQLHDBC hDbc = NULL;
-    SQLHSTMT hStmt = NULL;
-    SQLRETURN retcode;
-    SQLLEN id;
-    SQLCHAR menuID[32];
-    SQLCHAR menuName[128];
+	SQLHENV 	hEnv = NULL;
+    SQLHDBC 	hDbc = NULL;
+    SQLHSTMT 	hStmt = NULL;
+    SQLRETURN 	retcode;
+    SQLLEN 		id;
+    SQLCHAR 	menuID[32];
+    SQLCHAR 	menuName[128];
 
     // 分配环境句柄
     SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv);
@@ -29,7 +29,7 @@ int main() {
     // 连接数据库
     SQLRETURN ret;
     // 输入正确的用户名和密码
-    ret = SQLConnect(hDbc, (SQLCHAR*)"kwdb", SQL_NTS, (SQLCHAR*)"user", SQL_NTS, (SQLCHAR*)"password", SQL_NTS);
+    ret = SQLConnect(hDbc, (SQLCHAR*)"kwdb", SQL_NTS, (SQLCHAR*)"test", SQL_NTS, (SQLCHAR*)"!@#$%^&*()", SQL_NTS);
     if (ret != SQL_SUCCESS) {
         printf("Failed to connect the database, error code %d\n\n", ret);
         return -1;
@@ -44,8 +44,7 @@ int main() {
     if (ret != SQL_SUCCESS) {
         printf("execute failed, %s\n", create3);
         return -1;
-    }
-    else {
+    } else {
         printf("execute success, %s\n", create3);
     }
 

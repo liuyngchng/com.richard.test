@@ -143,7 +143,7 @@ int main( int   argc,
 
   adj = (GtkAdjustment *) gtk_adjustment_new (0.0, -10000.0, 10000.0,
                           0.5, 100.0, 0.0);
-  spinner1 = gtk_spin_button_new (adj, 1.0, 2);
+  spinner1 = gtk_spin_b	utton_new (adj, 1.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinner1), TRUE);
   gtk_widget_set_size_request (spinner1, 100, -1);
   gtk_box_pack_start (GTK_BOX (vbox2), spinner1, FALSE, TRUE, 0);
