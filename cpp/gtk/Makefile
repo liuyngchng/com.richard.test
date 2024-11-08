@@ -1,6 +1,6 @@
 CC=gcc
 #CFLAGS += -D__SSL1_0__
-SOURCE_FILE= gtk_packbox.c 
+SOURCE_FILE= gtk_arrow.c 
 all:_gtk _x11
 _gtk: ${SOURCE_FILE}
 	${CC} -g ${CFLAGS} -o _gtk ${SOURCE_FILE} `pkg-config --cflags --libs gtk+-2.0`
