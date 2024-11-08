@@ -29,7 +29,7 @@ int main() {
     // 连接数据库
     SQLRETURN ret;
     // 输入正确的用户名和密码
-    ret = SQLConnect(hDbc, (SQLCHAR*)"kwdb", SQL_NTS, (SQLCHAR*)"test", SQL_NTS, (SQLCHAR*)"!@#$%^&*()", SQL_NTS);
+    ret = SQLConnect(hDbc, (SQLCHAR*)"kwdb", SQL_NTS, (SQLCHAR*)"test", SQL_NTS, (SQLCHAR*)"123)", SQL_NTS);
     if (ret != SQL_SUCCESS) {
         printf("Failed to connect the database, error code %d\n\n", ret);
         return -1;
