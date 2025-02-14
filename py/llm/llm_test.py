@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from langchain.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
@@ -7,7 +8,7 @@ from langchain_community.llms import Ollama
 
 
 # 加载知识库文件 insurance.txt
-loader = TextLoader("/home/rd/software/ollama_models/knowledge.txt",encoding='utf8')
+loader = TextLoader("knowledge.txt",encoding='utf8')
 documents = loader.load()
 
 # 将文档分割成块
