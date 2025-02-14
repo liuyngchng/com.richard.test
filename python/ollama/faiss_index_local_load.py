@@ -22,15 +22,15 @@ logger.info("load index from local file finish")
 
 # 创建远程 Ollama API代理
 logger.info("get remote llm agent")
-llm = OllamaLLM(model="deepseekR1:7B", base_url='http://11.10.36.1:11435')
-#llm = OllamaLLM(model="llama2:7B", base_url='http://11.10.36.1:11435')
+llm = OllamaLLM(model="deepseekR1:7B", base_url='http://127.0.0.1:11435')
+#llm = OllamaLLM(model="llama2:7B", base_url='http://127.0.0.1:11435')
 
 # 创建检索问答链
 logger.info("build retrieval")
 qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=loaded_index.as_retriever())
 
 # 提问
-query = "请看看名单里的用户用气量是否有异常大或者异常小的情况，如果有异常，请给出原因"
+query = "一个秘密问题，你知道吗？"
 logger.info("invoke retrieval")
 result = qa.invoke(query)
 logger.info(result)

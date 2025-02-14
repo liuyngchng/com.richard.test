@@ -1,5 +1,7 @@
 #! /usr/bin/python3
 from langchain_community.document_loaders import TextLoader
+# 加载 word文档
+from langchain_unstructured import UnstructuredLoader 
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -12,11 +14,12 @@ import logging.config
 logging.config.fileConfig('logging.conf')
  
 # 创建 logger
-logger = logging.getLogger()
-
+logger = logging.getLogger("root")
+file = "./1.pdf"
 # 加载知识库文件
-logger.info("load doc")
-loader = TextLoader("./data.csv",encoding='utf8')
+logger.info("load local doc {}".format(file))
+loader = UnstructuredLoader(file)
+#loader = TextLoader(file,encoding='utf8')
 documents = loader.load()
 
 # 将文档分割成块
