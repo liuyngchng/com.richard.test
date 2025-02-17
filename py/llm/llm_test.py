@@ -5,6 +5,10 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_community.llms import Ollama
+import warnings
+
+ # 忽略所有FutureWarning警告
+warnings.filterwarnings("ignore")
 
 
 # 加载知识库文件 insurance.txt
