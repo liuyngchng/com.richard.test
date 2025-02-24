@@ -1,0 +1,8 @@
+// the test
+digraph MyPicture {
+	a [label=wo color=purple]
+	b [label=niu color=purple]
+	c [label=che color=purple]
+	a -> b [label=woniu color=red]
+	b -> c [label=woniuche color=red]
+}

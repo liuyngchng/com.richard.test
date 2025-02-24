@@ -1,0 +1,17 @@
+digraph edge_settings { 
+    fontname ="SimHei";
+    graph [dpi=1500];
+    edge [fontname="Microsoft YaHei"];
+    node [fontname="Microsoft YaHei"];
+    rankdir = TB;
+    label = "2.56keV测试一下"
+    A [label=C shape=box fontsize=30]
+    A -> NO2 [label= "transfer 1.96eV" weight=3]
+    B [label=测试 shape=box]
+    NO2 -> B[style=dashed  dir = none]
+    B -> A[dir = both]
+    A ->{小测, 一下}
+    B ->小测[headlabel="headlabel"]
+    C [label=H2O]
+    B ->C[style=bold,label="compete\nwith" color=red minlen=2]
+} 
