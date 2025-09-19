@@ -8,13 +8,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * <dependency>
+ * create a java maven project with cmd: mvn archetype:generate
+ * dd dependency in your pom file
+ * JDK version > 11, 17 is tested in this file.
+  * <dependency>
  *   <groupId>com.fasterxml.jackson.core</groupId>
  *   <artifactId>jackson-databind</artifactId>
  *   <version>2.15.0</version>
  *	</dependency>
  **/
 public class Txt2Sql {
+
     private static final String DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
     private final String apiKey;
     private final HttpClient httpClient;
